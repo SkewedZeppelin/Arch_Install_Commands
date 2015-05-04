@@ -4,9 +4,11 @@ mkinitcpio -p linux #Regenerate the kernel
 
 
 #Bootloader tweaks
+#Grub
 nano /etc/default/grub #Add "resume=[SWAP PARTITION]" to GRUB_CMDLINE_LINUX_DEFAULT
 grub-mkconfig -o /boot/grub/grub.cfg #Regenerate the GRUB config
-
+#Gummiboot
+nano /boot/loader/entries/arch.conf #Add "resume=[SWAP PARTITION]" to options
 
 #Account Creation
 useradd -m -G wheel -s /bin/bash [USERNAME] #Create a new account

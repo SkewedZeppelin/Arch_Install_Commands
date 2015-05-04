@@ -54,4 +54,22 @@ export LANG=en_US.UTF-8
 ln -s /usr/share/zoneinfo/America/New_York /etc/localtime
 hwclock --systohc --utc
 
-#NOT FINISHED
+
+#Network hostname
+echo [HOSTNAME] > /etc/hostname
+nano /etc/hosts #Append [HOSTNAME] to the end of 127.0.0.1 and ::1
+
+
+#Set root password
+passwd
+
+
+#Install the bootloader
+pacman -S [grub os-prober / dosfstools efibootmgr gummiboot]
+[grub-install --target=i386-pc --recheck /dev/sdX / gummiboot --path=$esp install]
+[grub-mkconfig -o /boot/grub/grub.cfg / * ] #*= See https://wiki.archlinux.org/index.php/Beginners%27_guide#For_UEFI_motherboards
+
+#Finishing up
+exit
+umount -R /mnt
+reboot
