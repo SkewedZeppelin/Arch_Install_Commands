@@ -1,6 +1,11 @@
 #Kernel Tweaks
-sudo nano /etc/mkinitcpio.conf #Add "lz4 lz4_compress kvm kvm_intel" to modules and "shutdown resume" to hooks
-sudo mkinitcpio -p linux #Regenerate the kernel
+nano /etc/mkinitcpio.conf #Add "lz4 lz4_compress kvm kvm_intel" to modules and "shutdown resume" to hooks
+mkinitcpio -p linux #Regenerate the kernel
+
+
+#Bootloader tweaks
+nano /etc/default/grub #Add "resume=[SWAP PARTITION]" to GRUB_CMDLINE_LINUX_DEFAULT
+grub-mkconfig -o /boot/grub/grub.cfg #Regenerate the GRUB config
 
 
 #Account Creation
@@ -60,6 +65,7 @@ sudo systemctl start plexmediaserver.service
 sudo cp /etc/X11/xinit/xinitrc ~/.xinitrc
 sudo chown [USERNAME] .xinitrc
 nano ~/.xinitrc #Remove the last five lines and add "exec cinnamon-session"
+echo '[[ -z $DISPLAY && $XDG_VTNR -eq 1 ]] && exec startx' > ~/.bash_profile #Start X-Org on login
 
 
 #Network Tweaks for Games
@@ -72,3 +78,4 @@ sudo ip link set enp6s0 qlen 50
 #Misc Tweaks
 # - Add conky to startup applications in Cinnamon 
 # - Disable mouse acceleration: https://wiki.archlinux.org/index.php/Mouse_acceleration#Disabling_mouse_acceleration
+echo 'alias speedtest='speedtest-cli --share --server 2137'' > .bash_profile #Add an alias for the best local Speedtest server
