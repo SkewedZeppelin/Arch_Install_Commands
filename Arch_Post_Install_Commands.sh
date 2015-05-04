@@ -76,5 +76,6 @@ sudo ip link set [MAIN NETWORK INTERFACE] qlen 20
 # - Add conky to startup applications in Cinnamon 
 # - Disable mouse acceleration: https://wiki.archlinux.org/index.php/Mouse_acceleration#Disabling_mouse_acceleration
 # - Install VMWare: https://wiki.archlinux.org/index.php/VMware
+dconf load /org/cinnamon/desktop/keybindings/ < Keybinds.dconf #Load my keybinds
 echo 'alias speedtest='speedtest-cli --share --server 2137'' > ~/.bash_profile #Add an alias for the best local Speedtest server
 sudo reboot now #Reboot the system
