@@ -59,7 +59,7 @@ sudo systemctl enable plexmediaserver.service #Enable Plex
 
 #Configure X-Org
 sudo cp /etc/X11/xinit/xinitrc ~/.xinitrc
-sudo chown [USERNAME] .xinitrc
+sudo chown [USERNAME] ~/.xinitrc
 nano ~/.xinitrc #Remove the last five lines and add "exec cinnamon-session"
 echo '[[ -z $DISPLAY && $XDG_VTNR -eq 1 ]] && exec startx' > ~/.bash_profile #Start X-Org on login
 
@@ -68,11 +68,11 @@ echo '[[ -z $DISPLAY && $XDG_VTNR -eq 1 ]] && exec startx' > ~/.bash_profile #St
 sudo sysctl net.ipv4.tcp_ecn=1
 sudo sysctl net.ipv4.tcp_sack=1 
 sudo sysctl net.ipv4.tcp_dsack=1
-sudo ip link set [MAIN NETWORK INTERFACE] qlen 50
+sudo ip link set [MAIN NETWORK INTERFACE] qlen 20
 
 
 #Misc
 # - Add conky to startup applications in Cinnamon 
 # - Disable mouse acceleration: https://wiki.archlinux.org/index.php/Mouse_acceleration#Disabling_mouse_acceleration
-echo 'alias speedtest='speedtest-cli --share --server 2137'' > .bash_profile #Add an alias for the best local Speedtest server
+echo 'alias speedtest='speedtest-cli --share --server 2137'' > ~/.bash_profile #Add an alias for the best local Speedtest server
 sudo reboot now #Reboot the system
