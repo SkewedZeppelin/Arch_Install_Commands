@@ -47,7 +47,7 @@ sudo pacman -S cinnamon nemo-fileroller nemo-preview nemo-seahorse networkmanage
 Cinnamon
 sudo systemctl enable NetworkManager.service
 sudo systemctl enable NetworkManager-dispatcher.service
-sudo pacman -S android-tools audacity bc bleachbit cheese chromium clamav conky cpupower eclipse empathy eog evince evolution filezilla freerdp gcc-multilib gedit gimp git gksudo 
+sudo pacman -S --needed android-tools audacity bc bleachbit cheese chromium clamav conky cpupower eclipse empathy eog evince evolution filezilla freerdp gcc-multilib gedit gimp git gksudo 
 gnome-calculator gnome-calendar gnome-disk-utility gnome-keyring gnome-screenshot gnome-sound-recorder gnome-system-log gnome-system-monitor gtkmm hexchat htop 
 intellij-idea-community-edition jdk7-openjdk jdk8-openjdk jre7-openjdk jre7-openjdk-headless jre8-openjdk jre8-openjdk-headless keepass lib32-alsa-plugins lib32-readline 
 libreoffice-fresh linux-headers mumble numix-themes parted perl-switch proguard python python-pip python2-virtualenv remmina 
