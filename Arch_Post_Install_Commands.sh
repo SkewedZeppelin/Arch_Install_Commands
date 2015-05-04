@@ -38,6 +38,7 @@ rm -rf yaourt*
 
 
 #Install Needed Packages
+sudo nano /etc/pacman.conf #Uncomment out all default repos
 sudo pacman -Syyu #Download the latest repos and upgrade the system
 sudo pacman -S xorg-server xorg xorg-xinit #Install X-Org
 sudo pacman -S nvidia nvidia-utils opencl-nvidia lib32-nvidia-libgl lib32-mesa-vdpau #Install Nvidia drivers
