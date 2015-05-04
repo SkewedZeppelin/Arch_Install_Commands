@@ -68,7 +68,7 @@ echo '[[ -z $DISPLAY && $XDG_VTNR -eq 1 ]] && exec startx' > ~/.bash_profile #St
 sudo sysctl net.ipv4.tcp_ecn=1
 sudo sysctl net.ipv4.tcp_sack=1 
 sudo sysctl net.ipv4.tcp_dsack=1
-sudo ip link set enp6s0 qlen 50
+sudo ip link set [MAIN NETWORK INTERFACE] qlen 50
 
 
 #Misc
