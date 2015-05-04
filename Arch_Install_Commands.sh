@@ -1,4 +1,4 @@
-#Connect to WiFi Network
+#Connect to wifi network, wired connections are automatic
 wifi-menu
 
 
@@ -68,6 +68,7 @@ passwd
 pacman -S [grub os-prober / dosfstools efibootmgr gummiboot]
 [grub-install --target=i386-pc --recheck /dev/sdX / gummiboot --path=$esp install]
 [grub-mkconfig -o /boot/grub/grub.cfg / * ] #*= See https://wiki.archlinux.org/index.php/Beginners%27_guide#For_UEFI_motherboards
+
 
 #Finishing up
 exit

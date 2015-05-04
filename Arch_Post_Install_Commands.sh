@@ -1,4 +1,4 @@
-#Kernel Tweaks
+#Kernel tweaks
 nano /etc/mkinitcpio.conf #Add "lz4 lz4_compress kvm kvm_intel" to modules and "shutdown resume" to hooks
 mkinitcpio -p linux #Regenerate the kernel
 
@@ -10,7 +10,7 @@ grub-mkconfig -o /boot/grub/grub.cfg #Regenerate the GRUB config
 #Gummiboot
 nano /boot/loader/entries/arch.conf #Add "resume=[SWAP PARTITION]" to options
 
-#Account Creation
+#Account creation
 useradd -m -G wheel -s /bin/bash [USERNAME] #Create a new account
 usermod -aG games,rfkill, users,uucp,wheel [USERNAME] #Add the new account to some groups
 chfn [USERNAME] #Set extra info for the new account
@@ -22,7 +22,7 @@ EDITOR=nano visudo #Go to the part where it says "root ALL=(ALL) ALL" and add "[
 logout
 
 
-#Install Yaourt
+#Install yaourt
 wget https://aur.archlinux.org/packages/pa/package-query-git/package-query-git.tar.gz
 tar -xzvf package-query-git.tar.gz 
 cd package-query-git
@@ -39,7 +39,7 @@ cd ..
 rm -rf yaourt*
 
 
-#Install Needed Packages
+#Install needed packages
 sudo nano /etc/pacman.conf #Uncomment out all default repos
 sudo pacman -Syyu #Download the latest repos and upgrade the system
 sudo pacman -S xorg-server xorg xorg-xinit #Install X-Org
@@ -67,7 +67,7 @@ nano ~/.xinitrc #Remove the last five lines and add "exec cinnamon-session"
 echo '[[ -z $DISPLAY && $XDG_VTNR -eq 1 ]] && exec startx' > ~/.bash_profile #Start X-Org on login
 
 
-#Network Tweaks for Games
+#Network tweaks for games
 sudo sysctl net.ipv4.tcp_ecn=1
 sudo sysctl net.ipv4.tcp_sack=1 
 sudo sysctl net.ipv4.tcp_dsack=1
@@ -80,4 +80,7 @@ sudo ip link set [MAIN NETWORK INTERFACE] qlen 20
 # - Install VMWare: https://wiki.archlinux.org/index.php/VMware
 dconf load /org/cinnamon/desktop/keybindings/ < Keybinds.dconf #Load my keybinds
 echo 'alias speedtest='speedtest-cli --share --server 2137'' > ~/.bash_profile #Add an alias for the best local Speedtest server
+
+
+#Finishing up
 sudo reboot now #Reboot the system
