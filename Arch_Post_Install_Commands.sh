@@ -49,10 +49,10 @@ sudo pacman -S ttf-dejavu ttf-liberation ttf-ubuntu-font-family #Install fonts
 sudo pacman -S cinnamon nemo-fileroller nemo-preview nemo-seahorse networkmanager networkmanager-openconnect networkmanager-openvpn networkmanager-pptp networkmanager-vpnc #Install Cinnamon
 sudo systemctl enable NetworkManager.service #Enable the network manager [1/2]
 sudo systemctl enable NetworkManager-dispatcher.service #Enable the network manager [2/2]
-sudo pacman -S --needed android-tools audacity bc bleachbit cheese chromium clamav conky cpupower eclipse empathy eog evince evolution filezilla freerdp gcc-multilib gedit gimp git gksudo 
-gnome-calculator gnome-calendar gnome-disk-utility gnome-keyring gnome-screenshot gnome-sound-recorder gnome-system-log gnome-system-monitor gtkmm hexchat htop 
+sudo pacman -S --needed android-tools audacity bc bleachbit checksec cheese chromium clamav conky cpupower eclipse empathy eog evince evolution filezilla freerdp gcc-multilib gedit gimp git gksudo 
+gnome-calculator gnome-calendar gnome-disk-utility gnome-keyring gnome-screenshot gnome-sound-recorder gnome-system-log gnome-system-monitor gradm gtkmm hexchat htop 
 intellij-idea-community-edition jdk7-openjdk jdk8-openjdk jre7-openjdk jre7-openjdk-headless jre8-openjdk jre8-openjdk-headless keepass lib32-alsa-plugins lib32-readline 
-libreoffice-fresh linux-headers mumble numix-themes parted perl-switch proguard python python-pip python2-virtualenv remmina rhythmbox schedtool seahorse squashfs-tools steam telepathy-gabble telepathy-idle telepathy-rakia telepathy-salut totem transmission-gtk vlc wget wireshark-cli wireshark-gtk xfce4-terminal zip #Install official applications
+libreoffice-fresh linux-grsec linux-headers mumble numix-themes parted pax-utils paxd paxtest perl-switch proguard python python-pip python2-virtualenv remmina rhythmbox schedtool seahorse squashfs-tools steam telepathy-gabble telepathy-idle telepathy-rakia telepathy-salut totem transmission-gtk vlc wget wireshark-cli wireshark-gtk xfce4-terminal zip #Install official applications
 sudo pip install doge speedtest-cli #Install python applications
 sudo yaourt -S alsi android-sdk android-sdk-build-tools android-sdk-platform-tools android-studio archey arduino chromium-pepper-flash clamtk filebot launch4j libtinfo minecraft 
 networkmanager-l2tp numix-circle-icon-theme-git obs-studio-git repo #Install AUR applications
