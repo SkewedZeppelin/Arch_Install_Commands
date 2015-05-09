@@ -76,6 +76,7 @@ sudo ip link set [MAIN NETWORK INTERFACE] qlen 20
 # - Disable mouse acceleration: https://wiki.archlinux.org/index.php/Mouse_acceleration#Disabling_mouse_acceleration
 # - Install VMWare: https://wiki.archlinux.org/index.php/VMware
 # - Nemo - Scan file on right click with ClamAV: https://wiki.archlinux.org/index.php/Nemo#Clam_Scan
+# - Yubikey support: https://www.yubico.com/faq/enable-u2f-linux/
 dconf load /org/cinnamon/desktop/keybindings/ < Keybinds.dconf #Load my keybinds
 echo 'alias speedtest='speedtest-cli --share --server 2137'' > ~/.bash_profile #Add an alias for the best local Speedtest server
 
