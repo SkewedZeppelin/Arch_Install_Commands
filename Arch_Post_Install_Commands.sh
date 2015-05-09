@@ -12,7 +12,7 @@ nano /boot/loader/entries/arch.conf #Add "resume=[SWAP PARTITION]" to options
 
 #Account creation
 useradd -m -G wheel -s /bin/bash [USERNAME] #Create a new account
-usermod -aG games,rfkill, users,uucp,wheel [USERNAME] #Add the new account to some groups
+usermod -aG games,rfkill,users,uucp,wheel [USERNAME] #Add the new account to some groups
 chfn [USERNAME] #Set extra info for the new account
 passwd [USERNAME] #Set the password for the new account
 EDITOR=nano visudo #Go to the part where it says "root ALL=(ALL) ALL" and add "[USERNAME] ALL=(ALL) ALL" on the next line
