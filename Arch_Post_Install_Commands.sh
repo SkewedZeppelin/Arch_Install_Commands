@@ -1,5 +1,5 @@
 #Kernel tweaks
-nano /etc/mkinitcpio.conf #Add "lz4 lz4_compress kvm kvm_intel virtio-net virtio-blk virtio-scsi virtio-balloon" to modules and "shutdown resume" to hooks
+nano /etc/mkinitcpio.conf #Add "lz4 lz4_compress kvm kvm_intel virtio-pci virtio-net virtio-blk virtio-scsi virtio-balloon virtio-mmio virtio-console" to modules and "shutdown resume" to hooks
 mkinitcpio -p linux #Regenerate the kernel
 
 
