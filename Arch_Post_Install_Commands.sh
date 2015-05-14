@@ -45,14 +45,15 @@ sudo pacman -S ttf-dejavu ttf-liberation ttf-ubuntu-font-family #Install fonts
 sudo pacman -S cinnamon nemo-fileroller nemo-preview nemo-seahorse networkmanager networkmanager-openconnect networkmanager-openvpn networkmanager-pptp networkmanager-vpnc #Install Cinnamon
 sudo systemctl enable NetworkManager.service #Enable the network manager [1/2]
 sudo systemctl enable NetworkManager-dispatcher.service #Enable the network manager [2/2]
-sudo systemctl enable libvirtd.service #Enable libvirt
-sudo systemctl enable clamd.service #Enable ClamAV [1/2]
-sudo systemctl enable freshclamd.service #Enable ClamAV [2/2]
-sudo pacman -S --needed android-tools audacity bc bleachbit checksec cheese chromium clamav conky cpupower eclipse empathy eog evince evolution filezilla freerdp gcc-multilib gedit gimp git gksudo gnome-calculator gnome-calendar gnome-disk-utility gnome-keyring gnome-screenshot gnome-sound-recorder gnome-system-log gnome-system-monitor gradm gst-libav gtkmm hexchat htop intellij-idea-community-edition jdk7-openjdk jdk8-openjdk jre7-openjdk jre7-openjdk-headless jre8-openjdk jre8-openjdk-headless keepass lib32-alsa-plugins lib32-readline libreoffice-fresh linux-grsec linux-headers mumble numix-themes parted pax-utils paxd paxtest perl-switch pigz proguard python python-pip python2-virtualenv qemu remmina rhythmbox schedtool seahorse squashfs-tools steam telepathy-gabble telepathy-idle telepathy-rakia telepathy-salut totem transmission-gtk virt-manager vlc wget wireshark-cli wireshark-gtk xfce4-terminal zip #Install official applications
+sudo pacman -S --needed android-tools audacity bc bleachbit checksec cheese chromium clamav conky cpupower dnsmasq ebtables eclipse empathy eog evince evolution filezilla freerdp gcc-multilib gedit gimp git gksudo gnome-calculator gnome-calendar gnome-disk-utility gnome-keyring gnome-screenshot gnome-sound-recorder gnome-system-log gnome-system-monitor gradm gst-libav gtkmm hexchat htop intellij-idea-community-edition jdk7-openjdk jdk8-openjdk jre7-openjdk jre7-openjdk-headless jre8-openjdk jre8-openjdk-headless keepass lib32-alsa-plugins lib32-readline libreoffice-fresh linux-grsec linux-headers mumble numix-themes parted pax-utils paxd paxtest perl-switch pigz proguard python python-pip python2-virtualenv qemu remmina rhythmbox schedtool seahorse squashfs-tools steam telepathy-gabble telepathy-idle telepathy-rakia telepathy-salut totem transmission-gtk virt-manager vlc wget wireshark-cli wireshark-gtk xfce4-terminal zip #Install official applications
 sudo pip install doge speedtest-cli #Install python applications
 sudo yaourt -S alsi android-sdk android-sdk-build-tools android-sdk-platform-tools android-studio archey arduino chromium-pepper-flash clamtk downgrade filebot hostsblock launch4j libtinfo minecraft 
 networkmanager-l2tp numix-circle-icon-theme-git obs-studio-git pgl-git repo #Install AUR applications
 sudo yaourt -S plex-media-server-plexpass #Install Plex
+sudo systemctl enable dnsmasq.service #Enable dnsmasq
+sudo systemctl enable libvirtd.service #Enable libvirt
+sudo systemctl enable clamd.service #Enable ClamAV [1/2]
+sudo systemctl enable freshclamd.service #Enable ClamAV [2/2]
 sudo systemctl enable plexmediaserver.service #Enable Plex
 
 
@@ -78,7 +79,6 @@ mkinitcpio -p linux #Regenerate the kernel
 #Misc
 # - Add conky to startup applications in Cinnamon
 # - Disable mouse acceleration: https://wiki.archlinux.org/index.php/Mouse_acceleration#Disabling_mouse_acceleration
-# - Install VMWare: https://wiki.archlinux.org/index.php/VMware
 # - Nemo - Scan file on right click with ClamAV: https://wiki.archlinux.org/index.php/Nemo#Clam_Scan
 # - Yubikey support: https://www.yubico.com/faq/enable-u2f-linux/
 # - Add polkit rules for libvirt: https://wiki.archlinux.org/index.php/Libvirt#Using_polkit
