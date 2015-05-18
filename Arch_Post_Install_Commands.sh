@@ -38,8 +38,8 @@ rm -rf yaourt*
 sudo nano /etc/pacman.conf #Uncomment out all default repos
 sudo pacman -Syyu #Download the latest repos and upgrade the system
 sudo pacman -S xorg-server xorg xorg-xinit #Install X-Org
-yaourt -S nvidia-dkms nvidia-hook #Install the Nvidia kernel module
-sudo pacman -S nvidia-utils opencl-nvidia lib32-nvidia-libgl lib32-mesa-vdpau #Install Nvidia drivers
+yaourt -S nvidia-dkms nvidia-hook #Install Nvidia drivers [1/2]
+sudo pacman -S nvidia-utils opencl-nvidia lib32-nvidia-libgl lib32-mesa-vdpau #Install Nvidia drivers [2/2]
 sudo reboot now #Reboot to load Nvidia drivers
 sudo pacman -S ttf-dejavu ttf-liberation ttf-ubuntu-font-family #Install fonts
 sudo pacman -S cinnamon nemo-fileroller nemo-preview nemo-seahorse networkmanager networkmanager-openconnect networkmanager-openvpn networkmanager-pptp networkmanager-vpnc #Install Cinnamon
@@ -85,7 +85,8 @@ mkinitcpio -p linux #Regenerate the kernel
 sudo echo 'SafeBrowsing Yes' > /etc/clamav/freshclam.conf #Enable an extra signature list to check files against
 sudo archlinux-java set java-8-openjdk #Set default Java version to jre/jdk8
 dconf load /org/cinnamon/desktop/keybindings/ < Keybinds.dconf #Load my keybinds
-echo 'alias speedtest='speedtest-cli --share --server 2137'' > ~/.bash_profile #Add an alias for the best local Speedtest server
+echo 'alias speedtest='speedtest-cli --share --server 2137'' > ~/.bashrc #Add an alias for the best local Speedtest server
+echo 'EDITOR=nano' > ~/.bashrc #Set nano as the default CLI text editor 
 
 
 #Finishing up
