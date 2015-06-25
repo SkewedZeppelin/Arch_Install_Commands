@@ -168,7 +168,7 @@ polkit.addRule(function(action, subject) {
 ```shell
 sudo pacman -S ebtables libvirt openbsd-netcat qemu virt-manager
 sudo systemctl enable libvirtd.service
-sudo nano /etc/polkit-1/rules.d/49-org.libvirt.unix.manager.rules
+sudo nano /etc/polkit-1/rules.d/49-org.libvirt.unix.manager.rules #1
 ```
 
 
@@ -207,14 +207,19 @@ Selection=Any
 Extensions=dir;exe;dll;zip;gz;7z;rar;
 ```
 ```shell
-nano $HOME/.local/share/nemo/actions/clamscan.nemo_action
+nano $HOME/.local/share/nemo/actions/clamscan.nemo_action #1
 ```
 ####YubiKey udev Rules
+1. Add the following
 ```
 ACTION!="add|change", GOTO="u2f_end"
 KERNEL=="hidraw*", SUBSYSTEM=="hidraw", ATTRS{idVendor}=="1050", ATTRS{idProduct}=="0113|0114|0115|0116|0120|0402|0403|0406|0407|0410", TAG+="uaccess"
 LABEL="u2f_end"
 ```
+```shell
+sudo nano /etc/udev/rules.d/70-u2f.rules #1
+```
+
 
 ##Finishing up
 ```shell
