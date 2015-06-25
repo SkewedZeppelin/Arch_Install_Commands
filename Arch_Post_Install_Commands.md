@@ -27,11 +27,11 @@ logout
 
 ##Configure pacman and makepkg
 1. Uncomment out all default repos
-2. Change "CFLAGS" to "-march=native -mtune=native -O3 -pipe -fstack-protector-strong --param=ssp-buffer-size=4"
-3. Change "CXXFLAGS" to "${CFLAGS}"
-4. Change MAKEFLAGS to "-j[AMOUNT OF CORES]"
-5. Change "PACKAGER" to your name/email
-6. Change "COMPRESSXZ" to "(xz -T 0 -c -z -)"
+2. Change 'CFLAGS' to "-march=native -mtune=native -O3 -pipe -fstack-protector-strong --param=ssp-buffer-size=4"
+3. Change 'CXXFLAGS' to "${CFLAGS}"
+4. Change 'MAKEFLAGS' to "-j[AMOUNT OF CORES]"
+5. Change 'PACKAGER' to your name/email
+6. Change 'COMPRESSXZ' to "(xz -T 0 -c -z -)"
 ```shell
 sudo nano /etc/pacman.conf #1
 sudo nano /etc/makepkg.conf #2-6
@@ -40,8 +40,8 @@ sudo pacman -Syyu
 
 
 ##Install and Configure yaourt
-1. Change "AURURL" to "https://aur4.archlinux.org"
-2. Change "EXPORT" to "2"
+1. Change 'AURURL' to "https://aur4.archlinux.org"
+2. Change 'EXPORT' to "2"
 ```shell
 wget https://aur.archlinux.org/packages/pa/package-query-git/package-query-git.tar.gz
 tar -xzvf package-query-git.tar.gz
