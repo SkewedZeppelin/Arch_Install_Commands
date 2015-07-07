@@ -112,8 +112,8 @@ yaourt -S android-apk-tool android-sdk android-sdk-build-tools android-sdk-platf
 ```
 ###Gaming
 ```shell
-sudo pacman -S steam minecraft
-yaourt -S desura feedthebeast mcedit multimc5
+sudo pacman -S steam
+yaourt -S desura feedthebeast mcedit minecraft minecraft-technic-launcher multimc5
 ```
 ###L33t Hax0ring
 ```shell
