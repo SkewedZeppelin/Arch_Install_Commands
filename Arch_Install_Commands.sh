@@ -5,7 +5,7 @@ wifi-menu
 #Partition a 500GB Drive
 lsblk #Identify your drives
 parted /dev/sdX #Start parted on your drive
-list #List all partitions
+print #List all partitions
 rm [1-X] #Delete all partitions
 mklabel [msdos/gpt] #Create the partition table
 mkpart [primary/ESP] [ext4/fat32] 1MiB 1GiB #Create the /boot partition
