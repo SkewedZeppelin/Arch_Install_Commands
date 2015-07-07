@@ -74,7 +74,7 @@ nano ~/.xinitrc #1
 echo '[[ -z $DISPLAY && $XDG_VTNR -eq 1 ]] && exec startx' > ~/.bash_profile
 ```
 ####Nvidia Drivers
-1. Add "nvidia" to 'MODULES'
+1. Add "nvidia" to 'HOOKS'
 ```shell
 yaourt -S nvidia-dkms nvidia-hook
 sudo pacman -S nvidia-utils opencl-nvidia lib32-nvidia-libgl lib32-mesa-vdpau
