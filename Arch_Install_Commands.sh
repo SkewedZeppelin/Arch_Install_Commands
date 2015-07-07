@@ -13,6 +13,7 @@ set 1 boot on #Set /boot to be bootable
 mkpart primary ext4 1GiB 128GiB #Create the / partition
 mkpart primary linux-swap 128GiB [128+1.5x RAM]GiB #Create the swap partition
 mkpart primary ext4 [END SWAP SIZE]GiB 100% #Create the /home partition
+quit
 
 
 #Format partitions
