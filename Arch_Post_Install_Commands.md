@@ -105,7 +105,7 @@ sudo archlinux-java set java-8-openjdk
 sudo pacman -S --needed abs audacity bleachbit calibre cdrkit cheese chromium cpupower eog evince evolution expac gedit gimp git gksu gnome-calculator gnome-calendar gnome-disk-utility gnome-keyring gnome-screenshot gnome-sound-recorder gnome-system-log gnome-system-monitor gst-libav gst-plugins-bad gst-plugins-base gst-plugins-good gst-plugins-ugly hdparm hexchat htop keepass libreoffice-fresh lib32-alsa-plugins linux-headers mumble ntfs-3g openssh parted pigz pulseaudio-alsa pulseaudio-equalizer pulseaudio-gconf redshift rhythmbox seahorse totem transmission-gtk unrar wine wine-mono wine_gecko winetricks wget xfce4-terminal yubikey-neo-manager yubikey-personalization-gui zip zsh
 yaourt -S alsi chromium-pepper-flash downgrade filebot nano-syntax-highlighting-git notepadqq-git obs-studio-git oh-my-zsh-git pithos-git raccoon
 sudo pip install doge speedtest-cli
-chsh $(which zsh)
+chsh -s $(which zsh)
 ```
 ###Development
 ```shell
