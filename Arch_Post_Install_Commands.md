@@ -16,11 +16,13 @@ nano /boot/loader/entries/arch.conf
 
 
 ##Account Creation
+1. Add yourself after root
 ```shell
 useradd -m -G wheel -s /bin/bash [USERNAME]
 usermod -aG audio,games,rfkill,users,uucp,video,wheel [USERNAME]
 chfn [USERNAME]
-passwd [USERNAME]
+EDITOR=nano visudo
+passwd [USERNAME] #1
 logout
 ```
 
@@ -111,7 +113,7 @@ yaourt -S android-apk-tool android-sdk android-sdk-build-tools android-sdk-platf
 ###Gaming
 ```shell
 sudo pacman -S steam minecraft
-yaourt -S desura feedthebeast mcedit
+yaourt -S desura feedthebeast mcedit multimc5
 ```
 ###L33t Hax0ring
 ```shell
