@@ -123,7 +123,7 @@ sudo pacman -S nmap wireshark-cli wireshark-gtk
 ```
 ###Remote
 ```shell
-sudo pacman -S filezilla remmina
+sudo pacman -S filezilla remmina freerdp libvncserver nxproxy xorg-server-xephyr
 ```
 ###Security
 ```shell
