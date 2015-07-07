@@ -80,6 +80,7 @@ yaourt -S nvidia-dkms nvidia-hook
 sudo pacman -S nvidia-utils opencl-nvidia lib32-nvidia-libgl lib32-mesa-vdpau
 sudo nano /etc/mkinitcpio.conf #1
 sudo mkinitcpio -p linux
+nvidia-xconfig
 ```
 ####AMD Drivers
 [To Be Added]
