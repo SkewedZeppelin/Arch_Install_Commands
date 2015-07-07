@@ -42,7 +42,7 @@ sudo pacman -Syyu
 
 
 ##Install and Configure yaourt
-1. Change 'AURURL' to "https://aur4.archlinux.org"
+1. Change 'AURURL' to "https://aur4.archlinux.org" after you finish this guide
 2. Change 'EXPORT' to "2"
 ```shell
 wget https://aur.archlinux.org/packages/pa/package-query-git/package-query-git.tar.gz
