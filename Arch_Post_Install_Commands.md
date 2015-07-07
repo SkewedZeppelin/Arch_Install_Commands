@@ -37,7 +37,7 @@ logout
 ```shell
 sudo nano /etc/pacman.conf #1
 sudo nano /etc/makepkg.conf #2-6
-sudo pacman -Syyu
+sudo pacman -Syyu wget
 ```
 
 
