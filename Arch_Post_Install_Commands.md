@@ -85,7 +85,7 @@ sudo mkinitcpio -p linux
 [To Be Added]
 ###Fonts
 ```shell
-sudo pacman -S ttf-dejavu ttf-droid ttf-liberation ttf-tahoma ttf-ubuntu-font-family
+sudo pacman -S ttf-anonymous-pro ttf-dejavu ttf-droid ttf-liberation ttf-tahoma ttf-ubuntu-font-family
 ```
 ###Cinnamon
 ```shell
