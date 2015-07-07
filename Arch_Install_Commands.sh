@@ -44,7 +44,7 @@ arch-chroot /mnt /bin/bash
 
 
 #Set locale
-nano nano /etc/locale.gen #Uncomment "en_US.UTF-8 UTF-8"
+nano /etc/locale.gen #Uncomment "en_US.UTF-8 UTF-8"
 locale-gen
 echo LANG=en_US.UTF-8 > /etc/locale.conf
 export LANG=en_US.UTF-8
