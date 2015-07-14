@@ -1,0 +1,11 @@
+#!/usr/bin/env xdg-open
+[Desktop Entry]
+Version=1.0
+Type=Application
+Exec=/usr/bin/gksu /usr/bin/tlp bat
+Icon=cs-power
+StartupNotify=false
+Terminal=false
+Categories=Utility;
+Name=TLP (Battery)
+Comment=Changes Power Management mode to battery
