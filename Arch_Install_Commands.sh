@@ -33,7 +33,7 @@ mount /dev/sdX4 /mnt/home
 
 
 #Install the base system
-pacstrap -i /mnt base base-devel
+pacstrap -i /mnt base base-devel #If you have wifi append 'iw wpa_supplicant'
 
 
 #Generate fstab
