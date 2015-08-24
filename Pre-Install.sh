@@ -75,10 +75,17 @@ sync
 
 #Mount the partitions
 mount ${strInstallDrive}2 /mnt
+cd /mnt
+rm -rf *
 mkdir -p /mnt/boot
 mkdir -p /mnt/home
 mount ${strInstallDrive}1 /mnt/boot
+cd /mnt/boot
+rm -rf *
 mount ${strInstallDrive}4 /mnt/home
+cd /mnt/home
+rm -rf *
+cd ~
 echo "END OF FORMATTING"
 sleep 3
 

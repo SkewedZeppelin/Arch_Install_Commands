@@ -3,7 +3,7 @@ Arch Install Commands
 
 Instructions
 ------------
-Run the following commands to be greeted with an wholesome install within minutes
+Run the following commands to be greeted with a wholesome install within minutes
 ```shell
 wget https://raw.githubusercontent.com/SpotComms/Arch_Install_Commands/master/Pre-Install.sh
 sh Pre-Install.sh
