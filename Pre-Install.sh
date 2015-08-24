@@ -39,9 +39,11 @@ select yn in "Yes" "No"; do
 done
 if [ ${blEFI} == true ]
 	then
+		parted ${strInstallDrive} mklabel gpt
 		parted ${strInstallDrive} mkpart primary fat32 1MiB ${strPartitionSizeBoot}
 	else
-		parted ${strInstallDrive} mkpart primary fat32 1MiB ${strPartitionSizeBoot}
+		parted ${strInstallDrive} mklabel msdos
+		parted ${strInstallDrive} mkpart primary ext4 1MiB ${strPartitionSizeBoot}
 fi
 parted ${strInstallDrive} set 1 boot on
 parted ${strInstallDrive} mkpart primary ext4 ${strPartitionSizeBoot} ${strPartitionSizeSystem}
