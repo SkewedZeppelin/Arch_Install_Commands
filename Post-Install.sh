@@ -45,10 +45,7 @@ cd ~
 
 #Install and configure X-org
 sudo pacman -S xorg-server xorg xorg-xinit
-cp /etc/X11/xinit/xinitrc ~/.xinitrc
-echo "Remove the last five lines and add 'exec cinnamon-session'"
-sleep 5
-nano ~/.xinitrc #TODO automate this
+wget https://raw.githubusercontent.com/SpotComms/Arch_Install_Commands/master/home/.xinitrc
 echo '[[ -z $DISPLAY && $XDG_VTNR -eq 1 ]] && exec startx' > ~/.bash_profile
 echo "Do you need NVIDIA drivers?" #Add support for older cards, bumblebee and AMD cards
 select yn in "Yes" "No"; do
@@ -63,19 +60,19 @@ echo "Do you want infinality? (Makes fonts look glorious)"
 select yn in "Yes" "No"; do
         case $yn in
                 Yes ) 
-			sudo echo "[infinality-bundle]" >> /etc/pacman.conf;
-			sudo echo "Server = http://bohoomil.com/repo/$arch" >> /etc/pacman.conf;
-			sudo echo "[infinality-bundle-multilib]" >> /etc/pacman.conf;
-			sudo echo "Server = http://bohoomil.com/repo/multilib/$arch" >> /etc/pacman.conf;
-			sudo echo "[infinality-bundle-fonts]" >> /etc/pacman.conf;
-			sudo echo "Server = http://bohoomil.com/repo/fonts" >> /etc/pacman.conf;
-			sudo dirmngr;
-			sudo pacman-key -r 962DDE58;
-			sudo pacman-key -f 962DDE58;
-			sudo pacman-key --lsign-key 962DDE58;
-			sudo pacman -Syyu;
-			sudo pacman -S infinality-bundle-multilib infinality-bundle ibfonts-meta-base;
-			break;;
+					sudo echo "[infinality-bundle]" >> /etc/pacman.conf;
+					sudo echo "Server = http://bohoomil.com/repo/$arch" >> /etc/pacman.conf;
+					sudo echo "[infinality-bundle-multilib]" >> /etc/pacman.conf;
+					sudo echo "Server = http://bohoomil.com/repo/multilib/$arch" >> /etc/pacman.conf;
+					sudo echo "[infinality-bundle-fonts]" >> /etc/pacman.conf;
+					sudo echo "Server = http://bohoomil.com/repo/fonts" >> /etc/pacman.conf;
+					sudo dirmngr;
+					sudo pacman-key -r 962DDE58;
+					sudo pacman-key -f 962DDE58;
+					sudo pacman-key --lsign-key 962DDE58;
+					sudo pacman -Syyu;
+					sudo pacman -S infinality-bundle-multilib infinality-bundle ibfonts-meta-base;
+					break;;
                 No ) break;;
         esac
 done
