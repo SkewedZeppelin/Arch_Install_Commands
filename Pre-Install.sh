@@ -18,13 +18,13 @@ done
 lsblk
 echo "What drive do you want to install Arch onto? (/dev/sdX)"
 read strInstallDrive
-echo "Where do you want your /boot partition to end? (Recommend: 1GB)"
+echo "Where do you want your /boot partition to end? (Recommend Size: 1GB)"
 read strPartitionSizeBoot
-echo "Where do you want your / partition to end? (Recommend: 32GB)"
+echo "Where do you want your / partition to end? (Recommend Size: 32GB)"
 read strPartitionSizeSystem
-echo "Where do you want your swap partition to end? (Recommend: Amount of RAM installed)"
+echo "Where do you want your swap partition to end? (Recommend Size: Amount of RAM installed)"
 read strPartitionSizeSwap
-echo "Where do you want your /home partition to end? (Recommend: 100%)"
+echo "Where do you want your /home partition to end? (Recommend Size: 100%)"
 read strPartitionSizeHome
 echo "Do you have a (U)EFI system or a plain BIOS system?"
 select yn in "Yes" "No"; do
