@@ -32,8 +32,11 @@ sleep 3
 echo "START OF MAKEPKG CONFIGURATION"
 sudo sed -i 's/CFLAGS="-march=x86-64 -mtune=generic -O2 -pipe -fstack-protector-strong -fstack-check"/CFLAGS="-march=native -mtune=native -O3 -pipe -fstack-protector-strong -fstack-check --param=ssp-buffer-size=4"/' /etc/makepkg.conf
 sudo sed -i 's/CXXFLAGS="-march=x86-64 -mtune=generic -O2 -pipe -fstack-protector-strong -fstack-check"/CXXFLAGS="${CFLAGS}"/' /etc/makepkg.conf
+echo "How many threads do you have?"
+read strAmtThreads
+sudo sed -i "s/#MAKEFLAGS=\"-j2\"/MAKEFLAGS=\"-j${strAmtThreads}\"/" /etc/makepkg.conf
 #TODO: Change packager name here
-sudo sed -i 's/COMPRESSXZ=(xz -c -z -)/(xz -T 0 -c -z -)/' /etc/makepkg.conf
+sudo sed -i 's/(xz -c -z -)/(xz -T 0 -c -z -)/' /etc/makepkg.conf
 echo "END OF MAKEPKG CONFIGURATION"
 sleep 3
 
@@ -47,7 +50,7 @@ makepkg -s
 sudo pacman -U package-query-git-*.tar.xz
 cd ..
 wget https://aur.archlinux.org/cgit/aur.git/snapshot/yaourt-git.tar.gz
-tar =xzvf yaourt-git.tar.gz
+tar -xzvf yaourt-git.tar.gz
 cd yaourt-git
 makepkg -s
 sudo pacman -U yaourt-git-*.tar.xz
@@ -62,13 +65,13 @@ wget https://raw.githubusercontent.com/SpotComms/Arch_Install_Commands/master/ho
 wget https://raw.githubusercontent.com/SpotComms/Arch_Install_Commands/master/home/.Xresources
 echo '[[ -z $DISPLAY && $XDG_VTNR -eq 1 ]] && exec startx' > ~/.bash_profile
 echo '[[ -z $DISPLAY && $XDG_VTNR -eq 1 ]] && exec startx' > ~/.zprofile
-sudo echo 'Section "InputClass"' >> /etc/X11/xorg.conf.d/50-mouse-acceleration.conf
-sudo echo '	Identifier "My Mouse"' >> /etc/X11/xorg.conf.d/50-mouse-acceleration.conf
-sudo echo '	MatchIsPointer "yes"' >> /etc/X11/xorg.conf.d/50-mouse-acceleration.conf
-sudo echo '	Option "AccelerationProfile" "-1"' >> /etc/X11/xorg.conf.d/50-mouse-acceleration.conf
-sudo echo '	Option "AccelerationScheme" "none"' >> /etc/X11/xorg.conf.d/50-mouse-acceleration.conf
-sudo echo '	Option "AccelSpeed" "-1"' >> /etc/X11/xorg.conf.d/50-mouse-acceleration.conf
-sudo echo 'EndSection' >> /etc/X11/xorg.conf.d/50-mouse-acceleration.conf
+sudo /bin/bash -c $echo \'Section "InputClass"\' >> /etc/X11/xorg.conf.d/50-mouse-acceleration.conf'
+sudo /bin/bash -c $echo \'	Identifier "My Mouse"\' >> /etc/X11/xorg.conf.d/50-mouse-acceleration.conf'
+sudo /bin/bash -c $'echo \'	MatchIsPointer "yes"\' >> /etc/X11/xorg.conf.d/50-mouse-acceleration.conf'
+sudo /bin/bash -c $'echo \'	Option "AccelerationProfile" "-1"\' >> /etc/X11/xorg.conf.d/50-mouse-acceleration.conf'
+sudo /bin/bash -c $'echo \'	Option "AccelerationScheme" "none"\' >> /etc/X11/xorg.conf.d/50-mouse-acceleration.conf'
+sudo /bin/bash -c $'echo \'	Option "AccelSpeed" "-1"\' >> /etc/X11/xorg.conf.d/50-mouse-acceleration.conf'
+sudo /bin/bash -c $'echo \'EndSection\' >> /etc/X11/xorg.conf.d/50-mouse-acceleration.conf'
 echo "Do you need NVIDIA Optimus drivers? (Bumblebee)" 
 select yn in "Yes" "No"; do
         case $yn in
@@ -99,12 +102,12 @@ echo "Do you want Infinality? (Makes fonts look glorious)"
 select yn in "Yes" "No"; do
         case $yn in
                 Yes ) 
-			sudo echo "[infinality-bundle]" >> /etc/pacman.conf;
-			sudo echo "Server = http://bohoomil.com/repo/$arch" >> /etc/pacman.conf;
-			sudo echo "[infinality-bundle-multilib]" >> /etc/pacman.conf;
-			sudo echo "Server = http://bohoomil.com/repo/multilib/$arch" >> /etc/pacman.conf;
-			sudo echo "[infinality-bundle-fonts]" >> /etc/pacman.conf;
-			sudo echo "Server = http://bohoomil.com/repo/fonts" >> /etc/pacman.conf;
+			sudo /bin/bash -c $'echo "[infinality-bundle]" >> /etc/pacman.conf';
+			sudo /bin/bash -c $'echo "Server = http://bohoomil.com/repo/$arch" >> /etc/pacman.conf';
+			sudo /bin/bash -c $'echo "[infinality-bundle-multilib]" >> /etc/pacman.conf';
+			sudo /bin/bash -c $'echo "Server = http://bohoomil.com/repo/multilib/$arch" >> /etc/pacman.conf';
+			sudo /bin/bash -c $'echo "[infinality-bundle-fonts]" >> /etc/pacman.conf';
+			sudo /bin/bash -c $'echo "Server = http://bohoomil.com/repo/fonts" >> /etc/pacman.conf';
 			sudo dirmngr;
 			sudo pacman-key -r 962DDE58;
 			sudo pacman-key -f 962DDE58;
@@ -147,9 +150,9 @@ l yubikey-neo-manager yubikey-personalization-gui zip zsh acpi acpi_call ethtool
 			sudo pip install doge speedtest-cli;
 			wget https://raw.githubusercontent.com/SpotComms/Arch_Install_Commands/master/home/.zshrc;
 			chsh -s $(which zsh)
-			sudo echo 'ACTION!="add|change", GOTO="u2f_end"' >> /etc/udev/rules.d/70-u2f.rules;
-			sudo echo 'KERNEL=="hidraw*", SUBSYSTEM=="hidraw", ATTRS{idVendor}=="1050", ATTRS{idProduct}=="0113|0114|0115|0116|0120|0402|0403|0406|0407|0410", TAG+="uaccess"' >> /etc/udev/rules.d/70-u2f.rules;
-			sudo echo 'LABEL="u2f_end"' >> /etc/udev/rules.d/70-u2f.rules;
+			sudo /bin/bash -c $'echo \'ACTION!="add|change", GOTO="u2f_end"\' >> /etc/udev/rules.d/70-u2f.rules';
+			sudo /bin/bash -c $'echo \'KERNEL=="hidraw*", SUBSYSTEM=="hidraw", ATTRS{idVendor}=="1050", ATTRS{idProduct}=="0113|0114|0115|0116|0120|0402|0403|0406|0407|0410", TAG+="uaccess"\' >> /etc/udev/rules.d/70-u2f.rules';
+			sudo /bin/bash -c $'echo \'LABEL="u2f_end"\' >> /etc/udev/rules.d/70-u2f.rules';
 			break;;
                 No ) break;;
         esac
@@ -194,7 +197,7 @@ select yn in "Yes" "No"; do
                 Yes ) 
 			sudo pacman -S clamav haveged;
 			yaourt -S clamtk pgl;
-			sudo echo 'SafeBrowsing Yes' >> /etc/clamav/freshclam.conf;
+			sudo /bin/bash -c $'echo \'SafeBrowsing Yes\' >> /etc/clamav/freshclam.conf';
 			sudo systemctl enable haveged.service;
 			sudo systemctl enable pgl.service;
 			break;;
@@ -217,12 +220,12 @@ select yn in "Yes" "No"; do
                 Yes )
 			sudo pacman -S ebtables libvirt openbsd-netcat qemu virt-manager;
 			sudo systemctl enable libvirtd.service;
-			sudo echo 'polkit.addRule(function(action, subject) {' >> /etc/polkit-1/rules.d/49-org.libvirt.unix.manager.rules
-			sudo echo '    if (action.id == "org.libvirt.unix.manage" &&' >> /etc/polkit-1/rules.d/49-org.libvirt.unix.manager.rules
-			sudo echo '        subject.isInGroup("kvm")) {' >> /etc/polkit-1/rules.d/49-org.libvirt.unix.manager.rules
-			sudo echo '            return polkit.Result.YES;' >> /etc/polkit-1/rules.d/49-org.libvirt.unix.manager.rules
-			sudo echo '    }' >> /etc/polkit-1/rules.d/49-org.libvirt.unix.manager.rules
-			sudo echo '});' >> /etc/polkit-1/rules.d/49-org.libvirt.unix.manager.rules
+			sudo /bin/bash -c $'echo \'polkit.addRule(function(action, subject) {\' >> /etc/polkit-1/rules.d/49-org.libvirt.unix.manager.rules';
+			sudo /bin/bash -c $'echo \'    if (action.id == "org.libvirt.unix.manage" &&\' >> /etc/polkit-1/rules.d/49-org.libvirt.unix.manager.rules';
+			sudo /bin/bash -c $'echo \'        subject.isInGroup("kvm")) {\' >> /etc/polkit-1/rules.d/49-org.libvirt.unix.manager.rules';
+			sudo /bin/bash -c $'echo \'            return polkit.Result.YES;\' >> /etc/polkit-1/rules.d/49-org.libvirt.unix.manager.rules;
+			sudo /bin/bash -c $'echo \'    }\' >> /etc/polkit-1/rules.d/49-org.libvirt.unix.manager.rules;
+			sudo /bin/bash -c $'echo \'});\' >> /etc/polkit-1/rules.d/49-org.libvirt.unix.manager.rules;
 			sudo gpasswd -a $USER kvm;
 			sudo sed -i 's/MODULES="/MODULES="kvm kvm_intel /' /etc/mkinitcpio.conf;#TODO AMD CPU SUPPORT
 			break;;
@@ -237,13 +240,13 @@ echo "START OF NETWORK TWEAKS"
 sudo pacman -S dnsmasq
 sudo sed -i 's/listen-address=/listen-address=127.0.0.1' /etc/dnsmasq.conf
 sudo sed -i 's/dns=default/dns=dnsmasq' /etc/NetworkManager/NetworkManager.conf
-sudo echo "net.ipv4.neigh.default.gc_thresh1=256" >> /etc/sysctl.d/99-sysctl.conf
-sudo echo "net.ipv4.neigh.default.gc_thresh2=2048" >> /etc/sysctl.d/99-sysctl.conf
-sudo echo "net.ipv4.neigh.default.gc_thresh3=2048" >> /etc/sysctl.d/99-sysctl.conf
-sudo echo "net.ipv4.tcp_ecn=1" >> /etc/sysctl.d/99-sysctl.conf
-sudo echo "net.ipv4.tcp_sack=1" >> /etc/sysctl.d/99-sysctl.conf
-sudo echo "net.ipv4.tcp_dsack=1" >> /etc/sysctl.d/99-sysctl.conf
-sudo echo "net.netfilter.nf_conntrack_max=1048576" >> /etc/sysctl.d/99-sysctl.conf
+sudo /bin/bash -c $'echo "net.ipv4.neigh.default.gc_thresh1=256" >> /etc/sysctl.d/99-sysctl.conf'
+sudo /bin/bash -c $'echo "net.ipv4.neigh.default.gc_thresh2=2048" >> /etc/sysctl.d/99-sysctl.conf'
+sudo /bin/bash -c $'echo "net.ipv4.neigh.default.gc_thresh3=2048" >> /etc/sysctl.d/99-sysctl.conf'
+sudo /bin/bash -c $'echo "net.ipv4.tcp_ecn=1" >> /etc/sysctl.d/99-sysctl.conf'
+sudo /bin/bash -c $'echo "net.ipv4.tcp_sack=1" >> /etc/sysctl.d/99-sysctl.conf'
+sudo /bin/bash -c $'echo "net.ipv4.tcp_dsack=1" >> /etc/sysctl.d/99-sysctl.conf'
+sudo /bin/bash -c $'echo "net.netfilter.nf_conntrack_max=1048576" >> /etc/sysctl.d/99-sysctl.conf'
 echo "END OF NETWORK TWEAKS"
 sleep 3
 
