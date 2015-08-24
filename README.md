@@ -11,7 +11,14 @@ sh Pre-Install.sh
 
 Disclaimer
 ----------
-This script has yet to be tested at ALL
+The pre-install script has been tested to be functional, the post-install script however has yet to be tested at all
+
+To Do
+-----
+- Input Validation
+- Prompting to retry on error
+- Stopping upon hitting an error
+- Improve user feedback (Colors, More descriptive)
 
 Misc
 ----

@@ -1,7 +1,7 @@
 #Intro
 echo "Welcome to the Spot Communication's Arch Linux installer and configurator"
 echo "This is the pre-install script meant to be run from a live media"
-echo "This script has yet to be tested, stuff might go very, very wrong"
+echo "This script has yet to be throughly tested, stuff might go very, very wrong"
 echo "Ctrl+C within 10 seconds if you do not want to end up troubleshooting your system or have to attempt to recover lost files"
 sleep 10
 
@@ -22,9 +22,9 @@ echo "START OF PARTITIONING"
 lsblk
 echo "What drive do you want to install Arch onto? (/dev/sdX)"
 read strInstallDrive
-echo "Where do you want your /boot partition to end? (Recommend Size: 1GB)"
+echo "Where do you want your /boot partition to end? (Recommend Size: 1GiB)"
 read strPartitionSizeBoot
-echo "Where do you want your / partition to end? (Recommend Size: 32GB)"
+echo "Where do you want your / partition to end? (Recommend Size: 32GiB)"
 read strPartitionSizeSystem
 echo "Where do you want your swap partition to end? (Recommend Size: Amount of RAM installed)"
 read strPartitionSizeSwap
@@ -78,6 +78,7 @@ sleep 3
 echo "INSTALLING THE BASE SYSTEM"
 pacstrap -i /mnt base base-devel wget iw wpa_supplicant
 sleep 3
+
 #Generate an fstab
 genfstab -U -p /mnt >> /mnt/etc/fstab
 
@@ -85,10 +86,9 @@ genfstab -U -p /mnt >> /mnt/etc/fstab
 echo "START OF SETTING LOCALE"
 echo "What language would you like to use? (en_US.UTF-8)"
 read strLanguage
-arch-chroot /mnt sed -i 's/#${strLanguage}/${strLanguage}/' /etc/locale.gen
+arch-chroot /mnt /bin/bash -c "sed -i 's/#${strLanguage}/${strLanguage}/' /etc/locale.gen"
 arch-chroot /mnt locale-gen
-arch-chroot /mnt echo LANG=${strLanguage} > /etc/locale.conf
-arch-chroot /mnt export LANG=${strLanguage}
+arch-chroot /mnt /bin/bash -c "echo LANG=${strLanguage} > /etc/locale.conf"
 echo "END OF SETTING LOCALE"
 sleep 3
 
@@ -96,7 +96,7 @@ sleep 3
 echo "START OF SETTING TIMEZONE"
 echo "What timezone are you in? (America/New_York)"
 read strTimezone
-arch-chroot /mnt ln -s /usr/share/zoneinfo/${strTimezone} /etc/localtime
+arch-chroot /mnt /bin/bash -c "ln -s /usr/share/zoneinfo/${strTimezone} /etc/localtime"
 arch-chroot /mnt hwclock --systohc --utc
 echo "END OF SETTING TIMEZONE"
 sleep 3
@@ -105,10 +105,8 @@ sleep 3
 echo "START OF SETTING HOSTNAME"
 echo "What would you like your hostname to be?"
 read strHostname
-arch-chroot /mnt echo ${strHostname} > /etc/hostname
-echo "Please append your hostname to the end of the lines containing 127.0.0.1 and ::1"
-sleep 5
-arch-chroot /mnt nano /etc/hosts
+arch-chroot /mnt /bin/bash -c "echo ${strHostname} > /etc/hostname"
+arch-chroot /mnt /bin/bash -c "sed -i 's/localhost /localhost $strHostname' /etc/hosts"
 echo "END OF SETTING HOSTNAME"
 sleep 3
 
@@ -118,12 +116,12 @@ if [ ${blEFI} == true ]
         then
 		arch-chroot /mnt pacman -S dosfstools
 		arch-chroot /mnt bootctl --path=/boot install
-		arch-chroot /mnt echo "title Arch Linux" >> /boot/loader/entries/arch.conf
-		arch-chroot /mnt echo "linux /vmlinuz-linux" >> /boot/loader/entries/arch.conf
-		arch-chroot /mnt echo "initrc /initramfs-linux.img" >> /boot/loader/entries/arch.conf
-		arch-chroot /mnt echo "options root=${strInstallDrive}1 rw resume=${strInstallDrive}3" >> /boot/loader/entries/arch.conf
-		arch-chroot /mnt echo "timeout 0" > /boot/loader/loader.conf #There is only 1 > because the file is created on install, and we're overwriting it
-		arch-chroot /mnt echo "default arch" >> /boot/loader/loader.conf
+		arch-chroot /mnt /bin/bash -c 'echo "title Arch Linux" >> /boot/loader/entries/arch.conf'
+		arch-chroot /mnt /bin/bash -c 'echo "linux /vmlinuz-linux" >> /boot/loader/entries/arch.conf'
+		arch-chroot /mnt /bin/bash -c 'echo "initrc /initramfs-linux.img" >> /boot/loader/entries/arch.conf'
+		arch-chroot /mnt /bin/bash -c 'echo "options root=${strInstallDrive}1 rw resume=${strInstallDrive}3" >> /boot/loader/entries/arch.conf'
+		arch-chroot /mnt /bin/bash -c 'echo "timeout 0" > /boot/loader/loader.conf' #There is only 1 > because the file is created on install, and we're overwriting it
+		arch-chroot /mnt /bin/bash -c 'echo "default arch" >> /boot/loader/loader.conf'
         else
 		arch-chroot /mnt pacman -S grub os-prober
 		arch-chroot /mnt grub-install --target=i386-pc --recheck ${strInstallDrive}
@@ -140,14 +138,14 @@ sleep 3
 
 #Create a user account
 echo "START OF USER ACCOUNT CREATION"
-echo "What would you like your username to be? (ObamaLlama)"
+echo "What would you like your username to be? Must be all lowercase (obamallama)"
 read strUsername
 arch-chroot /mnt useradd -m -G wheel -s /bin/bash ${strUsername}
 arch-chroot /mnt usermod -aG audio,games,rfkill,users,uucp,video,wheel ${strUsername}
 arch-chroot /mnt chfn ${strUsername}
-echo "Please add your username to the sudoers file after 'root ALL=(ALL) ALL'
+echo "Please add your username to the sudoers file after 'root ALL=(ALL) ALL'"
 sleep 5
-arch-chroot /mnt EDITOR=nano visudo
+arch-chroot /mnt /bin/bash -c 'EDITOR=nano visudo'
 echo "Please set a password for your account"
 arch-chroot /mnt passwd ${strUsername}
 echo "END OF USER ACCOUNT CREATION"
