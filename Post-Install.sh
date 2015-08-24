@@ -102,12 +102,12 @@ echo "Do you want Infinality? (Makes fonts look glorious)"
 select yn in "Yes" "No"; do
         case $yn in
                 Yes ) 
-			sudo /bin/bash -c $'echo "[infinality-bundle]" >> /etc/pacman.conf';
-			sudo /bin/bash -c $'echo "Server = http://bohoomil.com/repo/$arch" >> /etc/pacman.conf';
-			sudo /bin/bash -c $'echo "[infinality-bundle-multilib]" >> /etc/pacman.conf';
-			sudo /bin/bash -c $'echo "Server = http://bohoomil.com/repo/multilib/$arch" >> /etc/pacman.conf';
-			sudo /bin/bash -c $'echo "[infinality-bundle-fonts]" >> /etc/pacman.conf';
-			sudo /bin/bash -c $'echo "Server = http://bohoomil.com/repo/fonts" >> /etc/pacman.conf' ;
+			sudo /bin/bash -c 'echo "[infinality-bundle]" >> /etc/pacman.conf';
+			sudo /bin/bash -c 'echo "Server = http://bohoomil.com/repo/$arch" >> /etc/pacman.conf';
+			sudo /bin/bash -c 'echo "[infinality-bundle-multilib]" >> /etc/pacman.conf';
+			sudo /bin/bash -c 'echo "Server = http://bohoomil.com/repo/multilib/$arch" >> /etc/pacman.conf';
+			sudo /bin/bash -c 'echo "[infinality-bundle-fonts]" >> /etc/pacman.conf';
+			sudo /bin/bash -c 'echo "Server = http://bohoomil.com/repo/fonts" >> /etc/pacman.conf' ;
 			sudo dirmngr;
 			sudo pacman-key -r 962DDE58;
 			sudo pacman-key -f 962DDE58;
