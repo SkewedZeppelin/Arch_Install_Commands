@@ -26,7 +26,7 @@ sudo pacman -Syyu
 sudo sed -i 's/CFLAGS="-march=generic -O2 -pipe -fstack-protector-strong --param=ssp-buffer-size=4"/CFLAGS="-march=native -mtune=native -O3 -pipe -fstack-protector-strong --param=ssp-buffer-size=4"' /etc/makepkg.conf
 sudo sed -i 's/CXXFLAGS="-march=generic -O2 -pipe -fstack-protector-strong --param=ssp-buffer-size=4"/CXXFLAGS="${CFLAGS}"' /etc/makepkg.conf
 #TODO: Change packager name here
-sudo sed -i 's/COMPRESSXZ="(xz -c -z -)/(xz -T 0 -c -z -)'" /etc/makepkg.conf
+sudo sed -i 's/COMPRESSXZ="(xz -c -z -)/(xz -T 0 -c -z -)"' /etc/makepkg.conf
 
 #Install and configure yaourt
 cd /tmp
