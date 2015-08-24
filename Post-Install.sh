@@ -19,21 +19,21 @@ sleep 3
 
 #Configure pacman
 echo "START OF PACMAN CONFIGURATION"
-sudo sed -i 's/#[testing]/[testing]' /etc/pacman.conf
-sudo sed -i 's/#[community-testing]/[community-testing]' /etc/pacman.conf
-sudo sed -i 's/#[multilib-testing]/[multilib-testing]' /etc/pacman.conf
-sudo sed -i 's/#[multilib]/[multilib]' /etc/pacman.conf
-sudo sed -i 's~#Include = /etc/pacman.d/mirrorlist~Include = /etc/pacman.d/mirrorlist' /etc/pacman.conf
+sudo sed -i 's/#\[testing\]/\[testing\]' /etc/pacman.conf
+sudo sed -i 's/#\[community-testing\]/\[community-testing\]/' /etc/pacman.conf
+sudo sed -i 's/#\[multilib-testing\]/\[multilib-testing\]/' /etc/pacman.conf
+sudo sed -i 's/#\[multilib\]/\[multilib\]/' /etc/pacman.conf
+sudo sed -i 's~#Include = /etc/pacman.d/mirrorlist~Include = /etc/pacman.d/mirrorlist/' /etc/pacman.conf
 sudo pacman -Syyu
 echo "END OF PACMAN CONFIGURATION"
 sleep 3
 
 #Configure makepkg
 echo "START OF MAKEPKG CONFIGURATION"
-sudo sed -i 's/CFLAGS="-march=generic -O2 -pipe -fstack-protector-strong --param=ssp-buffer-size=4"/CFLAGS="-march=native -mtune=native -O3 -pipe -fstack-protector-strong --param=ssp-buffer-size=4"' /etc/makepkg.conf
-sudo sed -i 's/CXXFLAGS="-march=generic -O2 -pipe -fstack-protector-strong --param=ssp-buffer-size=4"/CXXFLAGS="${CFLAGS}"' /etc/makepkg.conf
+sudo sed -i 's/CFLAGS="-march=generic -O2 -pipe -fstack-protector-strong --param=ssp-buffer-size=4"/CFLAGS="-march=native -mtune=native -O3 -pipe -fstack-protector-strong --param=ssp-buffer-size=4"/' /etc/makepkg.conf
+sudo sed -i 's/CXXFLAGS="-march=generic -O2 -pipe -fstack-protector-strong --param=ssp-buffer-size=4"/CXXFLAGS="${CFLAGS}"/' /etc/makepkg.conf
 #TODO: Change packager name here
-sudo sed -i 's/COMPRESSXZ="(xz -c -z -)/(xz -T 0 -c -z -)"' /etc/makepkg.conf
+sudo sed -i 's/COMPRESSXZ="(xz -c -z -)/(xz -T 0 -c -z -)"/' /etc/makepkg.conf
 echo "END OF MAKEPKG CONFIGURATION"
 sleep 3
 
@@ -76,7 +76,7 @@ select yn in "Yes" "No"; do
 			sudo pacman -S bumblebeed primus lib32-primus virtualgl lib32-virtualgl bbswitch mesa lib32-mesa mesa-libgl lib32-mesa-libgl mesa-vdpau lib32-mesa-vdpau xf86-video-intel xf86-video-nv lib32-nvidia-utils nvidia-utils lib32-opencl-nvidia opencl-nvidia nvidia;
 			sudo systemctl enable bumblebeed.service;
 			sudo gpasswd -a $USER bumblebee;
-			sudo sed -i 's/MODULES="/MODULES="i915 bbswitch ' /etc/mkinitcpio.conf;
+			sudo sed -i 's/MODULES="/MODULES="i915 bbswitch /' /etc/mkinitcpio.conf;
 			sudo mkinitcpio -p linux;
 			break;;
                 No ) break;;
@@ -224,7 +224,7 @@ select yn in "Yes" "No"; do
 			sudo echo '    }' >> /etc/polkit-1/rules.d/49-org.libvirt.unix.manager.rules
 			sudo echo '});' >> /etc/polkit-1/rules.d/49-org.libvirt.unix.manager.rules
 			sudo gpasswd -a $USER kvm;
-			sudo sed -i 's/MODULES="/MODULES="kvm kvm_intel ' /etc/mkinitcpio.conf;#TODO AMD CPU SUPPORT
+			sudo sed -i 's/MODULES="/MODULES="kvm kvm_intel /' /etc/mkinitcpio.conf;#TODO AMD CPU SUPPORT
 			break;;
                 No ) break;;
         esac
