@@ -19,21 +19,21 @@ sleep 3
 
 #Configure pacman
 echo "START OF PACMAN CONFIGURATION"
-sudo sed -i 's/#\[testing\]/\[testing\]' /etc/pacman.conf
+sudo sed -i 's/#\[testing\]/\[testing\]/' /etc/pacman.conf
 sudo sed -i 's/#\[community-testing\]/\[community-testing\]/' /etc/pacman.conf
 sudo sed -i 's/#\[multilib-testing\]/\[multilib-testing\]/' /etc/pacman.conf
 sudo sed -i 's/#\[multilib\]/\[multilib\]/' /etc/pacman.conf
-sudo sed -i 's~#Include = /etc/pacman.d/mirrorlist~Include = /etc/pacman.d/mirrorlist/' /etc/pacman.conf
+sudo sed -i 's/#Include = \/etc\/pacman.d\/mirrorlist/Include = \/etc\/pacman.d\/mirrorlist/' /etc/pacman.conf
 sudo pacman -Syyu
 echo "END OF PACMAN CONFIGURATION"
 sleep 3
 
 #Configure makepkg
 echo "START OF MAKEPKG CONFIGURATION"
-sudo sed -i 's/CFLAGS="-march=generic -O2 -pipe -fstack-protector-strong --param=ssp-buffer-size=4"/CFLAGS="-march=native -mtune=native -O3 -pipe -fstack-protector-strong --param=ssp-buffer-size=4"/' /etc/makepkg.conf
-sudo sed -i 's/CXXFLAGS="-march=generic -O2 -pipe -fstack-protector-strong --param=ssp-buffer-size=4"/CXXFLAGS="${CFLAGS}"/' /etc/makepkg.conf
+sudo sed -i 's/CFLAGS="-march=x86-64 -mtune=generic -O2 -pipe -fstack-protector-strong -fstack-check"/CFLAGS="-march=native -mtune=native -O3 -pipe -fstack-protector-strong -fstack-check --param=ssp-buffer-size=4"/' /etc/makepkg.conf
+sudo sed -i 's/CXXFLAGS="-march=x86-64 -mtune=generic -O2 -pipe -fstack-protector-strong -fstack-check"/CXXFLAGS="${CFLAGS}"/' /etc/makepkg.conf
 #TODO: Change packager name here
-sudo sed -i 's/COMPRESSXZ="(xz -c -z -)/(xz -T 0 -c -z -)"/' /etc/makepkg.conf
+sudo sed -i 's/COMPRESSXZ=(xz -c -z -)/(xz -T 0 -c -z -)/' /etc/makepkg.conf
 echo "END OF MAKEPKG CONFIGURATION"
 sleep 3
 
