@@ -70,6 +70,7 @@ mkfs.ext4 ${strInstallDrive}2
 mkswap ${strInstallDrive}3
 swapon ${strInstallDrive}3
 mkfs.ext4 ${strInstallDrive}4
+sync
 
 #Mount the partitions
 mount ${strInstallDrive}2 /mnt
