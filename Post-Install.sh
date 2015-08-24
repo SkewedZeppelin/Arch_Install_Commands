@@ -65,8 +65,8 @@ wget https://raw.githubusercontent.com/SpotComms/Arch_Install_Commands/master/ho
 wget https://raw.githubusercontent.com/SpotComms/Arch_Install_Commands/master/home/.Xresources
 echo '[[ -z $DISPLAY && $XDG_VTNR -eq 1 ]] && exec startx' > ~/.bash_profile
 echo '[[ -z $DISPLAY && $XDG_VTNR -eq 1 ]] && exec startx' > ~/.zprofile
-sudo /bin/bash -c $echo \'Section "InputClass"\' >> /etc/X11/xorg.conf.d/50-mouse-acceleration.conf'
-sudo /bin/bash -c $echo \'	Identifier "My Mouse"\' >> /etc/X11/xorg.conf.d/50-mouse-acceleration.conf'
+sudo /bin/bash -c $'echo \'Section "InputClass"\' >> /etc/X11/xorg.conf.d/50-mouse-acceleration.conf'
+sudo /bin/bash -c $'echo \'	Identifier "My Mouse"\' >> /etc/X11/xorg.conf.d/50-mouse-acceleration.conf'
 sudo /bin/bash -c $'echo \'	MatchIsPointer "yes"\' >> /etc/X11/xorg.conf.d/50-mouse-acceleration.conf'
 sudo /bin/bash -c $'echo \'	Option "AccelerationProfile" "-1"\' >> /etc/X11/xorg.conf.d/50-mouse-acceleration.conf'
 sudo /bin/bash -c $'echo \'	Option "AccelerationScheme" "none"\' >> /etc/X11/xorg.conf.d/50-mouse-acceleration.conf'
@@ -107,7 +107,7 @@ select yn in "Yes" "No"; do
 			sudo /bin/bash -c $'echo "[infinality-bundle-multilib]" >> /etc/pacman.conf';
 			sudo /bin/bash -c $'echo "Server = http://bohoomil.com/repo/multilib/$arch" >> /etc/pacman.conf';
 			sudo /bin/bash -c $'echo "[infinality-bundle-fonts]" >> /etc/pacman.conf';
-			sudo /bin/bash -c $'echo "Server = http://bohoomil.com/repo/fonts" >> /etc/pacman.conf';
+			sudo /bin/bash -c $'echo "Server = http://bohoomil.com/repo/fonts" >> /etc/pacman.conf' ;
 			sudo dirmngr;
 			sudo pacman-key -r 962DDE58;
 			sudo pacman-key -f 962DDE58;
@@ -220,7 +220,7 @@ select yn in "Yes" "No"; do
                 Yes )
 			sudo pacman -S ebtables libvirt openbsd-netcat qemu virt-manager;
 			sudo systemctl enable libvirtd.service;
-			sudo /bin/bash -c $'echo \'polkit.addRule(function(action, subject) {\' >> /etc/polkit-1/rules.d/49-org.libvirt.unix.manager.rules';
+			sudo /bin/bash -c $'echo "polkit.addRule(function(action, subject) {" >> /etc/polkit-1/rules.d/49-org.libvirt.unix.manager.rules';
 			sudo /bin/bash -c $'echo \'    if (action.id == "org.libvirt.unix.manage" &&\' >> /etc/polkit-1/rules.d/49-org.libvirt.unix.manager.rules';
 			sudo /bin/bash -c $'echo \'        subject.isInGroup("kvm")) {\' >> /etc/polkit-1/rules.d/49-org.libvirt.unix.manager.rules';
 			sudo /bin/bash -c $'echo \'            return polkit.Result.YES;\' >> /etc/polkit-1/rules.d/49-org.libvirt.unix.manager.rules;
