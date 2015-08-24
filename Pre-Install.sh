@@ -112,7 +112,7 @@ echo "START OF SETTING HOSTNAME"
 echo "What would you like your hostname to be?"
 read strHostname
 arch-chroot /mnt /bin/bash -c "echo ${strHostname} > /etc/hostname"
-arch-chroot /mnt /bin/bash -c "sed -i 's/localhost /localhost $strHostname' /etc/hosts"
+arch-chroot /mnt /bin/bash -c "sed -i 's/localhost /localhost $strHostname/' /etc/hosts"
 echo "END OF SETTING HOSTNAME"
 sleep 3
 
