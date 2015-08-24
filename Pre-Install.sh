@@ -149,7 +149,7 @@ read strUsername
 arch-chroot /mnt useradd -m -G wheel -s /bin/bash ${strUsername}
 arch-chroot /mnt usermod -aG audio,games,rfkill,users,uucp,video,wheel ${strUsername}
 arch-chroot /mnt chfn ${strUsername}
-echo "Please add your username to the sudoers file after 'root ALL=(ALL) ALL'"
+echo "Please add your username to the sudoers file after root ALL ALL ALL"
 sleep 5
 arch-chroot /mnt /bin/bash -c 'EDITOR=nano visudo'
 echo "Please set a password for your account"
