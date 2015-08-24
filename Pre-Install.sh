@@ -43,6 +43,7 @@ parted ${strInstallDrive} rm 3
 parted ${strInstallDrive} rm 4
 parted ${strInstallDrive} rm 5
 parted ${strInstallDrive} rm 6
+dd if=/dev/zero of=${strInstallDrive} bs=512 count=10
 if [ ${blEFI} == true ]
 	then
 		parted ${strInstallDrive} mklabel gpt
