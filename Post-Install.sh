@@ -123,7 +123,7 @@ select yn in "Yes" "No"; do
 			sudo /bin/bash -c "echo 'Server = http://bohoomil.com/repo/multilib/\$arch' >> /etc/pacman.conf";
 			sudo /bin/bash -c 'echo "[infinality-bundle-fonts]" >> /etc/pacman.conf';
 			sudo /bin/bash -c 'echo "Server = http://bohoomil.com/repo/fonts" >> /etc/pacman.conf' ;
-			sudo dirmngr;
+			sudo dirmngr yolo;
 			sudo pacman-key -r 962DDE58;
 			sudo pacman-key -f 962DDE58;
 			sudo pacman-key --lsign-key 962DDE58;
