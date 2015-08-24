@@ -88,12 +88,8 @@ echo "What would you like your hostname to be?"
 read strHostname
 arch-chroot /mnt echo ${strHostname} > /etc/hostname
 echo "Please append your hostname to the end of the lines containing 127.0.0.1 and ::1"
-sleep 5000
+sleep 5
 arch-chroot /mnt nano /etc/hosts
-
-#Set root password
-echo "Please set a password for the root account"
-arch-chroot /mnt passwd
 
 #Install the bootloader
 if [ ${blEFI} == true ]
@@ -103,7 +99,7 @@ if [ ${blEFI} == true ]
 		arch-chroot /mnt echo "title Arch Linux" >> /boot/loader/entries/arch.conf
 		arch-chroot /mnt echo "linux /vmlinuz-linux" >> /boot/loader/entries/arch.conf
 		arch-chroot /mnt echo "initrc /initramfs-linux.img" >> /boot/loader/entries/arch.conf
-		arch-chroot /mnt echo "options root=${strInstallDrive}1 rw" >> /boot/loader/entries/arch.conf
+		arch-chroot /mnt echo "options root=${strInstallDrive}1 rw resume=${strInstallDrive}3" >> /boot/loader/entries/arch.conf
 		arch-chroot /mnt echo "timeout 0" > /boot/loader/loader.conf #There is only 1 > because the file is created on install, and we're overwriting it
 		arch-chroot /mnt echo "default arch" >> /boot/loader/loader.conf
         else
@@ -112,6 +108,27 @@ if [ ${blEFI} == true ]
 		arch-chroot /mnt grub-mkconfig -o /boot/grub/grub.cfg
 fi
 
+#Set root password
+echo "Please set a password for the root account"
+arch-chroot /mnt passwd
+
+#Create a user account
+echo "What would you like your username to be? (ObamaLlama)"
+read strUsername
+arch-chroot /mnt useradd -m -G wheel -s /bin/bash ${strUsername}
+arch-chroot /mnt usermod -aG audio,games,rfkill,users,uucp,video,wheel ${strUsername}
+arch-chroot /mnt chfn ${strUsername}
+echo "Please add your username to the sudoers file after 'root ALL=(ALL) ALL'
+sleep 5
+arch-chroot /mnt EDITOR=nano visudo
+echo "Please set a password for your account"
+arch-chroot /mnt passwd ${strUsername}
+
+wget https://raw.githubusercontent.com/SpotComms/Arch_Install_Commands/master/Post-Install.sh
+cp Post-Install.sh /mnt/home/${strUsername}/
+
 #Finish up
 umount -R /mnt
+echo "After reboot please run 'sh Post-Install.sh'"
+sleep 5
 reboot
