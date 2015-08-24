@@ -1,7 +1,7 @@
 #Intro
 echo "Welcome to the Spot Communication's Arch Linux installer and configurator"
 echo "This is the post-install script meant to be run after doing a base install"
-echo "This script has yet to be tested, stuff might go very, very wrong"
+echo "This script has yet to be throughly tested, stuff might go very, very wrong"
 echo "Ctrl+C within 10 seconds if you do not want to end up troubleshooting your system or have to attempt to recover lost files"
 sleep 10
 
@@ -233,7 +233,7 @@ sleep 3
 #Network Tweaks
 echo "START OF NETWORK TWEAKS"
 sudo pacman -S dnsmasq
-sudo sed -i 's/listen-address=/listen-address=127.0.0.1/' /etc/dnsmasq.conf
+sudo sed -i 's/#listen-address=/listen-address=127.0.0.1/' /etc/dnsmasq.conf
 sudo sed -i 's/dns=default/dns=dnsmasq/' /etc/NetworkManager/NetworkManager.conf
 sudo /bin/bash -c 'echo "net.ipv4.neigh.default.gc_thresh1=256" >> /etc/sysctl.d/99-sysctl.conf'
 sudo /bin/bash -c 'echo "net.ipv4.neigh.default.gc_thresh2=2048" >> /etc/sysctl.d/99-sysctl.conf'
@@ -250,5 +250,3 @@ echo "FINISHING UP"
 echo "After reboot please login and enjoy your system"
 sleep 10
 reboot now
-
-#TODO Finish the rest and actually test this jazz
