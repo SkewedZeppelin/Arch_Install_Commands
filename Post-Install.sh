@@ -118,9 +118,9 @@ select yn in "Yes" "No"; do
         case $yn in
                 Yes ) 
 			sudo /bin/bash -c 'echo "[infinality-bundle]" >> /etc/pacman.conf';
-			sudo /bin/bash -c "echo 'Server = http://bohoomil.com/repo/$arch' >> /etc/pacman.conf";
+			sudo /bin/bash -c "echo 'Server = http://bohoomil.com/repo/\$arch' >> /etc/pacman.conf";
 			sudo /bin/bash -c 'echo "[infinality-bundle-multilib]" >> /etc/pacman.conf';
-			sudo /bin/bash -c "echo 'Server = http://bohoomil.com/repo/multilib/$arch' >> /etc/pacman.conf";
+			sudo /bin/bash -c "echo 'Server = http://bohoomil.com/repo/multilib/\$arch' >> /etc/pacman.conf";
 			sudo /bin/bash -c 'echo "[infinality-bundle-fonts]" >> /etc/pacman.conf';
 			sudo /bin/bash -c 'echo "Server = http://bohoomil.com/repo/fonts" >> /etc/pacman.conf' ;
 			sudo dirmngr;
