@@ -220,7 +220,7 @@ select yn in "Yes" "No"; do
                 Yes )
 			sudo pacman -S ebtables libvirt openbsd-netcat qemu virt-manager;
 			sudo systemctl enable libvirtd.service;
-			sudo /bin/bash -c 'echo \"polkit.addRule(function(action, subject) { if (action.id == "org.libvirt.unix.manage" && subject.isInGroup("kvm")) { return polkit.Result.YES; } });\" >> /etc/polkit-1/rules.d/49-org.libvirt.unix.manager.rules';
+			sudo /bin/bash -c "echo 'polkit.addRule(function(action, subject) { if (action.id == "org.libvirt.unix.manage" && subject.isInGroup("kvm")) { return polkit.Result.YES; } })' >> /etc/polkit-1/rules.d/49-org.libvirt.unix.manager.rules"
 			sudo gpasswd -a $USER kvm;
 			sudo sed -i 's/MODULES="/MODULES="kvm kvm_intel /' /etc/mkinitcpio.conf;#TODO AMD CPU SUPPORT
 			break;;
@@ -233,15 +233,15 @@ sleep 3
 #Network Tweaks
 echo "START OF NETWORK TWEAKS"
 sudo pacman -S dnsmasq
-sudo sed -i 's/listen-address=/listen-address=127.0.0.1' /etc/dnsmasq.conf
-sudo sed -i 's/dns=default/dns=dnsmasq' /etc/NetworkManager/NetworkManager.conf
-sudo /bin/bash -c $'echo "net.ipv4.neigh.default.gc_thresh1=256" >> /etc/sysctl.d/99-sysctl.conf'
-sudo /bin/bash -c $'echo "net.ipv4.neigh.default.gc_thresh2=2048" >> /etc/sysctl.d/99-sysctl.conf'
-sudo /bin/bash -c $'echo "net.ipv4.neigh.default.gc_thresh3=2048" >> /etc/sysctl.d/99-sysctl.conf'
-sudo /bin/bash -c $'echo "net.ipv4.tcp_ecn=1" >> /etc/sysctl.d/99-sysctl.conf'
-sudo /bin/bash -c $'echo "net.ipv4.tcp_sack=1" >> /etc/sysctl.d/99-sysctl.conf'
-sudo /bin/bash -c $'echo "net.ipv4.tcp_dsack=1" >> /etc/sysctl.d/99-sysctl.conf'
-sudo /bin/bash -c $'echo "net.netfilter.nf_conntrack_max=1048576" >> /etc/sysctl.d/99-sysctl.conf'
+sudo sed -i 's/listen-address=/listen-address=127.0.0.1/' /etc/dnsmasq.conf
+sudo sed -i 's/dns=default/dns=dnsmasq/' /etc/NetworkManager/NetworkManager.conf
+sudo /bin/bash -c 'echo "net.ipv4.neigh.default.gc_thresh1=256" >> /etc/sysctl.d/99-sysctl.conf'
+sudo /bin/bash -c 'echo "net.ipv4.neigh.default.gc_thresh2=2048" >> /etc/sysctl.d/99-sysctl.conf'
+sudo /bin/bash -c 'echo "net.ipv4.neigh.default.gc_thresh3=2048" >> /etc/sysctl.d/99-sysctl.conf'
+sudo /bin/bash -c 'echo "net.ipv4.tcp_ecn=1" >> /etc/sysctl.d/99-sysctl.conf'
+sudo /bin/bash -c 'echo "net.ipv4.tcp_sack=1" >> /etc/sysctl.d/99-sysctl.conf'
+sudo /bin/bash -c 'echo "net.ipv4.tcp_dsack=1" >> /etc/sysctl.d/99-sysctl.conf'
+sudo /bin/bash -c 'echo "net.netfilter.nf_conntrack_max=1048576" >> /etc/sysctl.d/99-sysctl.conf'
 echo "END OF NETWORK TWEAKS"
 sleep 3
 
