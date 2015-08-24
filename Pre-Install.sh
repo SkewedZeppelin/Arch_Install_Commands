@@ -2,7 +2,7 @@
 echo "Welcome to the Spot Communication's Arch Linux installer and configurator"
 echo "This is the pre-install script meant to be run from a live media"
 echo "This script has yet to be tested, stuff might go very, very wrong"
-echo "Ctrl+C right now if you do not want to end up troubleshooting your system or have to attempt to recover lost files"
+echo "Ctrl+C within 10 seconds if you do not want to end up troubleshooting your system or have to attempt to recover lost files"
 sleep 10
 
 #Connect to the network
@@ -42,7 +42,7 @@ fi
 parted ${strInstallDrive} set 1 boot on
 parted ${strInstallDrive} mkpart primary ext4 ${strPartitionSizeBoot} ${strPartitionSizeSystem}
 parted ${strInstallDrive} mkpart primary linux-swap ${strPartitionSizeSystem} ${strPartitionSizeSwap}
-parted ${strInstallDrive} mkpart primary ext4 ${strPartitionSizeSwap} ${strPartitionSizeSwap}
+parted ${strInstallDrive} mkpart primary ext4 ${strPartitionSizeSwap} ${strPartitionSizeHome}
 
 #Format the partitions
 if [ ${blEFI} == true ]
