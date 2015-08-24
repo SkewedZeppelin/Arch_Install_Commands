@@ -37,6 +37,12 @@ select yn in "Yes" "No"; do
 		No ) blEFI=false; break;;
 	esac
 done
+parted ${strInstallDrive} rm 1
+parted ${strInstallDrive} rm 2
+parted ${strInstallDrive} rm 3
+parted ${strInstallDrive} rm 4
+parted ${strInstallDrive} rm 5
+parted ${strInstallDrive} rm 6
 if [ ${blEFI} == true ]
 	then
 		parted ${strInstallDrive} mklabel gpt
