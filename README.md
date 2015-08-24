@@ -11,7 +11,7 @@ sh Pre-Install.sh
 
 Disclaimer
 ----------
-The pre-install script has been tested to be functional, the post-install script however has yet to be tested at all
+Both scripts have been tested to be functional, however I'm not liable for any damage you or it may do to your computer. Stuff might break or it might be flawless, there are too many variables in play to be definitive.
 
 To Do
 -----
