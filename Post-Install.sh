@@ -58,9 +58,16 @@ cd ~
 echo "END OF YAOURT INSTALLATION"
 sleep 3
 
+#Frameworks
+echo "START OF FRAMEWORKS INSTALLATION"
+sudo pacman -S gcc-multilib jdk7-openjdk jdk8-openjdk jre7-openjdk jre7-openjdk-headless jre8-openjdk jre8-openjdk-headless python python-pip python2-virtualenv
+sudo archlinux-java set java-8-openjdk
+echo "END OF FRAMEWORKS INSTALLATION"
+sleep 3
+
 #Install and configure X-org
 echo "START OF X-ORG INSTALLATION"
-sudo pacman -S xorg-server xorg xorg-xinit libvdpau-va-gl libvdpau lib32-libvdpau lib32-mesa-vdpau libva-vdpau-driver mesa-vdpau libva-intel-driver
+sudo pacman -S xorg-server xorg xorg-xinit libvdpau-va-gl libvdpau lib32-libvdpau lib32-mesa-vdpau libva-vdpau-driver mesa-vdpau libva-intel-driver libgl lib32-libgl
 wget https://raw.githubusercontent.com/SpotComms/Arch_Install_Commands/master/home/.xinitrc
 wget https://raw.githubusercontent.com/SpotComms/Arch_Install_Commands/master/home/.Xresources
 echo '[[ -z $DISPLAY && $XDG_VTNR -eq 1 ]] && exec startx' > ~/.bash_profile
@@ -96,6 +103,14 @@ done
 echo "END OF X-ORG CONFIGURATION"
 sleep 3
 
+#Cinnamon
+echo "START OF CINNAMON INSTALLATION"
+sudo pacman -S cinnamon nemo-fileroller nemo-preview networkmanager networkmanager-openconnect networkmanager-openvpn networkmanager-pptp networkmanager-vpnc
+sudo systemctl enable NetworkManager.service
+sudo systemctl enable NetworkManager-dispatcher.service
+echo "END OF CINNAMON INSTALLATION"
+sleep 3
+
 #Infinality
 echo "START OF INFINALITY INSTALLATION"
 echo "Do you want Infinality? (Makes fonts look glorious)"
@@ -103,9 +118,9 @@ select yn in "Yes" "No"; do
         case $yn in
                 Yes ) 
 			sudo /bin/bash -c 'echo "[infinality-bundle]" >> /etc/pacman.conf';
-			sudo /bin/bash -c 'echo "Server = http://bohoomil.com/repo/$arch" >> /etc/pacman.conf';
+			sudo /bin/bash -c "echo 'Server = http://bohoomil.com/repo/$arch' >> /etc/pacman.conf";
 			sudo /bin/bash -c 'echo "[infinality-bundle-multilib]" >> /etc/pacman.conf';
-			sudo /bin/bash -c 'echo "Server = http://bohoomil.com/repo/multilib/$arch" >> /etc/pacman.conf';
+			sudo /bin/bash -c "echo 'Server = http://bohoomil.com/repo/multilib/$arch' >> /etc/pacman.conf";
 			sudo /bin/bash -c 'echo "[infinality-bundle-fonts]" >> /etc/pacman.conf';
 			sudo /bin/bash -c 'echo "Server = http://bohoomil.com/repo/fonts" >> /etc/pacman.conf' ;
 			sudo dirmngr;
@@ -119,21 +134,6 @@ select yn in "Yes" "No"; do
         esac
 done
 echo "END OF INFINALITY INSTALLATION"
-sleep 3
-
-#Cinnamon
-echo "START OF CINNAMON INSTALLATION"
-sudo pacman -S cinnamon nemo-fileroller nemo-preview networkmanager networkmanager-openconnect networkmanager-openvpn networkmanager-pptp networkmanager-vpnc
-sudo systemctl enable NetworkManager.service
-sudo systemctl enable NetworkManager-dispatcher.service
-echo "END OF CINNAMON INSTALLATION"
-sleep 3
-
-#Frameworks
-echo "START OF FRAMEWORKS INSTALLATION"
-sudo pacman -S gcc-multilib jdk7-openjdk jdk8-openjdk jre7-openjdk jre7-openjdk-headless jre8-openjdk jre8-openjdk-headless python python-pip python2-virtualenv
-sudo archlinux-java set java-8-openjdk
-echo "END OF FRAMEWORKS INSTALLATION"
 sleep 3
 
 #Applications
@@ -220,12 +220,7 @@ select yn in "Yes" "No"; do
                 Yes )
 			sudo pacman -S ebtables libvirt openbsd-netcat qemu virt-manager;
 			sudo systemctl enable libvirtd.service;
-			sudo /bin/bash -c $'echo "polkit.addRule(function(action, subject) {" >> /etc/polkit-1/rules.d/49-org.libvirt.unix.manager.rules';
-			sudo /bin/bash -c $'echo \'    if (action.id == "org.libvirt.unix.manage" &&\' >> /etc/polkit-1/rules.d/49-org.libvirt.unix.manager.rules';
-			sudo /bin/bash -c $'echo \'        subject.isInGroup("kvm")) {\' >> /etc/polkit-1/rules.d/49-org.libvirt.unix.manager.rules';
-			sudo /bin/bash -c $'echo \'            return polkit.Result.YES;\' >> /etc/polkit-1/rules.d/49-org.libvirt.unix.manager.rules;
-			sudo /bin/bash -c $'echo \'    }\' >> /etc/polkit-1/rules.d/49-org.libvirt.unix.manager.rules;
-			sudo /bin/bash -c $'echo \'});\' >> /etc/polkit-1/rules.d/49-org.libvirt.unix.manager.rules;
+			sudo /bin/bash -c 'echo \"polkit.addRule(function(action, subject) { if (action.id == "org.libvirt.unix.manage" && subject.isInGroup("kvm")) { return polkit.Result.YES; } });\" >> /etc/polkit-1/rules.d/49-org.libvirt.unix.manager.rules';
 			sudo gpasswd -a $USER kvm;
 			sudo sed -i 's/MODULES="/MODULES="kvm kvm_intel /' /etc/mkinitcpio.conf;#TODO AMD CPU SUPPORT
 			break;;
