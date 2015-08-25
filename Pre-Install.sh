@@ -91,7 +91,7 @@ sleep 3
 
 #Update local mirrors
 echo "UPDATING LOCAL MIRRORS"
-pacman -S reflector
+pacman -Sy reflector
 reflector --verbose --country 'United States' -l 200 -p http -p https --sort rate --save /etc/pacman.d/mirrorlist
 sleep 3
 
