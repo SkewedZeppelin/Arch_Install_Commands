@@ -8,8 +8,9 @@ purple='\e[0;35m'
 red='\e[0;31m'
 white='\e[0;37m'
 yellow='\e[0;33m'
-infoColor=${yellow}
+infoColor=${green}
 questionColor=${red}
+outputColor=${yellow}
 
 #Intro
 echo -e ${infoColor}"Welcome to the Spot Communication's Arch Linux installer and configurator"
@@ -50,6 +51,7 @@ select yn in "Yes" "No"; do
 		No ) blEFI=false; break;;
 	esac
 done
+echo -e ${outputColor}
 parted ${strInstallDrive} rm 1
 parted ${strInstallDrive} rm 2
 parted ${strInstallDrive} rm 3
@@ -74,6 +76,7 @@ sleep 3
 
 #Format the partitions
 echo -e ${infoColor}"START OF FORMATTING"
+echo -e ${outputColor}
 if [ ${blEFI} == true ]
 	then
 		mkfs.vfat -F32 ${strInstallDrive}1
@@ -104,22 +107,27 @@ sleep 3
 
 #Update local mirrors
 echo -e ${infoColor}"UPDATING LOCAL MIRRORS"
+echo -e ${outputColor}
 pacman -Sy reflector
 reflector --verbose --country 'United States' -l 200 -p http -p https --sort rate --save /etc/pacman.d/mirrorlist
 sleep 3
 
 #Install the base system
 echo -e ${infoColor}"INSTALLING THE BASE SYSTEM"
+echo -e ${outputColor}
 pacstrap -i /mnt base base-devel wget iw wpa_supplicant reflector
 sleep 3
 
+
 #Generate an fstab
+echo -e ${infoColor}"GENERATING FSTAB"
 genfstab -U -p /mnt >> /mnt/etc/fstab
 
 #Set locale
 echo -e ${infoColor}"START OF SETTING LOCALE"
 echo -e ${questionColor}"What language would you like to use? (en_US.UTF-8)"
 read strLanguage
+echo -e ${outputColor}
 arch-chroot /mnt /bin/bash -c "sed -i 's/#${strLanguage}/${strLanguage}/' /etc/locale.gen"
 arch-chroot /mnt locale-gen
 arch-chroot /mnt /bin/bash -c "echo LANG=${strLanguage} > /etc/locale.conf"
@@ -130,6 +138,7 @@ sleep 3
 echo -e ${infoColor}"START OF SETTING TIMEZONE"
 echo -e ${questionColor}"What timezone are you in? (America/New_York)"
 read strTimezone
+echo -e ${outputColor}
 arch-chroot /mnt /bin/bash -c "ln -s /usr/share/zoneinfo/${strTimezone} /etc/localtime"
 arch-chroot /mnt hwclock --systohc --utc
 echo -e ${infoColor}"END OF SETTING TIMEZONE"
@@ -146,6 +155,7 @@ sleep 3
 
 #Install the bootloader
 echo -e ${infoColor}"START OF BOOTLOADER INSTALLATION"
+echo -e ${outputColor}
 if [ ${blEFI} == true ]
         then
 		arch-chroot /mnt pacman -S dosfstools
@@ -167,6 +177,7 @@ sleep 3
 #Set root password
 echo -e ${infoColor}"SETTING ROOT PASSWORD"
 echo -e ${questionColor}"Please set a password for the root account"
+echo -e ${outputColor}
 arch-chroot /mnt passwd
 sleep 3
 
@@ -174,6 +185,7 @@ sleep 3
 echo -e ${infoColor}"START OF USER ACCOUNT CREATION"
 echo -e ${questionColor}"What would you like your username to be? Must be all lowercase (obamallama)"
 read strUsername
+echo -e ${outputColor}
 arch-chroot /mnt useradd -m -G wheel -s /bin/bash ${strUsername}
 arch-chroot /mnt usermod -aG audio,games,rfkill,users,uucp,video,wheel ${strUsername}
 arch-chroot /mnt chfn ${strUsername}
@@ -181,12 +193,14 @@ echo -e ${questionColor}"Please add your username to the sudoers file after root
 sleep 5
 arch-chroot /mnt /bin/bash -c "EDITOR=nano visudo"
 echo -e ${questionColor}"Please set a password for your account"
+echo -e ${outputColor}
 arch-chroot /mnt passwd ${strUsername}
 echo -e ${infoColor}"END OF USER ACCOUNT CREATION"
 sleep 3
 
 #Post-Install Script
 echo -e ${infoColor}"INSTALLING POST INSTALL SCRIPT"
+echo -e ${outputColor}
 wget https://raw.githubusercontent.com/SpotComms/Arch_Install_Commands/master/Post-Install.sh
 cp Post-Install.sh /mnt/home/${strUsername}/
 echo -e ${infoColor}"INSTALLED POST INSTALL SCRIPT"

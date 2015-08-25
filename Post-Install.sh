@@ -8,8 +8,9 @@ purple='\e[0;35m'
 red='\e[0;31m'
 white='\e[0;37m'
 yellow='\e[0;33m'
-infoColor=${yellow}
+infoColor=${green}
 questionColor=${red}
+outputColor=${yellow}
 
 #Intro
 echo -e ${infoColor}"Welcome to the Spot Communication's Arch Linux installer and configurator"
@@ -37,6 +38,7 @@ sudo sed -i 's/#\[community-testing\]/\[community-testing\]/' /etc/pacman.conf
 sudo sed -i 's/#\[multilib-testing\]/\[multilib-testing\]/' /etc/pacman.conf
 sudo sed -i 's/#\[multilib\]/\[multilib\]/' /etc/pacman.conf
 sudo sed -i 's/#Include = \/etc\/pacman.d\/mirrorlist/Include = \/etc\/pacman.d\/mirrorlist/' /etc/pacman.conf
+echo -e ${outputColor}
 sudo reflector --verbose --country 'United States' -l 200 -p http -p https --sort rate --save /etc/pacman.d/mirrorlist
 sudo pacman -Syyu
 echo -e ${infoColor}"END OF PACMAN CONFIGURATION"
@@ -56,6 +58,7 @@ sleep 3
 
 #Install and configure yaourt
 echo -e ${infoColor}"START OF YAOURT INSTALLATION"
+echo -e ${outputColor}
 cd /tmp
 wget https://aur.archlinux.org/cgit/aur.git/snapshot/package-query-git.tar.gz
 tar -xzvf package-query-git.tar.gz
@@ -74,6 +77,7 @@ sleep 3
 
 #Frameworks
 echo -e ${infoColor}"START OF FRAMEWORKS INSTALLATION"
+echo -e ${outputColor}
 sudo pacman -S --needed gcc-multilib jdk7-openjdk jdk8-openjdk jre7-openjdk jre7-openjdk-headless jre8-openjdk jre8-openjdk-headless python python-pip python2-virtualenv
 sudo archlinux-java set java-8-openjdk
 echo -e ${infoColor}"END OF FRAMEWORKS INSTALLATION"
@@ -81,6 +85,7 @@ sleep 3
 
 #Install and configure X-org
 echo -e ${infoColor}"START OF X-ORG INSTALLATION"
+echo -e ${outputColor}
 sudo pacman -S --needed xorg-server xorg xorg-xinit libvdpau-va-gl libvdpau lib32-libvdpau lib32-mesa-vdpau libva-vdpau-driver mesa-vdpau libva-intel-driver libgl lib32-libgl
 wget https://raw.githubusercontent.com/SpotComms/Arch_Install_Commands/master/home/.xinitrc
 wget https://raw.githubusercontent.com/SpotComms/Arch_Install_Commands/master/home/.Xresources
@@ -97,6 +102,7 @@ echo -e ${questionColor}"Do you need NVIDIA Optimus drivers? (Bumblebee)"
 select yn in "Yes" "No"; do
         case $yn in
                 Yes ) 
+                	echo -e ${outputColor};
 			sudo pacman -S --needed bumblebeed primus lib32-primus virtualgl lib32-virtualgl bbswitch mesa lib32-mesa mesa-libgl lib32-mesa-libgl mesa-vdpau lib32-mesa-vdpau xf86-video-intel xf86-video-nv lib32-nvidia-utils nvidia-utils lib32-opencl-nvidia opencl-nvidia nvidia;
 			sudo systemctl enable bumblebeed.service;
 			sudo gpasswd -a $USER bumblebee;
@@ -109,7 +115,7 @@ done
 echo -e ${questionColor}"Do you need NVIDIA drivers?"
 select yn in "Yes" "No"; do
 	case $yn in
-		Yes ) sudo pacman -S --needed nvidia-utils opencl-nvidia lib32-nvidia-libgl lib32-mesa-vdpau nvidia; break;;
+		Yes ) echo -e ${outputColor}; sudo pacman -S --needed nvidia-utils opencl-nvidia lib32-nvidia-libgl lib32-mesa-vdpau nvidia; break;;
 		No ) break;;
 	esac
 done
@@ -119,6 +125,7 @@ sleep 3
 
 #Cinnamon
 echo -e ${infoColor}"START OF CINNAMON INSTALLATION"
+echo -e ${outputColor}
 sudo pacman -S --needed cinnamon nemo-fileroller nemo-preview networkmanager networkmanager-openconnect networkmanager-openvpn networkmanager-pptp networkmanager-vpnc
 sudo systemctl enable NetworkManager.service
 sudo systemctl enable NetworkManager-dispatcher.service
@@ -131,6 +138,7 @@ echo -e ${questionColor}"Do you want Infinality? (Makes fonts look glorious)"
 select yn in "Yes" "No"; do
         case $yn in
                 Yes ) 
+                	echo -e ${outputColor};
 			sudo /bin/bash -c 'echo "[infinality-bundle]" >> /etc/pacman.conf';
 			sudo /bin/bash -c "echo 'Server = http://bohoomil.com/repo/\$arch' >> /etc/pacman.conf";
 			sudo /bin/bash -c 'echo "[infinality-bundle-multilib]" >> /etc/pacman.conf';
@@ -158,6 +166,7 @@ echo -e ${questionColor}"Do you want applications from the basics group??"
 select yn in "Yes" "No"; do
         case $yn in
                 Yes )
+                	echo -e ${outputColor};
 			sudo pacman -S --needed bleachbit calibre cdrkit cheese chromium cpupower eog evince evolution expac gedit gimp git gksu gnome-calculator gnome-calendar gnome-disk-utility gnome-keyring gnome-screenshot gnome-sound-recorder gnome-system-log gnome-system-monitor gst-libav gst-plugins-bad gst-plugins-base gst-plugins-good gst-plugins-ugly hdparm hexchat htop keepass libreoffice-fresh lib32-alsa-plugins linux-headers mumble ntfs-3g openssh parted pigz pulseaudio-alsa pulseaudio-equalizer pulseaudio-gconf redshift rhythmbox seahorse syncthing-gtk totem transmission-gtk unrar wine wine-mono wine_gecko winetricks wget xfce4-terminal yubikey-neo-manager yubikey-personalization-gui zip zsh acpi acpi_call ethtool smartmontools linux-tools intel-ucode gparted btrfs-progs dosfstools e2fsprogs exfat-utils f2fs-tools jfsutils ntfs-3g reiserfsprogs xfsprogs mtools gpart nilfs-utils pigz pixz lbzip2 gdmap bind-tools simplescreenrecorder lib32-simplescreenrecorder gperf lm_sensors;
 			yaourt -S alsi chromium-pepper-flash downgrade filebot nano-syntax-highlighting-git notepadqq-git obs-studio-git oh-my-zsh-git pithos-git android-udev-git;
 			sudo pip install doge speedtest-cli;
@@ -178,6 +187,7 @@ echo -e ${questionColor}"Do you want applications from the development group?"
 select yn in "Yes" "No"; do
         case $yn in
                 Yes ) 
+                	echo -e ${outputColor};
 			sudo pacman -S --needed abs android-tools apache-ant bc ccache eclipse-java intellij-idea-community-edition lib32-readline perl-switch proguard schedtool squashfs-tools;
 			yaourt -S android-apk-tool android-sdk android-sdk-build-tools android-sdk-platform-tools android-studio arduino dex2jar jd-gui launch4j libtinfo repo;
 			break;;
@@ -188,6 +198,7 @@ echo -e ${questionColor}"Do you want applications from the games group?"
 select yn in "Yes" "No"; do
         case $yn in
                 Yes ) 
+                	echo -e ${outputColor};
 			sudo pacman -S --needed steam;
 			yaourt -S multimc5-git;
 			break;;
@@ -197,14 +208,14 @@ done
 echo -e ${questionColor}"Do you want applications from the l33t hax0ring group?"
 select yn in "Yes" "No"; do
         case $yn in
-                Yes ) sudo pacman -S --needed nmap wireshark-cli wireshark-gtk; break;;
+                Yes ) echo -e ${outputColor}; sudo pacman -S --needed nmap wireshark-cli wireshark-gtk; break;;
                 No ) break;;
         esac
 done
 echo -e ${questionColor}"Do you want applications from the remote access group?"
 select yn in "Yes" "No"; do
         case $yn in
-                Yes ) sudo pacman -S --needed filezilla remmina freerdp libvncserver nxproxy xorg-server-xephyr; break;;
+                Yes ) echo -e ${outputColor}; sudo pacman -S --needed filezilla remmina freerdp libvncserver nxproxy xorg-server-xephyr; break;;
                 No ) break;;
         esac
 done
@@ -212,6 +223,7 @@ echo -e ${questionColor}"Do you want applications from the security group?"
 select yn in "Yes" "No"; do
         case $yn in
                 Yes ) 
+                	echo -e ${outputColor};
 			sudo pacman -S --needed clamav haveged;
 			yaourt -S clamtk pgl;
 			sudo /bin/bash -c $'echo \'SafeBrowsing Yes\' >> /etc/clamav/freshclam.conf';
@@ -224,6 +236,7 @@ echo -e ${questionColor}"Do you want applications from the theming group?"
 select yn in "Yes" "No"; do
         case $yn in
                 Yes )
+                	echo -e ${outputColor};
 			sudo pacman -S --needed numix-themes;
 			yaourt -S numix-icon-theme-git numix-circle-icon-theme-git;
 			break;;
@@ -234,6 +247,7 @@ echo -e ${questionColor}"Do you want applications from the virtulization group?"
 select yn in "Yes" "No"; do
         case $yn in
                 Yes )
+                	echo -e ${outputColor};
 			sudo pacman -S --needed ebtables libvirt openbsd-netcat qemu virt-manager;
 			sudo systemctl enable libvirtd.service;
 			sudo /bin/bash -c "echo 'polkit.addRule(function(action, subject) { if (action.id == "org.libvirt.unix.manage" && subject.isInGroup("kvm")) { return polkit.Result.YES; } })' >> /etc/polkit-1/rules.d/49-org.libvirt.unix.manager.rules"
@@ -249,6 +263,7 @@ sleep 3
 
 #Network Tweaks
 echo -e ${infoColor}"START OF NETWORK TWEAKS"
+echo -e ${outputColor}
 sudo pacman -S dnsmasq
 sudo sed -i 's/#listen-address=/listen-address=127.0.0.1/' /etc/dnsmasq.conf
 sudo sed -i 's/dns=default/dns=dnsmasq/' /etc/NetworkManager/NetworkManager.conf
@@ -264,6 +279,7 @@ sleep 3
 
 #Misc Tweaks
 echo -e ${infoColor}"START OF MISC TWEAKS"
+echo -e ${outputColor}
 sudo timedatectl set-ntp true
 sudo systemctl enable systemd-timesyncd.service
 sudo systemctl restart systemd-timesyncd.service
@@ -274,5 +290,5 @@ sleep 3
 echo -e ${infoColor}"FINISHING UP"
 echo -e ${infoColor}"After reboot please login and enjoy your system"
 sleep 10
-sync
-reboot now
+sudo sync
+sudo reboot now
