@@ -291,4 +291,5 @@ echo -e ${infoColor}"FINISHING UP"
 echo -e ${infoColor}"After reboot please login and enjoy your system"
 sleep 10
 sudo sync
+echo -e ${coloroff}
 sudo reboot now

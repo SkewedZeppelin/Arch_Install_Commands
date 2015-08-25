@@ -211,4 +211,5 @@ echo -e ${infoColor}"FINISHING UP"
 umount -R /mnt
 echo -e ${infoColor}"After reboot please login and run 'sh Post-Install.sh'"
 sleep 10
+echo -e ${coloroff}
 reboot now
