@@ -122,8 +122,9 @@ select yn in "Yes" "No"; do
 			sudo /bin/bash -c 'echo "[infinality-bundle-multilib]" >> /etc/pacman.conf';
 			sudo /bin/bash -c "echo 'Server = http://bohoomil.com/repo/multilib/\$arch' >> /etc/pacman.conf";
 			sudo /bin/bash -c 'echo "[infinality-bundle-fonts]" >> /etc/pacman.conf';
-			sudo /bin/bash -c 'echo "Server = http://bohoomil.com/repo/fonts" >> /etc/pacman.conf' ;
+			sudo /bin/bash -c 'echo "Server = http://bohoomil.com/repo/fonts" >> /etc/pacman.conf';
 			sudo dirmngr < /dev/null;
+			sudo pacman -S archlinux-keyring;
 			echo "The next command might take a couple minutes";
 			sudo pacman-key -r 962DDE58;
 			sudo pacman-key -f 962DDE58;
@@ -143,10 +144,7 @@ echo "Do you want applications from the basics group??"
 select yn in "Yes" "No"; do
         case $yn in
                 Yes )
-			sudo pacman -S --needed bleachbit calibre cdrkit cheese chromium cpupower eog evince evolution expac gedit gimp git gksu gnome-calculator gnome-calendar gnome-disk-utility gnome-keyring gnome-screenshot gnome-so
-und-recorder gnome-system-log gnome-system-monitor gst-libav gst-plugins-bad gst-plugins-base gst-plugins-good gst-plugins-ugly hdparm hexchat htop keepass libreoffice-fresh lib32-alsa-plugins linux-headers mumb
-le ntfs-3g openssh parted pigz pulseaudio-alsa pulseaudio-equalizer pulseaudio-gconf redshift rhythmbox seahorse syncthing-gtk totem transmission-gtk unrar wine wine-mono wine_gecko winetricks wget xfce4-termina
-l yubikey-neo-manager yubikey-personalization-gui zip zsh acpi acpi_call ethtool smartmontools linux-tools intel-ucode gparted btrfs-progs dosfstools e2fsprogs exfat-utils f2fs-tools jfsutils ntfs-3g reiserfsprogs xfsprogs mtools gpart nilfs-utils pigz pixz lbzip2 gdmap bind-tools simplescreenrecorder lib32-simplescreenrecorder gperf lm_sensors;
+			sudo pacman -S --needed bleachbit calibre cdrkit cheese chromium cpupower eog evince evolution expac gedit gimp git gksu gnome-calculator gnome-calendar gnome-disk-utility gnome-keyring gnome-screenshot gnome-sound-recorder gnome-system-log gnome-system-monitor gst-libav gst-plugins-bad gst-plugins-base gst-plugins-good gst-plugins-ugly hdparm hexchat htop keepass libreoffice-fresh lib32-alsa-plugins linux-headers mumble ntfs-3g openssh parted pigz pulseaudio-alsa pulseaudio-equalizer pulseaudio-gconf redshift rhythmbox seahorse syncthing-gtk totem transmission-gtk unrar wine wine-mono wine_gecko winetricks wget xfce4-terminal yubikey-neo-manager yubikey-personalization-gui zip zsh acpi acpi_call ethtool smartmontools linux-tools intel-ucode gparted btrfs-progs dosfstools e2fsprogs exfat-utils f2fs-tools jfsutils ntfs-3g reiserfsprogs xfsprogs mtools gpart nilfs-utils pigz pixz lbzip2 gdmap bind-tools simplescreenrecorder lib32-simplescreenrecorder gperf lm_sensors;
 			yaourt -S alsi chromium-pepper-flash downgrade filebot nano-syntax-highlighting-git notepadqq-git obs-studio-git oh-my-zsh-git pithos-git android-udev-git;
 			sudo pip install doge speedtest-cli;
 			wget https://raw.githubusercontent.com/SpotComms/Arch_Install_Commands/master/home/.zshrc;
