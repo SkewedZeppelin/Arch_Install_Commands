@@ -198,7 +198,6 @@ select yn in "Yes" "No"; do
 			yaourt -S clamtk pgl;
 			sudo /bin/bash -c $'echo \'SafeBrowsing Yes\' >> /etc/clamav/freshclam.conf';
 			sudo systemctl enable haveged.service;
-			sudo systemctl enable pgl.service;
 			break;;
                 No ) break;;
         esac
@@ -222,6 +221,7 @@ select yn in "Yes" "No"; do
 			sudo /bin/bash -c "echo 'polkit.addRule(function(action, subject) { if (action.id == "org.libvirt.unix.manage" && subject.isInGroup("kvm")) { return polkit.Result.YES; } })' >> /etc/polkit-1/rules.d/49-org.libvirt.unix.manager.rules"
 			sudo gpasswd -a $USER kvm;
 			sudo sed -i 's/MODULES="/MODULES="kvm kvm_intel /' /etc/mkinitcpio.conf;#TODO AMD CPU SUPPORT
+			sudo mkinitcpio -p linux;
 			break;;
                 No ) break;;
         esac
@@ -242,6 +242,14 @@ sudo /bin/bash -c 'echo "net.ipv4.tcp_sack=1" >> /etc/sysctl.d/99-sysctl.conf'
 sudo /bin/bash -c 'echo "net.ipv4.tcp_dsack=1" >> /etc/sysctl.d/99-sysctl.conf'
 sudo /bin/bash -c 'echo "net.netfilter.nf_conntrack_max=1048576" >> /etc/sysctl.d/99-sysctl.conf'
 echo "END OF NETWORK TWEAKS"
+sleep 3
+
+#Misc Tweaks
+echo "START OF MISC TWEAKS"
+sudo timedatectl set-ntp true
+sudo systemctl enable systemd-timesyncd.service
+sudo systemctl restart systemd-timesyncd.service
+echo "END OF MISC TWEAKS"
 sleep 3
 
 #Finish up
