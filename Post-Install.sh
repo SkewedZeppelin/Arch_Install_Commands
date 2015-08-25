@@ -15,7 +15,7 @@ select yn in "Yes" "No"; do
     esac
 done
 echo "END OF NETWORK CONFIG"
-sleep 3
+sleep 15
 
 #Configure pacman
 echo "START OF PACMAN CONFIGURATION"
@@ -60,14 +60,14 @@ sleep 3
 
 #Frameworks
 echo "START OF FRAMEWORKS INSTALLATION"
-sudo pacman -S gcc-multilib jdk7-openjdk jdk8-openjdk jre7-openjdk jre7-openjdk-headless jre8-openjdk jre8-openjdk-headless python python-pip python2-virtualenv
+sudo pacman -S --needed gcc-multilib jdk7-openjdk jdk8-openjdk jre7-openjdk jre7-openjdk-headless jre8-openjdk jre8-openjdk-headless python python-pip python2-virtualenv
 sudo archlinux-java set java-8-openjdk
 echo "END OF FRAMEWORKS INSTALLATION"
 sleep 3
 
 #Install and configure X-org
 echo "START OF X-ORG INSTALLATION"
-sudo pacman -S xorg-server xorg xorg-xinit libvdpau-va-gl libvdpau lib32-libvdpau lib32-mesa-vdpau libva-vdpau-driver mesa-vdpau libva-intel-driver libgl lib32-libgl
+sudo pacman -S --needed xorg-server xorg xorg-xinit libvdpau-va-gl libvdpau lib32-libvdpau lib32-mesa-vdpau libva-vdpau-driver mesa-vdpau libva-intel-driver libgl lib32-libgl
 wget https://raw.githubusercontent.com/SpotComms/Arch_Install_Commands/master/home/.xinitrc
 wget https://raw.githubusercontent.com/SpotComms/Arch_Install_Commands/master/home/.Xresources
 echo '[[ -z $DISPLAY && $XDG_VTNR -eq 1 ]] && exec startx' > ~/.bash_profile
@@ -83,7 +83,7 @@ echo "Do you need NVIDIA Optimus drivers? (Bumblebee)"
 select yn in "Yes" "No"; do
         case $yn in
                 Yes ) 
-			sudo pacman -S bumblebeed primus lib32-primus virtualgl lib32-virtualgl bbswitch mesa lib32-mesa mesa-libgl lib32-mesa-libgl mesa-vdpau lib32-mesa-vdpau xf86-video-intel xf86-video-nv lib32-nvidia-utils nvidia-utils lib32-opencl-nvidia opencl-nvidia nvidia;
+			sudo pacman -S --needed bumblebeed primus lib32-primus virtualgl lib32-virtualgl bbswitch mesa lib32-mesa mesa-libgl lib32-mesa-libgl mesa-vdpau lib32-mesa-vdpau xf86-video-intel xf86-video-nv lib32-nvidia-utils nvidia-utils lib32-opencl-nvidia opencl-nvidia nvidia;
 			sudo systemctl enable bumblebeed.service;
 			sudo gpasswd -a $USER bumblebee;
 			sudo sed -i 's/MODULES="/MODULES="i915 bbswitch /' /etc/mkinitcpio.conf;
@@ -95,7 +95,7 @@ done
 echo "Do you need NVIDIA drivers?"
 select yn in "Yes" "No"; do
 	case $yn in
-		Yes ) sudo pacman -S nvidia-utils opencl-nvidia lib32-nvidia-libgl lib32-mesa-vdpau nvidia; break;;
+		Yes ) sudo pacman -S --needed nvidia-utils opencl-nvidia lib32-nvidia-libgl lib32-mesa-vdpau nvidia; break;;
 		No ) break;;
 	esac
 done
@@ -105,7 +105,7 @@ sleep 3
 
 #Cinnamon
 echo "START OF CINNAMON INSTALLATION"
-sudo pacman -S cinnamon nemo-fileroller nemo-preview networkmanager networkmanager-openconnect networkmanager-openvpn networkmanager-pptp networkmanager-vpnc
+sudo pacman -S --needed cinnamon nemo-fileroller nemo-preview networkmanager networkmanager-openconnect networkmanager-openvpn networkmanager-pptp networkmanager-vpnc
 sudo systemctl enable NetworkManager.service
 sudo systemctl enable NetworkManager-dispatcher.service
 echo "END OF CINNAMON INSTALLATION"
@@ -123,7 +123,8 @@ select yn in "Yes" "No"; do
 			sudo /bin/bash -c "echo 'Server = http://bohoomil.com/repo/multilib/\$arch' >> /etc/pacman.conf";
 			sudo /bin/bash -c 'echo "[infinality-bundle-fonts]" >> /etc/pacman.conf';
 			sudo /bin/bash -c 'echo "Server = http://bohoomil.com/repo/fonts" >> /etc/pacman.conf' ;
-			sudo dirmngr yolo;
+			sudo dirmngr < /dev/null;
+			echo "The next command might take a couple minutes";
 			sudo pacman-key -r 962DDE58;
 			sudo pacman-key -f 962DDE58;
 			sudo pacman-key --lsign-key 962DDE58;
@@ -161,7 +162,7 @@ echo "Do you want applications from the development group?"
 select yn in "Yes" "No"; do
         case $yn in
                 Yes ) 
-			sudo pacman -S abs android-tools apache-ant bc ccache eclipse-java intellij-idea-community-edition lib32-readline perl-switch proguard schedtool squashfs-tools;
+			sudo pacman -S --needed abs android-tools apache-ant bc ccache eclipse-java intellij-idea-community-edition lib32-readline perl-switch proguard schedtool squashfs-tools;
 			yaourt -S android-apk-tool android-sdk android-sdk-build-tools android-sdk-platform-tools android-studio arduino dex2jar jd-gui launch4j libtinfo repo;
 			break;;
                 No ) break;;
@@ -171,7 +172,7 @@ echo "Do you want applications from the games group?"
 select yn in "Yes" "No"; do
         case $yn in
                 Yes ) 
-			sudo pacman -S steam;
+			sudo pacman -S --needed steam;
 			yaourt -S multimc5-git;
 			break;;
                 No ) break;;
@@ -180,14 +181,14 @@ done
 echo "Do you want applications from the l33t hax0ring group?"
 select yn in "Yes" "No"; do
         case $yn in
-                Yes ) sudo pacman -S nmap wireshark-cli wireshark-gtk; break;;
+                Yes ) sudo pacman -S --needed nmap wireshark-cli wireshark-gtk; break;;
                 No ) break;;
         esac
 done
 echo "Do you want applications from the remote access group?"
 select yn in "Yes" "No"; do
         case $yn in
-                Yes ) sudo pacman -S filezilla remmina freerdp libvncserver nxproxy xorg-server-xephyr; break;;
+                Yes ) sudo pacman -S --needed filezilla remmina freerdp libvncserver nxproxy xorg-server-xephyr; break;;
                 No ) break;;
         esac
 done
@@ -195,7 +196,7 @@ echo "Do you want applications from the security group?"
 select yn in "Yes" "No"; do
         case $yn in
                 Yes ) 
-			sudo pacman -S clamav haveged;
+			sudo pacman -S --needed clamav haveged;
 			yaourt -S clamtk pgl;
 			sudo /bin/bash -c $'echo \'SafeBrowsing Yes\' >> /etc/clamav/freshclam.conf';
 			sudo systemctl enable haveged.service;
@@ -208,7 +209,7 @@ echo "Do you want applications from the theming group?"
 select yn in "Yes" "No"; do
         case $yn in
                 Yes )
-			sudo pacman -S numix-themes;
+			sudo pacman -S --needed numix-themes;
 			yaourt -S numix-icon-theme-git numix-circle-icon-theme-git;
 			break;;
                 No ) break;;
@@ -218,7 +219,7 @@ echo "Do you want applications from the virtulization group?"
 select yn in "Yes" "No"; do
         case $yn in
                 Yes )
-			sudo pacman -S ebtables libvirt openbsd-netcat qemu virt-manager;
+			sudo pacman -S --needed ebtables libvirt openbsd-netcat qemu virt-manager;
 			sudo systemctl enable libvirtd.service;
 			sudo /bin/bash -c "echo 'polkit.addRule(function(action, subject) { if (action.id == "org.libvirt.unix.manage" && subject.isInGroup("kvm")) { return polkit.Result.YES; } })' >> /etc/polkit-1/rules.d/49-org.libvirt.unix.manager.rules"
 			sudo gpasswd -a $USER kvm;
