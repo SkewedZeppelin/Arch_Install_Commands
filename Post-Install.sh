@@ -148,7 +148,11 @@ select yn in "Yes" "No"; do
 			yaourt -S alsi chromium-pepper-flash downgrade filebot nano-syntax-highlighting-git notepadqq-git obs-studio-git oh-my-zsh-git pithos-git android-udev-git;
 			sudo pip install doge speedtest-cli;
 			wget https://raw.githubusercontent.com/SpotComms/Arch_Install_Commands/master/home/.zshrc;
-			chsh -s $(which zsh)
+			chsh -s $(which zsh);
+			mkdir -p .config/xfce4/terminal;
+			cd .config/xfce4/terminal;
+			wget https://raw.githubusercontent.com/SpotComms/Arch_Install_Commands/master/home/.config/xfce4/terminal/terminalrc;
+			cd ~; 
 			sudo /bin/bash -c $'echo \'ACTION!="add|change", GOTO="u2f_end"\' >> /etc/udev/rules.d/70-u2f.rules';
 			sudo /bin/bash -c $'echo \'KERNEL=="hidraw*", SUBSYSTEM=="hidraw", ATTRS{idVendor}=="1050", ATTRS{idProduct}=="0113|0114|0115|0116|0120|0402|0403|0406|0407|0410", TAG+="uaccess"\' >> /etc/udev/rules.d/70-u2f.rules';
 			sudo /bin/bash -c $'echo \'LABEL="u2f_end"\' >> /etc/udev/rules.d/70-u2f.rules';
@@ -256,4 +260,5 @@ sleep 3
 echo "FINISHING UP"
 echo "After reboot please login and enjoy your system"
 sleep 10
+sync
 reboot now
