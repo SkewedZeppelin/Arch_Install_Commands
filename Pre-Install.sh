@@ -89,9 +89,15 @@ cd ~
 echo "END OF FORMATTING"
 sleep 3
 
+#Update local mirrors
+echo "UPDATING LOCAL MIRRORS"
+pacman -S reflector
+reflector --verbose --country 'United States' -l 200 -p http -p https --sort rate --save /etc/pacman.d/mirrorlist
+sleep 3
+
 #Install the base system
 echo "INSTALLING THE BASE SYSTEM"
-pacstrap -i /mnt base base-devel wget iw wpa_supplicant
+pacstrap -i /mnt base base-devel wget iw wpa_supplicant reflector
 sleep 3
 
 #Generate an fstab
