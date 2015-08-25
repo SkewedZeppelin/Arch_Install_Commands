@@ -12,38 +12,38 @@ infoColor=${yellow}
 questionColor=${red}
 
 #Intro
-echo ${infoColor}"Welcome to the Spot Communication's Arch Linux installer and configurator"
-echo ${infoColor}"This is the pre-install script meant to be run from a live media"
-echo ${infoColor}"This script has yet to be throughly tested, stuff might go very, very wrong"
-echo ${infoColor}"Ctrl+C within 10 seconds if you do not want to end up troubleshooting your system or have to attempt to recover lost files"
+echo -e ${infoColor}"Welcome to the Spot Communication's Arch Linux installer and configurator"
+echo -e ${infoColor}"This is the pre-install script meant to be run from a live media"
+echo -e ${infoColor}"This script has yet to be throughly tested, stuff might go very, very wrong"
+echo -e ${infoColor}"Ctrl+C within 10 seconds if you do not want to end up troubleshooting your system or have to attempt to recover lost files"
 sleep 10
 
 #Connect to the network
-echo ${infoColor}"START OF NETWORK CONFIG"
-echo ${questionColor}"Do you plan on using Wi-Fi for this install? Answering no will auto connect on all ethernet interfaces"
+echo -e ${infoColor}"START OF NETWORK CONFIG"
+echo -e ${questionColor}"Do you plan on using Wi-Fi for this install? Answering no will auto connect on all ethernet interfaces"
 select yn in "Yes" "No"; do
     case $yn in
         Yes ) wifi-menu; break;;
         No ) systemctl start dhcpcd.service; break;;
     esac
 done
-echo ${infoColor}"END OF NETWORK CONFIG"
+echo -e ${infoColor}"END OF NETWORK CONFIG"
 sleep 3
 
 #Partition the drive
-echo ${infoColor}"START OF PARTITIONING"
+echo -e ${infoColor}"START OF PARTITIONING"
 lsblk
-echo ${questionColor}"What drive do you want to install Arch onto? (/dev/sdX)"
+echo -e ${questionColor}"What drive do you want to install Arch onto? (/dev/sdX)"
 read strInstallDrive
-echo ${questionColor}"Where do you want your /boot partition to end? (Recommend Size: 1GiB)"
+echo -e ${questionColor}"Where do you want your /boot partition to end? (Recommend Size: 1GiB)"
 read strPartitionSizeBoot
-echo ${questionColor}"Where do you want your / partition to end? (Recommend Size: 32GiB)"
+echo -e ${questionColor}"Where do you want your / partition to end? (Recommend Size: 32GiB)"
 read strPartitionSizeSystem
-echo ${questionColor}"Where do you want your swap partition to end? (Recommend Size: Amount of RAM installed)"
+echo -e ${questionColor}"Where do you want your swap partition to end? (Recommend Size: Amount of RAM installed)"
 read strPartitionSizeSwap
-echo ${questionColor}"Where do you want your /home partition to end? (Recommend Size: 100%)"
+echo -e ${questionColor}"Where do you want your /home partition to end? (Recommend Size: 100%)"
 read strPartitionSizeHome
-echo ${questionColor}"Do you have a (U)EFI system or a plain BIOS system?"
+echo -e ${questionColor}"Do you have a (U)EFI system or a plain BIOS system?"
 select yn in "Yes" "No"; do
 	case $yn in
 		Yes ) blEFI=true; break;;
@@ -69,11 +69,11 @@ parted ${strInstallDrive} set 1 boot on
 parted ${strInstallDrive} mkpart primary ext4 ${strPartitionSizeBoot} ${strPartitionSizeSystem}
 parted ${strInstallDrive} mkpart primary linux-swap ${strPartitionSizeSystem} ${strPartitionSizeSwap}
 parted ${strInstallDrive} mkpart primary ext4 ${strPartitionSizeSwap} ${strPartitionSizeHome}
-echo ${infoColor}"END OF PARTITIONING"
+echo -e ${infoColor}"END OF PARTITIONING"
 sleep 3
 
 #Format the partitions
-echo ${infoColor}"START OF FORMATTING"
+echo -e ${infoColor}"START OF FORMATTING"
 if [ ${blEFI} == true ]
 	then
 		mkfs.vfat -F32 ${strInstallDrive}1
@@ -99,17 +99,17 @@ mount ${strInstallDrive}4 /mnt/home
 cd /mnt/home
 rm -rf *
 cd ~
-echo ${infoColor}"END OF FORMATTING"
+echo -e ${infoColor}"END OF FORMATTING"
 sleep 3
 
 #Update local mirrors
-echo ${infoColor}"UPDATING LOCAL MIRRORS"
+echo -e ${infoColor}"UPDATING LOCAL MIRRORS"
 pacman -Sy reflector
 reflector --verbose --country 'United States' -l 200 -p http -p https --sort rate --save /etc/pacman.d/mirrorlist
 sleep 3
 
 #Install the base system
-echo ${infoColor}"INSTALLING THE BASE SYSTEM"
+echo -e ${infoColor}"INSTALLING THE BASE SYSTEM"
 pacstrap -i /mnt base base-devel wget iw wpa_supplicant reflector
 sleep 3
 
@@ -117,35 +117,35 @@ sleep 3
 genfstab -U -p /mnt >> /mnt/etc/fstab
 
 #Set locale
-echo ${infoColor}"START OF SETTING LOCALE"
-echo ${questionColor}"What language would you like to use? (en_US.UTF-8)"
+echo -e ${infoColor}"START OF SETTING LOCALE"
+echo -e ${questionColor}"What language would you like to use? (en_US.UTF-8)"
 read strLanguage
 arch-chroot /mnt /bin/bash -c "sed -i 's/#${strLanguage}/${strLanguage}/' /etc/locale.gen"
 arch-chroot /mnt locale-gen
 arch-chroot /mnt /bin/bash -c "echo LANG=${strLanguage} > /etc/locale.conf"
-echo ${infoColor}"END OF SETTING LOCALE"
+echo -e ${infoColor}"END OF SETTING LOCALE"
 sleep 3
 
 #Set timezone
-echo ${infoColor}"START OF SETTING TIMEZONE"
-echo ${questionColor}"What timezone are you in? (America/New_York)"
+echo -e ${infoColor}"START OF SETTING TIMEZONE"
+echo -e ${questionColor}"What timezone are you in? (America/New_York)"
 read strTimezone
 arch-chroot /mnt /bin/bash -c "ln -s /usr/share/zoneinfo/${strTimezone} /etc/localtime"
 arch-chroot /mnt hwclock --systohc --utc
-echo ${infoColor}"END OF SETTING TIMEZONE"
+echo -e ${infoColor}"END OF SETTING TIMEZONE"
 sleep 3
 
 #Set hostname
-echo ${infoColor}"START OF SETTING HOSTNAME"
-echo ${questionColor}"What would you like your hostname to be?"
+echo -e ${infoColor}"START OF SETTING HOSTNAME"
+echo -e ${questionColor}"What would you like your hostname to be?"
 read strHostname
 arch-chroot /mnt /bin/bash -c "echo ${strHostname} > /etc/hostname"
 arch-chroot /mnt /bin/bash -c "sed -i 's/localhost /localhost $strHostname/' /etc/hosts"
-echo ${infoColor}"END OF SETTING HOSTNAME"
+echo -e ${infoColor}"END OF SETTING HOSTNAME"
 sleep 3
 
 #Install the bootloader
-echo ${infoColor}"START OF BOOTLOADER INSTALLATION"
+echo -e ${infoColor}"START OF BOOTLOADER INSTALLATION"
 if [ ${blEFI} == true ]
         then
 		arch-chroot /mnt pacman -S dosfstools
@@ -161,40 +161,40 @@ if [ ${blEFI} == true ]
 		arch-chroot /mnt grub-install --target=i386-pc --recheck ${strInstallDrive}
 		arch-chroot /mnt grub-mkconfig -o /boot/grub/grub.cfg
 fi
-echo ${infoColor}"END OF BOOTLOADER INSTALLATION"
+echo -e ${infoColor}"END OF BOOTLOADER INSTALLATION"
 sleep 3
 
 #Set root password
-echo ${infoColor}"SETTING ROOT PASSWORD"
-echo ${questionColor}"Please set a password for the root account"
+echo -e ${infoColor}"SETTING ROOT PASSWORD"
+echo -e ${questionColor}"Please set a password for the root account"
 arch-chroot /mnt passwd
 sleep 3
 
 #Create a user account
-echo ${infoColor}"START OF USER ACCOUNT CREATION"
-echo ${questionColor}"What would you like your username to be? Must be all lowercase (obamallama)"
+echo -e ${infoColor}"START OF USER ACCOUNT CREATION"
+echo -e ${questionColor}"What would you like your username to be? Must be all lowercase (obamallama)"
 read strUsername
 arch-chroot /mnt useradd -m -G wheel -s /bin/bash ${strUsername}
 arch-chroot /mnt usermod -aG audio,games,rfkill,users,uucp,video,wheel ${strUsername}
 arch-chroot /mnt chfn ${strUsername}
-echo ${questionColor}"Please add your username to the sudoers file after root ALL ALL ALL"
+echo -e ${questionColor}"Please add your username to the sudoers file after root ALL ALL ALL"
 sleep 5
 arch-chroot /mnt /bin/bash -c "EDITOR=nano visudo"
-echo ${questionColor}"Please set a password for your account"
+echo -e ${questionColor}"Please set a password for your account"
 arch-chroot /mnt passwd ${strUsername}
-echo ${infoColor}"END OF USER ACCOUNT CREATION"
+echo -e ${infoColor}"END OF USER ACCOUNT CREATION"
 sleep 3
 
 #Post-Install Script
-echo ${infoColor}"INSTALLING POST INSTALL SCRIPT"
+echo -e ${infoColor}"INSTALLING POST INSTALL SCRIPT"
 wget https://raw.githubusercontent.com/SpotComms/Arch_Install_Commands/master/Post-Install.sh
 cp Post-Install.sh /mnt/home/${strUsername}/
-echo ${infoColor}"INSTALLED POST INSTALL SCRIPT"
+echo -e ${infoColor}"INSTALLED POST INSTALL SCRIPT"
 sleep 3
 
 #Finish up
-echo ${infoColor}"FINISHING UP"
+echo -e ${infoColor}"FINISHING UP"
 umount -R /mnt
-echo ${infoColor}"After reboot please login and run 'sh Post-Install.sh'"
+echo -e ${infoColor}"After reboot please login and run 'sh Post-Install.sh'"
 sleep 10
 reboot now

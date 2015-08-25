@@ -12,26 +12,26 @@ infoColor=${yellow}
 questionColor=${red}
 
 #Intro
-echo ${infoColor}"Welcome to the Spot Communication's Arch Linux installer and configurator"
-echo ${infoColor}"This is the post-install script meant to be run after doing a base install"
-echo ${infoColor}"This script has yet to be throughly tested, stuff might go very, very wrong"
-echo ${infoColor}"Ctrl+C within 10 seconds if you do not want to end up troubleshooting your system or have to attempt to recover lost files"
+echo -e ${infoColor}"Welcome to the Spot Communication's Arch Linux installer and configurator"
+echo -e ${infoColor}"This is the post-install script meant to be run after doing a base install"
+echo -e ${infoColor}"This script has yet to be throughly tested, stuff might go very, very wrong"
+echo -e ${infoColor}"Ctrl+C within 10 seconds if you do not want to end up troubleshooting your system or have to attempt to recover lost files"
 sleep 10
 
 #Connect to the network
-echo ${infoColor}"START OF NETWORK CONFIG"
-echo ${questionColor}"Do you plan on using Wi-Fi for this install? Answering no will auto connect on all ethernet interfaces"
+echo -e ${infoColor}"START OF NETWORK CONFIG"
+echo -e ${questionColor}"Do you plan on using Wi-Fi for this install? Answering no will auto connect on all ethernet interfaces"
 select yn in "Yes" "No"; do
     case $yn in
         Yes ) sudo wifi-menu; break;;
         No ) sudo systemctl start dhcpcd.service; break;;
     esac
 done
-echo ${infoColor}"END OF NETWORK CONFIG"
+echo -e ${infoColor}"END OF NETWORK CONFIG"
 sleep 15
 
 #Configure pacman
-echo ${infoColor}"START OF PACMAN CONFIGURATION"
+echo -e ${infoColor}"START OF PACMAN CONFIGURATION"
 sudo sed -i 's/#\[testing\]/\[testing\]/' /etc/pacman.conf
 sudo sed -i 's/#\[community-testing\]/\[community-testing\]/' /etc/pacman.conf
 sudo sed -i 's/#\[multilib-testing\]/\[multilib-testing\]/' /etc/pacman.conf
@@ -39,23 +39,23 @@ sudo sed -i 's/#\[multilib\]/\[multilib\]/' /etc/pacman.conf
 sudo sed -i 's/#Include = \/etc\/pacman.d\/mirrorlist/Include = \/etc\/pacman.d\/mirrorlist/' /etc/pacman.conf
 sudo reflector --verbose --country 'United States' -l 200 -p http -p https --sort rate --save /etc/pacman.d/mirrorlist
 sudo pacman -Syyu
-echo ${infoColor}"END OF PACMAN CONFIGURATION"
+echo -e ${infoColor}"END OF PACMAN CONFIGURATION"
 sleep 3
 
 #Configure makepkg
-echo ${infoColor}"START OF MAKEPKG CONFIGURATION"
+echo -e ${infoColor}"START OF MAKEPKG CONFIGURATION"
 sudo sed -i 's/CFLAGS="-march=x86-64 -mtune=generic -O2 -pipe -fstack-protector-strong -fstack-check"/CFLAGS="-march=native -mtune=native -O3 -pipe -fstack-protector-strong -fstack-check --param=ssp-buffer-size=4"/' /etc/makepkg.conf
 sudo sed -i 's/CXXFLAGS="-march=x86-64 -mtune=generic -O2 -pipe -fstack-protector-strong -fstack-check"/CXXFLAGS="${CFLAGS}"/' /etc/makepkg.conf
-echo ${questionColor}"How many threads do you have?"
+echo -e ${questionColor}"How many threads do you have?"
 read strAmtThreads
 sudo sed -i "s/#MAKEFLAGS=\"-j2\"/MAKEFLAGS=\"-j${strAmtThreads}\"/" /etc/makepkg.conf
 #TODO: Change packager name here
 sudo sed -i 's/(xz -c -z -)/(xz -T 0 -c -z -)/' /etc/makepkg.conf
-echo ${infoColor}"END OF MAKEPKG CONFIGURATION"
+echo -e ${infoColor}"END OF MAKEPKG CONFIGURATION"
 sleep 3
 
 #Install and configure yaourt
-echo ${infoColor}"START OF YAOURT INSTALLATION"
+echo -e ${infoColor}"START OF YAOURT INSTALLATION"
 cd /tmp
 wget https://aur.archlinux.org/cgit/aur.git/snapshot/package-query-git.tar.gz
 tar -xzvf package-query-git.tar.gz
@@ -69,18 +69,18 @@ cd yaourt-git
 makepkg -s
 sudo pacman -U yaourt-git-*.tar.xz
 cd ~
-echo ${infoColor}"END OF YAOURT INSTALLATION"
+echo -e ${infoColor}"END OF YAOURT INSTALLATION"
 sleep 3
 
 #Frameworks
-echo ${infoColor}"START OF FRAMEWORKS INSTALLATION"
+echo -e ${infoColor}"START OF FRAMEWORKS INSTALLATION"
 sudo pacman -S --needed gcc-multilib jdk7-openjdk jdk8-openjdk jre7-openjdk jre7-openjdk-headless jre8-openjdk jre8-openjdk-headless python python-pip python2-virtualenv
 sudo archlinux-java set java-8-openjdk
-echo ${infoColor}"END OF FRAMEWORKS INSTALLATION"
+echo -e ${infoColor}"END OF FRAMEWORKS INSTALLATION"
 sleep 3
 
 #Install and configure X-org
-echo ${infoColor}"START OF X-ORG INSTALLATION"
+echo -e ${infoColor}"START OF X-ORG INSTALLATION"
 sudo pacman -S --needed xorg-server xorg xorg-xinit libvdpau-va-gl libvdpau lib32-libvdpau lib32-mesa-vdpau libva-vdpau-driver mesa-vdpau libva-intel-driver libgl lib32-libgl
 wget https://raw.githubusercontent.com/SpotComms/Arch_Install_Commands/master/home/.xinitrc
 wget https://raw.githubusercontent.com/SpotComms/Arch_Install_Commands/master/home/.Xresources
@@ -93,7 +93,7 @@ sudo /bin/bash -c $'echo \'	Option "AccelerationProfile" "-1"\' >> /etc/X11/xorg
 sudo /bin/bash -c $'echo \'	Option "AccelerationScheme" "none"\' >> /etc/X11/xorg.conf.d/50-mouse-acceleration.conf'
 sudo /bin/bash -c $'echo \'	Option "AccelSpeed" "-1"\' >> /etc/X11/xorg.conf.d/50-mouse-acceleration.conf'
 sudo /bin/bash -c $'echo \'EndSection\' >> /etc/X11/xorg.conf.d/50-mouse-acceleration.conf'
-echo ${questionColor}"Do you need NVIDIA Optimus drivers? (Bumblebee)" 
+echo -e ${questionColor}"Do you need NVIDIA Optimus drivers? (Bumblebee)" 
 select yn in "Yes" "No"; do
         case $yn in
                 Yes ) 
@@ -106,7 +106,7 @@ select yn in "Yes" "No"; do
                 No ) break;;
         esac
 done
-echo ${questionColor}"Do you need NVIDIA drivers?"
+echo -e ${questionColor}"Do you need NVIDIA drivers?"
 select yn in "Yes" "No"; do
 	case $yn in
 		Yes ) sudo pacman -S --needed nvidia-utils opencl-nvidia lib32-nvidia-libgl lib32-mesa-vdpau nvidia; break;;
@@ -114,20 +114,20 @@ select yn in "Yes" "No"; do
 	esac
 done
 #TODO Add support for older NVIDIA cards, AMD cards and AMD cards with Intel (PRIME)
-echo ${infoColor}"END OF X-ORG CONFIGURATION"
+echo -e ${infoColor}"END OF X-ORG CONFIGURATION"
 sleep 3
 
 #Cinnamon
-echo ${infoColor}"START OF CINNAMON INSTALLATION"
+echo -e ${infoColor}"START OF CINNAMON INSTALLATION"
 sudo pacman -S --needed cinnamon nemo-fileroller nemo-preview networkmanager networkmanager-openconnect networkmanager-openvpn networkmanager-pptp networkmanager-vpnc
 sudo systemctl enable NetworkManager.service
 sudo systemctl enable NetworkManager-dispatcher.service
-echo ${infoColor}"END OF CINNAMON INSTALLATION"
+echo -e ${infoColor}"END OF CINNAMON INSTALLATION"
 sleep 3
 
 #Infinality
-echo ${infoColor}"START OF INFINALITY INSTALLATION"
-echo ${questionColor}"Do you want Infinality? (Makes fonts look glorious)"
+echo -e ${infoColor}"START OF INFINALITY INSTALLATION"
+echo -e ${questionColor}"Do you want Infinality? (Makes fonts look glorious)"
 select yn in "Yes" "No"; do
         case $yn in
                 Yes ) 
@@ -149,12 +149,12 @@ select yn in "Yes" "No"; do
                 No ) break;;
         esac
 done
-echo ${infoColor}"END OF INFINALITY INSTALLATION"
+echo -e ${infoColor}"END OF INFINALITY INSTALLATION"
 sleep 3
 
 #Applications
-echo ${infoColor}"START OF APPLICATIONS INSTALLATION"
-echo ${questionColor}"Do you want applications from the basics group??"
+echo -e ${infoColor}"START OF APPLICATIONS INSTALLATION"
+echo -e ${questionColor}"Do you want applications from the basics group??"
 select yn in "Yes" "No"; do
         case $yn in
                 Yes )
@@ -174,7 +174,7 @@ select yn in "Yes" "No"; do
                 No ) break;;
         esac
 done
-echo ${questionColor}"Do you want applications from the development group?"
+echo -e ${questionColor}"Do you want applications from the development group?"
 select yn in "Yes" "No"; do
         case $yn in
                 Yes ) 
@@ -184,7 +184,7 @@ select yn in "Yes" "No"; do
                 No ) break;;
         esac
 done
-echo ${questionColor}"Do you want applications from the games group?"
+echo -e ${questionColor}"Do you want applications from the games group?"
 select yn in "Yes" "No"; do
         case $yn in
                 Yes ) 
@@ -194,21 +194,21 @@ select yn in "Yes" "No"; do
                 No ) break;;
         esac
 done
-echo ${questionColor}"Do you want applications from the l33t hax0ring group?"
+echo -e ${questionColor}"Do you want applications from the l33t hax0ring group?"
 select yn in "Yes" "No"; do
         case $yn in
                 Yes ) sudo pacman -S --needed nmap wireshark-cli wireshark-gtk; break;;
                 No ) break;;
         esac
 done
-echo ${questionColor}"Do you want applications from the remote access group?"
+echo -e ${questionColor}"Do you want applications from the remote access group?"
 select yn in "Yes" "No"; do
         case $yn in
                 Yes ) sudo pacman -S --needed filezilla remmina freerdp libvncserver nxproxy xorg-server-xephyr; break;;
                 No ) break;;
         esac
 done
-echo ${questionColor}"Do you want applications from the security group?"
+echo -e ${questionColor}"Do you want applications from the security group?"
 select yn in "Yes" "No"; do
         case $yn in
                 Yes ) 
@@ -220,7 +220,7 @@ select yn in "Yes" "No"; do
                 No ) break;;
         esac
 done
-echo ${questionColor}"Do you want applications from the theming group?"
+echo -e ${questionColor}"Do you want applications from the theming group?"
 select yn in "Yes" "No"; do
         case $yn in
                 Yes )
@@ -230,7 +230,7 @@ select yn in "Yes" "No"; do
                 No ) break;;
         esac
 done
-echo ${questionColor}"Do you want applications from the virtulization group?"
+echo -e ${questionColor}"Do you want applications from the virtulization group?"
 select yn in "Yes" "No"; do
         case $yn in
                 Yes )
@@ -244,11 +244,11 @@ select yn in "Yes" "No"; do
                 No ) break;;
         esac
 done
-echo ${infoColor}"END OF APPLICATIONS INSTALLATION"
+echo -e ${infoColor}"END OF APPLICATIONS INSTALLATION"
 sleep 3
 
 #Network Tweaks
-echo ${infoColor}"START OF NETWORK TWEAKS"
+echo -e ${infoColor}"START OF NETWORK TWEAKS"
 sudo pacman -S dnsmasq
 sudo sed -i 's/#listen-address=/listen-address=127.0.0.1/' /etc/dnsmasq.conf
 sudo sed -i 's/dns=default/dns=dnsmasq/' /etc/NetworkManager/NetworkManager.conf
@@ -259,20 +259,20 @@ sudo /bin/bash -c 'echo "net.ipv4.tcp_ecn=1" >> /etc/sysctl.d/99-sysctl.conf'
 sudo /bin/bash -c 'echo "net.ipv4.tcp_sack=1" >> /etc/sysctl.d/99-sysctl.conf'
 sudo /bin/bash -c 'echo "net.ipv4.tcp_dsack=1" >> /etc/sysctl.d/99-sysctl.conf'
 sudo /bin/bash -c 'echo "net.netfilter.nf_conntrack_max=1048576" >> /etc/sysctl.d/99-sysctl.conf'
-echo ${infoColor}"END OF NETWORK TWEAKS"
+echo -e ${infoColor}"END OF NETWORK TWEAKS"
 sleep 3
 
 #Misc Tweaks
-echo ${infoColor}"START OF MISC TWEAKS"
+echo -e ${infoColor}"START OF MISC TWEAKS"
 sudo timedatectl set-ntp true
 sudo systemctl enable systemd-timesyncd.service
 sudo systemctl restart systemd-timesyncd.service
-echo ${infoColor}"END OF MISC TWEAKS"
+echo -e ${infoColor}"END OF MISC TWEAKS"
 sleep 3
 
 #Finish up
-echo ${infoColor}"FINISHING UP"
-echo ${infoColor}"After reboot please login and enjoy your system"
+echo -e ${infoColor}"FINISHING UP"
+echo -e ${infoColor}"After reboot please login and enjoy your system"
 sleep 10
 sync
 reboot now
