@@ -78,7 +78,7 @@ sleep 3
 #Frameworks
 echo -e ${infoColor}"START OF FRAMEWORKS INSTALLATION"
 echo -e ${outputColor}
-sudo pacman -S --needed gcc-multilib jdk7-openjdk jdk8-openjdk jre7-openjdk jre7-openjdk-headless jre8-openjdk jre8-openjdk-headless python python-pip python2-virtualenv
+sudo pacman -S --needed gcc-multilib jdk7-openjdk jdk8-openjdk jre7-openjdk jre8-openjdk python python-pip python2-virtualenv
 sudo archlinux-java set java-8-openjdk
 echo -e ${infoColor}"END OF FRAMEWORKS INSTALLATION"
 sleep 3
@@ -126,7 +126,7 @@ sleep 3
 #Cinnamon
 echo -e ${infoColor}"START OF CINNAMON INSTALLATION"
 echo -e ${outputColor}
-sudo pacman -S --needed cinnamon nemo-fileroller nemo-preview networkmanager networkmanager-openconnect networkmanager-openvpn networkmanager-pptp networkmanager-vpnc
+sudo pacman -S --needed cinnamon nemo-fileroller nemo-preview networkmanager networkmanager-openconnect networkmanager-openvpn networkmanager-pptp networkmanager-vpnc xfce4-terminal
 sudo systemctl enable NetworkManager.service
 sudo systemctl enable NetworkManager-dispatcher.service
 echo -e ${infoColor}"END OF CINNAMON INSTALLATION"
@@ -167,8 +167,8 @@ select yn in "Yes" "No"; do
         case $yn in
                 Yes )
                 	echo -e ${outputColor};
-			sudo pacman -S --needed bleachbit calibre cdrkit cheese chromium cpupower eog evince evolution expac gedit gimp git gksu gnome-calculator gnome-calendar gnome-disk-utility gnome-keyring gnome-screenshot gnome-sound-recorder gnome-system-log gnome-system-monitor gst-libav gst-plugins-bad gst-plugins-base gst-plugins-good gst-plugins-ugly hdparm hexchat htop keepass libreoffice-fresh lib32-alsa-plugins linux-headers mumble ntfs-3g openssh parted pigz pulseaudio-alsa pulseaudio-equalizer pulseaudio-gconf redshift rhythmbox seahorse syncthing-gtk totem transmission-gtk unrar wine wine-mono wine_gecko winetricks wget xfce4-terminal yubikey-neo-manager yubikey-personalization-gui zip zsh acpi acpi_call ethtool smartmontools linux-tools intel-ucode gparted btrfs-progs dosfstools e2fsprogs exfat-utils f2fs-tools jfsutils ntfs-3g reiserfsprogs xfsprogs mtools gpart nilfs-utils pigz pixz lbzip2 gdmap bind-tools simplescreenrecorder lib32-simplescreenrecorder gperf lm_sensors;
-			yaourt -S alsi chromium-pepper-flash downgrade filebot nano-syntax-highlighting-git notepadqq-git obs-studio-git oh-my-zsh-git pithos-git android-udev-git;
+			sudo pacman -S --needed bleachbit cdrkit cheese chromium cpupower eog evince evolution expac gedit gimp git gksu gnome-calculator gnome-calendar gnome-disk-utility gnome-keyring gnome-screenshot gnome-sound-recorder gnome-system-log gnome-system-monitor gst-libav gst-plugins-bad gst-plugins-base gst-plugins-good gst-plugins-ugly hdparm htop libreoffice-fresh lib32-alsa-plugins linux-headers mumble ntfs-3g openssh parted pigz pulseaudio-alsa pulseaudio-equalizer pulseaudio-gconf redshift seahorse totem transmission-gtk unrar wine wine-mono wine_gecko winetricks wget zip zsh acpi acpi_call ethtool smartmontools linux-tools intel-ucode gparted btrfs-progs dosfstools e2fsprogs exfat-utils f2fs-tools jfsutils ntfs-3g reiserfsprogs xfsprogs mtools gpart nilfs-utils pigz pixz lbzip2 bind-tools gperf lm_sensors;
+			yaourt -S alsi chromium-pepper-flash downgrade nano-syntax-highlighting-git notepadqq-git oh-my-zsh-git android-udev-git;
 			sudo pip install doge speedtest-cli;
 			wget https://raw.githubusercontent.com/SpotComms/Arch_Install_Commands/master/home/.zshrc;
 			chsh -s $(which zsh);
@@ -188,8 +188,8 @@ select yn in "Yes" "No"; do
         case $yn in
                 Yes ) 
                 	echo -e ${outputColor};
-			sudo pacman -S --needed abs android-tools apache-ant bc ccache eclipse-java intellij-idea-community-edition lib32-readline perl-switch proguard schedtool squashfs-tools;
-			yaourt -S android-apk-tool android-sdk android-sdk-build-tools android-sdk-platform-tools android-studio arduino dex2jar jd-gui launch4j libtinfo repo;
+			sudo pacman -S --needed abs android-tools apache-ant bc ccache eclipse-java lib32-readline perl-switch proguard schedtool squashfs-tools;
+			yaourt -S android-sdk android-sdk-build-tools android-studio arduino jd-gui launch4j libtinfo repo;
 			break;;
                 No ) break;;
         esac
@@ -208,14 +208,14 @@ done
 echo -e ${questionColor}"Do you want applications from the l33t hax0ring group?"
 select yn in "Yes" "No"; do
         case $yn in
-                Yes ) echo -e ${outputColor}; sudo pacman -S --needed nmap wireshark-cli wireshark-gtk; break;;
+                Yes ) echo -e ${outputColor}; sudo pacman -S --needed nmap wireshark-gtk; break;;
                 No ) break;;
         esac
 done
 echo -e ${questionColor}"Do you want applications from the remote access group?"
 select yn in "Yes" "No"; do
         case $yn in
-                Yes ) echo -e ${outputColor}; sudo pacman -S --needed filezilla remmina freerdp libvncserver nxproxy xorg-server-xephyr; break;;
+                Yes ) echo -e ${outputColor}; sudo pacman -S --needed remmina freerdp libvncserver nxproxy xorg-server-xephyr; break;;
                 No ) break;;
         esac
 done
