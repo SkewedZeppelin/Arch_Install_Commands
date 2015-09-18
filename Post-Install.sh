@@ -167,7 +167,7 @@ select yn in "Yes" "No"; do
         case $yn in
                 Yes )
                 	echo -e ${outputColor};
-			sudo pacman -S --needed bleachbit cdrkit cheese chromium cpupower eog evince evolution expac gedit gimp git gksu gnome-calculator gnome-calendar gnome-disk-utility gnome-keyring gnome-screenshot gnome-sound-recorder gnome-system-log gnome-system-monitor gst-libav gst-plugins-bad gst-plugins-base gst-plugins-good gst-plugins-ugly hdparm htop libreoffice-fresh lib32-alsa-plugins linux-headers mumble ntfs-3g openssh parted pigz pulseaudio-alsa pulseaudio-equalizer pulseaudio-gconf redshift seahorse totem transmission-gtk unrar wine wine-mono wine_gecko winetricks wget zip zsh acpi acpi_call ethtool smartmontools linux-tools intel-ucode gparted btrfs-progs dosfstools e2fsprogs exfat-utils f2fs-tools jfsutils ntfs-3g reiserfsprogs xfsprogs mtools gpart nilfs-utils pigz pixz lbzip2 bind-tools gperf lm_sensors;
+			sudo pacman -S --needed bleachbit cdrkit chromium cpupower eog evince evolution gedit gimp git gksu gnome-calculator gnome-disk-utility gnome-keyring gnome-screenshot gnome-system-monitor gst-libav gst-plugins-bad gst-plugins-base gst-plugins-good gst-plugins-ugly hdparm htop libreoffice-fresh lib32-alsa-plugins linux-headers mumble ntfs-3g openssh parted pigz pulseaudio-alsa pulseaudio-equalizer pulseaudio-gconf redshift seahorse totem transmission-gtk unrar wine wine-mono wine_gecko winetricks wget zip zsh acpi acpi_call ethtool smartmontools linux-tools intel-ucode gparted btrfs-progs dosfstools e2fsprogs exfat-utils f2fs-tools jfsutils ntfs-3g reiserfsprogs xfsprogs mtools gpart nilfs-utils pigz pixz lbzip2 bind-tools gperf lm_sensors;
 			yaourt -S alsi chromium-pepper-flash downgrade nano-syntax-highlighting-git notepadqq-git oh-my-zsh-git android-udev-git;
 			sudo pip install doge speedtest-cli;
 			wget https://raw.githubusercontent.com/SpotComms/Arch_Install_Commands/master/home/.zshrc;
@@ -176,9 +176,6 @@ select yn in "Yes" "No"; do
 			cd .config/xfce4/terminal;
 			wget https://raw.githubusercontent.com/SpotComms/Arch_Install_Commands/master/home/.config/xfce4/terminal/terminalrc;
 			cd ~; 
-			sudo /bin/bash -c $'echo \'ACTION!="add|change", GOTO="u2f_end"\' >> /etc/udev/rules.d/70-u2f.rules';
-			sudo /bin/bash -c $'echo \'KERNEL=="hidraw*", SUBSYSTEM=="hidraw", ATTRS{idVendor}=="1050", ATTRS{idProduct}=="0113|0114|0115|0116|0120|0402|0403|0406|0407|0410", TAG+="uaccess"\' >> /etc/udev/rules.d/70-u2f.rules';
-			sudo /bin/bash -c $'echo \'LABEL="u2f_end"\' >> /etc/udev/rules.d/70-u2f.rules';
 			break;;
                 No ) break;;
         esac
@@ -228,6 +225,19 @@ select yn in "Yes" "No"; do
 			yaourt -S clamtk pgl;
 			sudo /bin/bash -c $'echo \'SafeBrowsing Yes\' >> /etc/clamav/freshclam.conf';
 			sudo systemctl enable haveged.service;
+			break;;
+                No ) break;;
+        esac
+done
+echo -e ${questionColor}"Do you want applications from the Yubikey group?"
+select yn in "Yes" "No"; do
+        case $yn in
+                Yes ) 
+                	echo -e ${outputColor};
+			sudo pacman -S yubikey-neo-manager yubikey-personalization-gui;
+			sudo /bin/bash -c $'echo \'ACTION!="add|change", GOTO="u2f_end"\' >> /etc/udev/rules.d/70-u2f.rules';
+			sudo /bin/bash -c $'echo \'KERNEL=="hidraw*", SUBSYSTEM=="hidraw", ATTRS{idVendor}=="1050", ATTRS{idProduct}=="0113|0114|0115|0116|0120|0402|0403|0406|0407|0410", TAG+="uaccess"\' >> /etc/udev/rules.d/70-u2f.rules';
+			sudo /bin/bash -c $'echo \'LABEL="u2f_end"\' >> /etc/udev/rules.d/70-u2f.rules';
 			break;;
                 No ) break;;
         esac
