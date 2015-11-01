@@ -103,7 +103,7 @@ select yn in "Yes" "No"; do
         case $yn in
                 Yes ) 
                 	echo -e ${outputColor};
-			sudo pacman -S --needed bumblebeed primus lib32-primus virtualgl lib32-virtualgl bbswitch mesa lib32-mesa mesa-libgl lib32-mesa-libgl mesa-vdpau lib32-mesa-vdpau xf86-video-intel xf86-video-nv lib32-nvidia-utils nvidia-utils lib32-opencl-nvidia opencl-nvidia nvidia;
+			sudo pacman -S --needed bumblebee primus lib32-primus virtualgl lib32-virtualgl bbswitch mesa lib32-mesa mesa-libgl lib32-mesa-libgl mesa-vdpau lib32-mesa-vdpau xf86-video-intel xf86-video-nv lib32-nvidia-utils nvidia-utils lib32-opencl-nvidia opencl-nvidia nvidia;
 			sudo systemctl enable bumblebeed.service;
 			sudo gpasswd -a $USER bumblebee;
 			sudo sed -i 's/MODULES="/MODULES="i915 bbswitch /' /etc/mkinitcpio.conf;

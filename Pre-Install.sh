@@ -62,7 +62,7 @@ dd if=/dev/zero of=${strInstallDrive} bs=512 count=10
 if [ ${blEFI} == true ]
 	then
 		parted ${strInstallDrive} mklabel gpt
-		parted ${strInstallDrive} mkpart primary fat32 1MiB ${strPartitionSizeBoot}
+		parted ${strInstallDrive} mkpart ESP fat32 1MiB ${strPartitionSizeBoot}
 	else
 		parted ${strInstallDrive} mklabel msdos
 		parted ${strInstallDrive} mkpart primary ext4 1MiB ${strPartitionSizeBoot}
@@ -81,7 +81,7 @@ if [ ${blEFI} == true ]
 	then
 		mkfs.vfat -F32 ${strInstallDrive}1
 	else
-		mkfs.ext4 {$strInstallDrive}1
+		mkfs.ext4 ${strInstallDrive}1
 fi
 mkfs.ext4 ${strInstallDrive}2
 mkswap ${strInstallDrive}3
