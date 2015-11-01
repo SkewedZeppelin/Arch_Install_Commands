@@ -162,8 +162,8 @@ if [ ${blEFI} == true ]
 		arch-chroot /mnt bootctl --path=/boot install
 		arch-chroot /mnt /bin/bash -c 'echo "title Arch Linux" >> /boot/loader/entries/arch.conf\'
 		arch-chroot /mnt /bin/bash -c 'echo "linux /vmlinuz-linux" >> /boot/loader/entries/arch.conf\'
-		arch-chroot /mnt /bin/bash -c 'echo "initrc /initramfs-linux.img" >> /boot/loader/entries/arch.conf\'
-		arch-chroot /mnt /bin/bash -c $'echo "options root=${strInstallDrive}1 rw resume=${strInstallDrive}3" >> /boot/loader/entries/arch.conf\'
+		arch-chroot /mnt /bin/bash -c 'echo "initrd /initramfs-linux.img" >> /boot/loader/entries/arch.conf\'
+		arch-chroot /mnt /bin/bash -c $'echo "options root=${strInstallDrive}1 rw resume=${strInstallDrive}3" >> /boot/loader/entries/arch.conf\' #FIX THIS
 		arch-chroot /mnt /bin/bash -c 'echo "timeout 0" > /boot/loader/loader.conf\' #There is only 1 > because the file is created on install, and were overwriting it
 		arch-chroot /mnt /bin/bash -c 'echo "default arch" >> /boot/loader/loader.conf\'
 		arch-chroot /mnt bootctl update
