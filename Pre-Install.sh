@@ -166,6 +166,7 @@ if [ ${blEFI} == true ]
 		arch-chroot /mnt /bin/bash -c $'echo "options root=${strInstallDrive}1 rw resume=${strInstallDrive}3" >> /boot/loader/entries/arch.conf\'
 		arch-chroot /mnt /bin/bash -c 'echo "timeout 0" > /boot/loader/loader.conf\' #There is only 1 > because the file is created on install, and were overwriting it
 		arch-chroot /mnt /bin/bash -c 'echo "default arch" >> /boot/loader/loader.conf\'
+		arch-chroot /mnt bootctl update
         else
 		arch-chroot /mnt pacman -S grub os-prober
 		arch-chroot /mnt grub-install --target=i386-pc --recheck ${strInstallDrive}
