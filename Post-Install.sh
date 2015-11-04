@@ -48,9 +48,7 @@ sleep 3
 echo -e ${infoColor}"START OF MAKEPKG CONFIGURATION"
 sudo sed -i 's/CFLAGS="-march=x86-64 -mtune=generic -O2 -pipe -fstack-protector-strong -fstack-check"/CFLAGS="-march=native -mtune=native -O3 -pipe -fstack-protector-strong -fstack-check --param=ssp-buffer-size=4"/' /etc/makepkg.conf
 sudo sed -i 's/CXXFLAGS="-march=x86-64 -mtune=generic -O2 -pipe -fstack-protector-strong -fstack-check"/CXXFLAGS="${CFLAGS}"/' /etc/makepkg.conf
-echo -e ${questionColor}"How many threads do you have?"
-read strAmtThreads
-sudo sed -i "s/#MAKEFLAGS=\"-j2\"/MAKEFLAGS=\"-j${strAmtThreads}\"/" /etc/makepkg.conf
+sudo sed -i "s/#MAKEFLAGS=\"-j2\"/MAKEFLAGS=\"-j$*(cat /proc/cpuinfo | grep -c processor)\"/" /etc/makepkg.conf
 #TODO: Change packager name here
 sudo sed -i 's/(xz -c -z -)/(xz -T 0 -c -z -)/' /etc/makepkg.conf
 echo -e ${infoColor}"END OF MAKEPKG CONFIGURATION"
