@@ -110,7 +110,7 @@ select yn in "Yes" "No"; do
                 No ) break;;
         esac
 done
-echo -e ${questionColor}"Do you need NVIDIA drivers?"
+echo -e ${questionColor}"Do you need NVIDIA drivers? (Not needed for Optimus)"
 select yn in "Yes" "No"; do
 	case $yn in
 		Yes ) echo -e ${outputColor}; sudo pacman -S --needed nvidia-utils opencl-nvidia lib32-nvidia-libgl lib32-mesa-vdpau nvidia; break;;
@@ -165,8 +165,8 @@ select yn in "Yes" "No"; do
         case $yn in
                 Yes )
                 	echo -e ${outputColor};
-			sudo pacman -S --needed bleachbit cdrkit chromium cpupower eog evince evolution gedit gimp git gksu gnome-calculator gnome-disk-utility gnome-keyring gnome-screenshot gnome-system-monitor gst-libav gst-plugins-bad gst-plugins-base gst-plugins-good gst-plugins-ugly hdparm htop libreoffice-fresh lib32-alsa-plugins linux-headers mumble ntfs-3g openssh parted pigz pulseaudio-alsa pulseaudio-equalizer pulseaudio-gconf redshift seahorse totem transmission-gtk unrar wine wine-mono wine_gecko winetricks wget zip zsh acpi acpi_call ethtool smartmontools linux-tools intel-ucode gparted btrfs-progs dosfstools e2fsprogs exfat-utils f2fs-tools jfsutils ntfs-3g reiserfsprogs xfsprogs mtools gpart nilfs-utils pigz pixz lbzip2 bind-tools gperf lm_sensors;
-			yaourt -S alsi chromium-pepper-flash downgrade nano-syntax-highlighting-git notepadqq-git oh-my-zsh-git android-udev-git;
+			sudo pacman -S --needed cdrkit chromium cpupower eog evince evolution gedit gimp git gksu gnome-calculator gnome-disk-utility gnome-keyring gnome-screenshot gnome-system-monitor gst-libav gst-plugins-bad gst-plugins-base gst-plugins-good gst-plugins-ugly hdparm htop libreoffice-fresh lib32-alsa-plugins linux-headers mumble ntfs-3g parted pigz pulseaudio-alsa pulseaudio-equalizer pulseaudio-gconf redshift seahorse totem transmission-gtk unrar wine-staging wine-mono wine_gecko wget zip zsh acpi acpi_call ethtool smartmontools linux-tools intel-ucode gparted btrfs-progs dosfstools e2fsprogs exfat-utils fuse-exfat f2fs-tools jfsutils ntfs-3g reiserfsprogs xfsprogs mtools gpart nilfs-utils pigz pixz lbzip2 bind-tools gperf lm_sensors expac meld gvfs-mtp hexchat paprefs pavucontrol;
+			yaourt -S alsi chromium-pepper-flash downgrade nano-syntax-highlighting-git notepadqq-git oh-my-zsh-git android-udev-git winetricks-git deadbeef vlc;
 			sudo pip install doge speedtest-cli;
 			wget https://raw.githubusercontent.com/SpotComms/Arch_Install_Commands/master/home/.zshrc;
 			chsh -s $(which zsh);
@@ -183,8 +183,8 @@ select yn in "Yes" "No"; do
         case $yn in
                 Yes ) 
                 	echo -e ${outputColor};
-			sudo pacman -S --needed abs android-tools apache-ant bc ccache eclipse-java lib32-readline perl-switch proguard schedtool squashfs-tools;
-			yaourt -S android-sdk android-sdk-build-tools android-studio arduino jd-gui launch4j libtinfo repo;
+			sudo pacman -S --needed abs android-tools apache-ant autoconf automake bc ccache eclipse-java lib32-readline perl-switch proguard schedtool squashfs-tools swftools glade;
+			yaourt -S android-apktool android-ndk android-studio arduino jd-gui launch4j libtinfo repo;
 			break;;
                 No ) break;;
         esac
@@ -203,14 +203,17 @@ done
 echo -e ${questionColor}"Do you want applications from the l33t hax0ring group?"
 select yn in "Yes" "No"; do
         case $yn in
-                Yes ) echo -e ${outputColor}; sudo pacman -S --needed nmap wireshark-gtk; break;;
+                Yes )
+			echo -e ${outputColor}; sudo pacman -S --needed aircrack-ng kismet nmap wireshark-gtk tor arm;
+			yaourt -S hashcat i2p;
+			break;;
                 No ) break;;
         esac
 done
 echo -e ${questionColor}"Do you want applications from the remote access group?"
 select yn in "Yes" "No"; do
         case $yn in
-                Yes ) echo -e ${outputColor}; sudo pacman -S --needed remmina freerdp libvncserver nxproxy xorg-server-xephyr; break;;
+                Yes ) echo -e ${outputColor}; sudo pacman -S --needed x2goclient openssh filezilla remmina freerdp libvncserver nxproxy xorg-server-xephyr; break;;
                 No ) break;;
         esac
 done
@@ -219,8 +222,8 @@ select yn in "Yes" "No"; do
         case $yn in
                 Yes ) 
                 	echo -e ${outputColor};
-			sudo pacman -S --needed clamav haveged;
-			yaourt -S clamtk pgl;
+			sudo pacman -S --needed clamav haveged checksec paxd grsec-common linux-grsec linux-grsec-headers linux-grsec-docs gradm bleachbit keepass;
+			yaourt -S clamtk pgl paxctl linux-pax-flags;
 			sudo /bin/bash -c $'echo \'SafeBrowsing Yes\' >> /etc/clamav/freshclam.conf';
 			sudo systemctl enable haveged.service;
 			break;;
@@ -262,6 +265,17 @@ select yn in "Yes" "No"; do
 			sudo gpasswd -a $USER kvm;
 			sudo sed -i 's/MODULES="/MODULES="kvm kvm_intel /' /etc/mkinitcpio.conf;#TODO AMD CPU SUPPORT
 			sudo mkinitcpio -p linux;
+			break;;
+                No ) break;;
+        esac
+done
+echo -e ${questionColor}"Do you want applications from the media group?"
+select yn in "Yes" "No"; do
+        case $yn in
+                Yes )
+                	echo -e ${outputColor};
+			sudo pacman -S --needed picard;
+			yaourt -S sickrage-git filebot plex-media-server-plexpass;
 			break;;
                 No ) break;;
         esac
