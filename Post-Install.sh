@@ -57,19 +57,7 @@ sleep 3
 #Install and configure yaourt
 echo -e ${infoColor}"START OF YAOURT INSTALLATION"
 echo -e ${outputColor}
-cd /tmp
-wget https://aur.archlinux.org/cgit/aur.git/snapshot/package-query-git.tar.gz
-tar -xzvf package-query-git.tar.gz
-cd package-query-git
-makepkg -s
-sudo pacman -U package-query-git-*.tar.xz
-cd ..
-wget https://aur.archlinux.org/cgit/aur.git/snapshot/yaourt-git.tar.gz
-tar -xzvf yaourt-git.tar.gz
-cd yaourt-git
-makepkg -s
-sudo pacman -U yaourt-git-*.tar.xz
-cd ~
+sudo pacman -S yaourt
 echo -e ${infoColor}"END OF YAOURT INSTALLATION"
 sleep 3
 
@@ -85,8 +73,8 @@ sleep 3
 echo -e ${infoColor}"START OF X-ORG INSTALLATION"
 echo -e ${outputColor}
 sudo pacman -S --needed xorg-server xorg xorg-xinit libvdpau-va-gl libvdpau lib32-libvdpau lib32-mesa-vdpau libva-vdpau-driver mesa-vdpau libva-intel-driver libgl lib32-libgl
-wget https://raw.githubusercontent.com/SpotComms/Arch_Install_Commands/master/home/.xinitrc
-wget https://raw.githubusercontent.com/SpotComms/Arch_Install_Commands/master/home/.Xresources
+wget https://gogs.spotco.us/spotcomms/Arch_Install_Script/raw/master/home/.xinitrc
+wget https://gogs.spotco.us/spotcomms/Arch_Install_Script/raw/master/home/.Xresources
 echo '[[ -z $DISPLAY && $XDG_VTNR -eq 1 ]] && exec startx' > ~/.bash_profile
 echo '[[ -z $DISPLAY && $XDG_VTNR -eq 1 ]] && exec startx' > ~/.zprofile
 sudo /bin/bash -c $'echo \'Section "InputClass"\' >> /etc/X11/xorg.conf.d/50-mouse-acceleration.conf'
@@ -168,11 +156,11 @@ select yn in "Yes" "No"; do
 			sudo pacman -S --needed cdrkit chromium cpupower eog evince evolution gedit gimp git gksu gnome-calculator gnome-disk-utility gnome-keyring gnome-screenshot gnome-system-monitor gst-libav gst-plugins-bad gst-plugins-base gst-plugins-good gst-plugins-ugly hdparm htop libreoffice-fresh lib32-alsa-plugins linux-headers mumble ntfs-3g parted pigz pulseaudio-alsa pulseaudio-equalizer pulseaudio-gconf redshift seahorse totem transmission-gtk unrar wine-staging wine-mono wine_gecko wget zip zsh acpi acpi_call ethtool smartmontools linux-tools intel-ucode gparted btrfs-progs dosfstools e2fsprogs exfat-utils fuse-exfat f2fs-tools jfsutils ntfs-3g reiserfsprogs xfsprogs mtools gpart nilfs-utils pigz pixz lbzip2 bind-tools gperf lm_sensors expac meld gvfs-mtp hexchat paprefs pavucontrol;
 			yaourt -S alsi chromium-pepper-flash downgrade nano-syntax-highlighting-git notepadqq-git oh-my-zsh-git android-udev-git winetricks-git deadbeef vlc;
 			sudo pip install doge speedtest-cli;
-			wget https://raw.githubusercontent.com/SpotComms/Arch_Install_Commands/master/home/.zshrc;
+			wget https://gogs.spotco.us/spotcomms/Arch_Install_Script/raw/master/home/.zshrc;
 			chsh -s $(which zsh);
 			mkdir -p .config/xfce4/terminal;
 			cd .config/xfce4/terminal;
-			wget https://raw.githubusercontent.com/SpotComms/Arch_Install_Commands/master/home/.config/xfce4/terminal/terminalrc;
+			wget https://gogs.spotco.us/spotcomms/Arch_Install_Script/raw/master/home/.config/xfce4/terminal/terminalrc;
 			cd ~; 
 			break;;
                 No ) break;;

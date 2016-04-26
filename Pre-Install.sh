@@ -202,7 +202,7 @@ sleep 3
 #Post-Install Script
 echo -e ${infoColor}"INSTALLING POST INSTALL SCRIPT"
 echo -e ${outputColor}
-wget https://raw.githubusercontent.com/SpotComms/Arch_Install_Commands/master/Post-Install.sh
+wget https://gogs.spotco.us/spotcomms/Arch_Install_Script/raw/master/Post-Install.sh
 cp Post-Install.sh /mnt/home/${strUsername}/
 echo -e ${infoColor}"INSTALLED POST INSTALL SCRIPT"
 sleep 3

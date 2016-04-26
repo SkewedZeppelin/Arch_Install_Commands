@@ -5,7 +5,7 @@ Instructions
 ------------
 Run the following commands to be greeted with a wholesome install within minutes
 ```shell
-wget https://raw.githubusercontent.com/SpotComms/Arch_Install_Commands/master/Pre-Install.sh
+wget https://gogs.spotco.us/spotcomms/Arch_Install_Script/raw/master/Pre-Install.sh
 sh Pre-Install.sh
 ```
 
