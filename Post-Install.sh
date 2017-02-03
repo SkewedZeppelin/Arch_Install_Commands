@@ -54,176 +54,14 @@ sudo sed -i 's/(xz -c -z -)/(xz -T 0 -c -z -)/' /etc/makepkg.conf
 echo -e ${infoColor}"END OF MAKEPKG CONFIGURATION"
 sleep 3
 
-#Install and configure yaourt
-echo -e ${infoColor}"START OF YAOURT INSTALLATION"
-echo -e ${outputColor}
-sudo pacman -S yaourt
-echo -e ${infoColor}"END OF YAOURT INSTALLATION"
-sleep 3
+echo "Please run Arch_Linux-Package_Installer.sh before continuing..."
+sleep 30
 
-#Frameworks
-echo -e ${infoColor}"START OF FRAMEWORKS INSTALLATION"
-echo -e ${outputColor}
-sudo pacman -S --needed gcc-multilib jdk7-openjdk jdk8-openjdk jre7-openjdk jre8-openjdk python python-pip python2-virtualenv
-sudo archlinux-java set java-8-openjdk
-echo -e ${infoColor}"END OF FRAMEWORKS INSTALLATION"
-sleep 3
-
-#Install and configure X-org
-echo -e ${infoColor}"START OF X-ORG INSTALLATION"
-echo -e ${outputColor}
-sudo pacman -S --needed xorg-server xorg xorg-xinit libvdpau-va-gl libvdpau lib32-libvdpau lib32-mesa-vdpau libva-vdpau-driver mesa-vdpau libva-intel-driver libgl lib32-libgl
-wget https://gogs.spotco.us/spotcomms/Arch_Install_Script/raw/master/home/.xinitrc
-wget https://gogs.spotco.us/spotcomms/Arch_Install_Script/raw/master/home/.Xresources
-echo '[[ -z $DISPLAY && $XDG_VTNR -eq 1 ]] && exec startx' > ~/.bash_profile
-echo '[[ -z $DISPLAY && $XDG_VTNR -eq 1 ]] && exec startx' > ~/.zprofile
-sudo /bin/bash -c $'echo \'Section "InputClass"\' >> /etc/X11/xorg.conf.d/50-mouse-acceleration.conf'
-sudo /bin/bash -c $'echo \'	Identifier "My Mouse"\' >> /etc/X11/xorg.conf.d/50-mouse-acceleration.conf'
-sudo /bin/bash -c $'echo \'	MatchIsPointer "yes"\' >> /etc/X11/xorg.conf.d/50-mouse-acceleration.conf'
-sudo /bin/bash -c $'echo \'	Option "AccelerationProfile" "-1"\' >> /etc/X11/xorg.conf.d/50-mouse-acceleration.conf'
-sudo /bin/bash -c $'echo \'	Option "AccelerationScheme" "none"\' >> /etc/X11/xorg.conf.d/50-mouse-acceleration.conf'
-sudo /bin/bash -c $'echo \'	Option "AccelSpeed" "-1"\' >> /etc/X11/xorg.conf.d/50-mouse-acceleration.conf'
-sudo /bin/bash -c $'echo \'EndSection\' >> /etc/X11/xorg.conf.d/50-mouse-acceleration.conf'
-echo -e ${questionColor}"Do you need NVIDIA Optimus drivers? (Bumblebee)" 
+echo -e ${questionColor}"Do you want YubiKey support?"
 select yn in "Yes" "No"; do
         case $yn in
                 Yes ) 
                 	echo -e ${outputColor};
-			sudo pacman -S --needed bumblebee primus lib32-primus virtualgl lib32-virtualgl bbswitch mesa lib32-mesa mesa-libgl lib32-mesa-libgl mesa-vdpau lib32-mesa-vdpau xf86-video-intel xf86-video-nv lib32-nvidia-utils nvidia-utils lib32-opencl-nvidia opencl-nvidia nvidia;
-			sudo systemctl enable bumblebeed.service;
-			sudo gpasswd -a $USER bumblebee;
-			sudo sed -i 's/MODULES="/MODULES="i915 bbswitch /' /etc/mkinitcpio.conf;
-			sudo mkinitcpio -p linux;
-			break;;
-                No ) break;;
-        esac
-done
-echo -e ${questionColor}"Do you need NVIDIA drivers? (Not needed for Optimus)"
-select yn in "Yes" "No"; do
-	case $yn in
-		Yes ) echo -e ${outputColor}; sudo pacman -S --needed nvidia-utils opencl-nvidia lib32-nvidia-libgl lib32-mesa-vdpau nvidia; break;;
-		No ) break;;
-	esac
-done
-#TODO Add support for older NVIDIA cards, AMD cards and AMD cards with Intel (PRIME)
-echo -e ${infoColor}"END OF X-ORG CONFIGURATION"
-sleep 3
-
-#Cinnamon
-echo -e ${infoColor}"START OF CINNAMON INSTALLATION"
-echo -e ${outputColor}
-sudo pacman -S --needed cinnamon nemo-fileroller nemo-preview networkmanager networkmanager-openconnect networkmanager-openvpn networkmanager-pptp networkmanager-vpnc xfce4-terminal
-sudo systemctl enable NetworkManager.service
-sudo systemctl enable NetworkManager-dispatcher.service
-echo -e ${infoColor}"END OF CINNAMON INSTALLATION"
-sleep 3
-
-#Infinality
-echo -e ${infoColor}"START OF INFINALITY INSTALLATION"
-echo -e ${questionColor}"Do you want Infinality? (Makes fonts look glorious)"
-select yn in "Yes" "No"; do
-        case $yn in
-                Yes ) 
-                	echo -e ${outputColor};
-			sudo /bin/bash -c 'echo "[infinality-bundle]" >> /etc/pacman.conf';
-			sudo /bin/bash -c "echo 'Server = http://bohoomil.com/repo/\$arch' >> /etc/pacman.conf";
-			sudo /bin/bash -c 'echo "[infinality-bundle-multilib]" >> /etc/pacman.conf';
-			sudo /bin/bash -c "echo 'Server = http://bohoomil.com/repo/multilib/\$arch' >> /etc/pacman.conf";
-			sudo /bin/bash -c 'echo "[infinality-bundle-fonts]" >> /etc/pacman.conf';
-			sudo /bin/bash -c 'echo "Server = http://bohoomil.com/repo/fonts" >> /etc/pacman.conf';
-			sudo dirmngr < /dev/null;
-			sudo pacman -S archlinux-keyring;
-			echo "The next command might take a couple minutes";
-			sudo pacman-key -r 962DDE58;
-			sudo pacman-key -f 962DDE58;
-			sudo pacman-key --lsign-key 962DDE58;
-			sudo pacman -Syyu;
-			sudo pacman -S infinality-bundle-multilib infinality-bundle ibfonts-meta-base;
-			break;;
-                No ) break;;
-        esac
-done
-echo -e ${infoColor}"END OF INFINALITY INSTALLATION"
-sleep 3
-
-#Applications
-echo -e ${infoColor}"START OF APPLICATIONS INSTALLATION"
-echo -e ${questionColor}"Do you want applications from the basics group??"
-select yn in "Yes" "No"; do
-        case $yn in
-                Yes )
-                	echo -e ${outputColor};
-			sudo pacman -S --needed cdrkit chromium cpupower eog evince evolution gedit gimp git gksu gnome-calculator gnome-disk-utility gnome-keyring gnome-screenshot gnome-system-monitor gst-libav gst-plugins-bad gst-plugins-base gst-plugins-good gst-plugins-ugly hdparm htop libreoffice-fresh lib32-alsa-plugins linux-headers mumble ntfs-3g parted pigz pulseaudio-alsa pulseaudio-equalizer pulseaudio-gconf redshift seahorse totem transmission-gtk unrar wine-staging wine-mono wine_gecko wget zip zsh acpi acpi_call ethtool smartmontools linux-tools intel-ucode gparted btrfs-progs dosfstools e2fsprogs exfat-utils fuse-exfat f2fs-tools jfsutils ntfs-3g reiserfsprogs xfsprogs mtools gpart nilfs-utils pigz pixz lbzip2 bind-tools gperf lm_sensors expac meld gvfs-mtp hexchat paprefs pavucontrol;
-			yaourt -S alsi chromium-pepper-flash downgrade nano-syntax-highlighting-git notepadqq-git oh-my-zsh-git android-udev-git winetricks-git deadbeef vlc;
-			sudo pip install doge speedtest-cli;
-			wget https://gogs.spotco.us/spotcomms/Arch_Install_Script/raw/master/home/.zshrc;
-			chsh -s $(which zsh);
-			mkdir -p .config/xfce4/terminal;
-			cd .config/xfce4/terminal;
-			wget https://gogs.spotco.us/spotcomms/Arch_Install_Script/raw/master/home/.config/xfce4/terminal/terminalrc;
-			cd ~; 
-			break;;
-                No ) break;;
-        esac
-done
-echo -e ${questionColor}"Do you want applications from the development group?"
-select yn in "Yes" "No"; do
-        case $yn in
-                Yes ) 
-                	echo -e ${outputColor};
-			sudo pacman -S --needed abs android-tools apache-ant autoconf automake bc ccache eclipse-java lib32-readline perl-switch proguard schedtool squashfs-tools swftools glade;
-			yaourt -S android-apktool android-ndk android-studio arduino jd-gui launch4j libtinfo repo;
-			break;;
-                No ) break;;
-        esac
-done
-echo -e ${questionColor}"Do you want applications from the games group?"
-select yn in "Yes" "No"; do
-        case $yn in
-                Yes ) 
-                	echo -e ${outputColor};
-			sudo pacman -S --needed steam;
-			yaourt -S multimc5-git;
-			break;;
-                No ) break;;
-        esac
-done
-echo -e ${questionColor}"Do you want applications from the l33t hax0ring group?"
-select yn in "Yes" "No"; do
-        case $yn in
-                Yes )
-			echo -e ${outputColor}; sudo pacman -S --needed aircrack-ng kismet nmap wireshark-gtk tor arm;
-			yaourt -S hashcat i2p;
-			break;;
-                No ) break;;
-        esac
-done
-echo -e ${questionColor}"Do you want applications from the remote access group?"
-select yn in "Yes" "No"; do
-        case $yn in
-                Yes ) echo -e ${outputColor}; sudo pacman -S --needed x2goclient openssh filezilla remmina freerdp libvncserver nxproxy xorg-server-xephyr; break;;
-                No ) break;;
-        esac
-done
-echo -e ${questionColor}"Do you want applications from the security group?"
-select yn in "Yes" "No"; do
-        case $yn in
-                Yes ) 
-                	echo -e ${outputColor};
-			sudo pacman -S --needed clamav haveged checksec paxd grsec-common linux-grsec linux-grsec-headers linux-grsec-docs gradm bleachbit keepass;
-			yaourt -S clamtk pgl paxctl linux-pax-flags;
-			sudo /bin/bash -c $'echo \'SafeBrowsing Yes\' >> /etc/clamav/freshclam.conf';
-			sudo systemctl enable haveged.service;
-			break;;
-                No ) break;;
-        esac
-done
-echo -e ${questionColor}"Do you want applications from the Yubikey group?"
-select yn in "Yes" "No"; do
-        case $yn in
-                Yes ) 
-                	echo -e ${outputColor};
-			sudo pacman -S yubikey-neo-manager yubikey-personalization-gui;
 			sudo /bin/bash -c $'echo \'ACTION!="add|change", GOTO="u2f_end"\' >> /etc/udev/rules.d/70-u2f.rules';
 			sudo /bin/bash -c $'echo \'KERNEL=="hidraw*", SUBSYSTEM=="hidraw", ATTRS{idVendor}=="1050", ATTRS{idProduct}=="0113|0114|0115|0116|0120|0402|0403|0406|0407|0410", TAG+="uaccess"\' >> /etc/udev/rules.d/70-u2f.rules';
 			sudo /bin/bash -c $'echo \'LABEL="u2f_end"\' >> /etc/udev/rules.d/70-u2f.rules';
@@ -231,75 +69,33 @@ select yn in "Yes" "No"; do
                 No ) break;;
         esac
 done
-echo -e ${questionColor}"Do you want applications from the theming group?"
+
+echo -e ${questionColor}"Do you want libvirt support?"
 select yn in "Yes" "No"; do
         case $yn in
                 Yes )
                 	echo -e ${outputColor};
-			sudo pacman -S --needed numix-themes;
-			yaourt -S numix-icon-theme-git numix-circle-icon-theme-git;
-			break;;
-                No ) break;;
-        esac
-done
-echo -e ${questionColor}"Do you want applications from the virtulization group?"
-select yn in "Yes" "No"; do
-        case $yn in
-                Yes )
-                	echo -e ${outputColor};
-			sudo pacman -S --needed ebtables libvirt openbsd-netcat qemu virt-manager;
 			sudo systemctl enable libvirtd.service;
 			sudo /bin/bash -c "echo 'polkit.addRule(function(action, subject) { if (action.id == "org.libvirt.unix.manage" && subject.isInGroup("kvm")) { return polkit.Result.YES; } })' >> /etc/polkit-1/rules.d/49-org.libvirt.unix.manager.rules"
 			sudo gpasswd -a $USER kvm;
-			sudo sed -i 's/MODULES="/MODULES="kvm kvm_intel /' /etc/mkinitcpio.conf;#TODO AMD CPU SUPPORT
+			sudo sed -i 's/MODULES="/MODULES="kvm kvm_intel /' /etc/mkinitcpio.conf;
 			sudo mkinitcpio -p linux;
 			break;;
                 No ) break;;
         esac
 done
-echo -e ${questionColor}"Do you want applications from the media group?"
-select yn in "Yes" "No"; do
-        case $yn in
-                Yes )
-                	echo -e ${outputColor};
-			sudo pacman -S --needed picard;
-			yaourt -S sickrage-git filebot plex-media-server-plexpass;
-			break;;
-                No ) break;;
-        esac
-done
-echo -e ${infoColor}"END OF APPLICATIONS INSTALLATION"
-sleep 3
 
-#Network Tweaks
-echo -e ${infoColor}"START OF NETWORK TWEAKS"
-echo -e ${outputColor}
-sudo pacman -S dnsmasq
+sudo archlinux-java set java-8-openjdk
 sudo sed -i 's/#listen-address=/listen-address=127.0.0.1/' /etc/dnsmasq.conf
 sudo sed -i 's/dns=default/dns=dnsmasq/' /etc/NetworkManager/NetworkManager.conf
-sudo /bin/bash -c 'echo "net.ipv4.neigh.default.gc_thresh1=256" >> /etc/sysctl.d/99-sysctl.conf'
-sudo /bin/bash -c 'echo "net.ipv4.neigh.default.gc_thresh2=2048" >> /etc/sysctl.d/99-sysctl.conf'
-sudo /bin/bash -c 'echo "net.ipv4.neigh.default.gc_thresh3=2048" >> /etc/sysctl.d/99-sysctl.conf'
-sudo /bin/bash -c 'echo "net.ipv4.tcp_ecn=1" >> /etc/sysctl.d/99-sysctl.conf'
-sudo /bin/bash -c 'echo "net.ipv4.tcp_sack=1" >> /etc/sysctl.d/99-sysctl.conf'
-sudo /bin/bash -c 'echo "net.ipv4.tcp_dsack=1" >> /etc/sysctl.d/99-sysctl.conf'
-sudo /bin/bash -c 'echo "net.netfilter.nf_conntrack_max=1048576" >> /etc/sysctl.d/99-sysctl.conf'
-echo -e ${infoColor}"END OF NETWORK TWEAKS"
-sleep 3
-
-#Misc Tweaks
-echo -e ${infoColor}"START OF MISC TWEAKS"
-echo -e ${outputColor}
+sudo systemctl enable NetworkManager.service
+sudo systemctl enable NetworkManager-dispatcher.service
+sudo systemctl enable haveged.service;
 sudo timedatectl set-ntp true
 sudo systemctl enable systemd-timesyncd.service
 sudo systemctl restart systemd-timesyncd.service
-echo -e ${infoColor}"END OF MISC TWEAKS"
-sleep 3
+chsh -s $(which zsh);
 
-#Finish up
 echo -e ${infoColor}"FINISHING UP"
-echo -e ${infoColor}"After reboot please login and enjoy your system"
-sleep 10
+echo -e ${infoColor}"Please reboot now"
 sudo sync
-echo -e ${coloroff}
-sudo reboot now

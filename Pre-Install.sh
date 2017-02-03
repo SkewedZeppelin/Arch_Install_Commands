@@ -199,14 +199,6 @@ arch-chroot /mnt passwd ${strUsername}
 echo -e ${infoColor}"END OF USER ACCOUNT CREATION"
 sleep 3
 
-#Post-Install Script
-echo -e ${infoColor}"INSTALLING POST INSTALL SCRIPT"
-echo -e ${outputColor}
-wget https://gogs.spotco.us/spotcomms/Arch_Install_Script/raw/master/Post-Install.sh
-cp Post-Install.sh /mnt/home/${strUsername}/
-echo -e ${infoColor}"INSTALLED POST INSTALL SCRIPT"
-sleep 3
-
 #Finish up
 echo -e ${infoColor}"FINISHING UP"
 umount -R /mnt

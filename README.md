@@ -5,13 +5,13 @@ Instructions
 ------------
 Run the following commands to be greeted with a wholesome install within minutes
 ```shell
-wget https://gogs.spotco.us/spotcomms/Arch_Install_Script/raw/master/Pre-Install.sh
 sh Pre-Install.sh
+sh Post-Install.sh #Midway run 'sh Arch_Linux-Package_Installer.sh'
 ```
 
 Disclaimer
 ----------
-Both scripts have been tested to be functional, however I'm not liable for any damage you or it may do to your computer. Stuff might break or it might be flawless, there are too many variables in play to be definitive.
+All scripts have been tested to be functional, however I'm not liable for any damage you or it may do to your computer. Stuff might break or it might be flawless, there are too many variables in play to be definitive.
 
 To Do
 -----
