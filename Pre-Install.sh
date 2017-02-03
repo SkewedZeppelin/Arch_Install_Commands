@@ -109,7 +109,7 @@ sleep 3
 echo -e ${infoColor}"UPDATING LOCAL MIRRORS"
 echo -e ${outputColor}
 pacman -Sy reflector
-reflector --verbose --country 'United States' -l 200 -p http -p https --sort rate --save /etc/pacman.d/mirrorlist
+reflector --verbose -l 50 -p https --sort rate --save /etc/pacman.d/mirrorlist
 sleep 3
 
 #Install the base system
