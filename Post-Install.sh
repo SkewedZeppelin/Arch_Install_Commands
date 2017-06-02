@@ -1,3 +1,6 @@
+#/bin/bash
+#Copyright (c) 2015-2017 Spot Communications, Inc.
+
 #Color codes from https://wiki.archlinux.org/index.php/Color_Bash_Prompt
 coloroff='\e[0m'
 black='\e[0;30m'
