@@ -187,7 +187,7 @@ sleep 3
 
 #Create a user account
 echo -e ${infoColor}"START OF USER ACCOUNT CREATION"
-echo -e ${questionColor}"What would you like your username to be? Must be all lowercase (obamallama)"
+echo -e ${questionColor}"What would you like your username to be? Must be all lowercase"
 read strUsername
 echo -e ${outputColor}
 arch-chroot /mnt useradd -m -G wheel -s /bin/bash ${strUsername}

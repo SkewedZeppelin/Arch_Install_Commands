@@ -42,7 +42,7 @@ sudo sed -i 's/#\[multilib-testing\]/\[multilib-testing\]/' /etc/pacman.conf
 sudo sed -i 's/#\[multilib\]/\[multilib\]/' /etc/pacman.conf
 sudo sed -i 's/#Include = \/etc\/pacman.d\/mirrorlist/Include = \/etc\/pacman.d\/mirrorlist/' /etc/pacman.conf
 echo -e ${outputColor}
-sudo reflector --verbose --country 'United States' -l 200 -p http -p https --sort rate --save /etc/pacman.d/mirrorlist
+sudo reflector --verbose --latest 50 -p https --sort rate --save /etc/pacman.d/mirrorlist
 sudo pacman -Syyu
 echo -e ${infoColor}"END OF PACMAN CONFIGURATION"
 sleep 3
