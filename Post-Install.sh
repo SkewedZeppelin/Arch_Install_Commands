@@ -1,5 +1,5 @@
 #/bin/bash
-#Copyright (c) 2015-2017 Spot Communications, Inc.
+#Copyright (c) 2015-2017 Divested Computing, Inc.
 
 #Color codes from https://wiki.archlinux.org/index.php/Color_Bash_Prompt
 coloroff='\e[0m'
@@ -60,40 +60,12 @@ sleep 3
 echo "Please run Arch_Linux-Package_Installer.sh before continuing..."
 sleep 30
 
-echo -e ${questionColor}"Do you want YubiKey support?"
-select yn in "Yes" "No"; do
-        case $yn in
-                Yes ) 
-                	echo -e ${outputColor};
-			sudo /bin/bash -c $'echo \'ACTION!="add|change", GOTO="u2f_end"\' >> /etc/udev/rules.d/70-u2f.rules';
-			sudo /bin/bash -c $'echo \'KERNEL=="hidraw*", SUBSYSTEM=="hidraw", ATTRS{idVendor}=="1050", ATTRS{idProduct}=="0113|0114|0115|0116|0120|0402|0403|0406|0407|0410", TAG+="uaccess"\' >> /etc/udev/rules.d/70-u2f.rules';
-			sudo /bin/bash -c $'echo \'LABEL="u2f_end"\' >> /etc/udev/rules.d/70-u2f.rules';
-			break;;
-                No ) break;;
-        esac
-done
-
-echo -e ${questionColor}"Do you want libvirt support?"
-select yn in "Yes" "No"; do
-        case $yn in
-                Yes )
-                	echo -e ${outputColor};
-			sudo systemctl enable libvirtd.service;
-			sudo /bin/bash -c "echo 'polkit.addRule(function(action, subject) { if (action.id == "org.libvirt.unix.manage" && subject.isInGroup("kvm")) { return polkit.Result.YES; } })' >> /etc/polkit-1/rules.d/49-org.libvirt.unix.manager.rules"
-			sudo gpasswd -a $USER kvm;
-			sudo sed -i 's/MODULES="/MODULES="kvm kvm_intel /' /etc/mkinitcpio.conf;
-			sudo mkinitcpio -p linux;
-			break;;
-                No ) break;;
-        esac
-done
-
 sudo archlinux-java set java-8-openjdk
 sudo sed -i 's/#listen-address=/listen-address=127.0.0.1/' /etc/dnsmasq.conf
 sudo sed -i 's/dns=default/dns=dnsmasq/' /etc/NetworkManager/NetworkManager.conf
 sudo systemctl enable NetworkManager.service
 sudo systemctl enable NetworkManager-dispatcher.service
-sudo systemctl enable haveged.service;
+sudo systemctl enable rngd.service;
 sudo timedatectl set-ntp true
 sudo systemctl enable systemd-timesyncd.service
 sudo systemctl restart systemd-timesyncd.service
