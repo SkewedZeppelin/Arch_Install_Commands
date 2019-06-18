@@ -1,5 +1,5 @@
 #/bin/bash
-#Copyright (c) 2015-2017 Divested Computing, Inc.
+#Copyright (c) 2015-2017 Divested Computing Group
 
 #Color codes from https://wiki.archlinux.org/index.php/Color_Bash_Prompt
 coloroff='\e[0m'
