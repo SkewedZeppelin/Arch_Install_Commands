@@ -1,5 +1,18 @@
 #/bin/bash
 #Copyright (c) 2015-2017 Divested Computing Group
+#
+#This program is free software: you can redistribute it and/or modify
+#it under the terms of the GNU General Public License as published by
+#the Free Software Foundation, either version 3 of the License, or
+#(at your option) any later version.
+#
+#This program is distributed in the hope that it will be useful,
+#but WITHOUT ANY WARRANTY; without even the implied warranty of
+#MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+#GNU General Public License for more details.
+#
+#You should have received a copy of the GNU General Public License
+#along with this program.  If not, see <https://www.gnu.org/licenses/>.
 
 #Color codes from https://wiki.archlinux.org/index.php/Color_Bash_Prompt
 coloroff='\e[0m'
@@ -16,7 +29,7 @@ questionColor=${red}
 outputColor=${yellow}
 
 #Intro
-echo -e ${infoColor}"Welcome to the Spot Communication's Arch Linux installer and configurator"
+echo -e ${infoColor}"Welcome to DCG's Arch Linux installer and configurator"
 echo -e ${infoColor}"This is the pre-install script meant to be run from a live media"
 echo -e ${infoColor}"This script has yet to be throughly tested, stuff might go very, very wrong"
 echo -e ${infoColor}"Ctrl+C within 10 seconds if you do not want to end up troubleshooting your system or have to attempt to recover lost files"
