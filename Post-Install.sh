@@ -1,4 +1,4 @@
-#/bin/bash
+#!/bin/bash
 #Copyright (c) 2015-2017 Divested Computing Group
 #
 #This program is free software: you can redistribute it and/or modify
@@ -64,13 +64,13 @@ sleep 3
 echo -e ${infoColor}"START OF MAKEPKG CONFIGURATION"
 sudo sed -i 's/CFLAGS="-march=x86-64 -mtune=generic -O2 -pipe -fstack-protector-strong -fstack-check"/CFLAGS="-march=native -mtune=native -O3 -pipe -fstack-protector-strong -fstack-check --param=ssp-buffer-size=4"/' /etc/makepkg.conf
 sudo sed -i 's/CXXFLAGS="-march=x86-64 -mtune=generic -O2 -pipe -fstack-protector-strong -fstack-check"/CXXFLAGS="${CFLAGS}"/' /etc/makepkg.conf
-sudo sed -i "s/#MAKEFLAGS=\"-j2\"/MAKEFLAGS=\"-j$*(cat /proc/cpuinfo | grep -c processor)\"/" /etc/makepkg.conf
+sudo sed -i "s/#MAKEFLAGS=\"-j2\"/MAKEFLAGS=\"-j$*(nproc)\"/" /etc/makepkg.conf
 #TODO: Change packager name here
 sudo sed -i 's/(xz -c -z -)/(xz -T 0 -c -z -)/' /etc/makepkg.conf
 echo -e ${infoColor}"END OF MAKEPKG CONFIGURATION"
 sleep 3
 
-echo "Please run Arch_Linux-Package_Installer.sh before continuing..."
+echo "Please run brace-installer before continuing..."
 sleep 30
 
 sudo archlinux-java set java-8-openjdk
@@ -82,7 +82,6 @@ sudo systemctl enable rngd.service;
 sudo timedatectl set-ntp true
 sudo systemctl enable systemd-timesyncd.service
 sudo systemctl restart systemd-timesyncd.service
-chsh -s $(which zsh);
 
 echo -e ${infoColor}"FINISHING UP"
 echo -e ${infoColor}"Please reboot now"

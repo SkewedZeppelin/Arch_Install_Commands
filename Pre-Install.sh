@@ -1,4 +1,4 @@
-#/bin/bash
+#!/bin/bash
 #Copyright (c) 2015-2017 Divested Computing Group
 #
 #This program is free software: you can redistribute it and/or modify
@@ -74,7 +74,7 @@ parted ${strInstallDrive} rm 3
 parted ${strInstallDrive} rm 4
 parted ${strInstallDrive} rm 5
 parted ${strInstallDrive} rm 6
-dd if=/dev/zero of=${strInstallDrive} bs=512 count=10
+dd if=/dev/zero of=${strInstallDrive} bs=512 count=10 #should be replaced with wipefs
 if [ ${blEFI} == true ]
 	then
 		parted ${strInstallDrive} mklabel gpt
@@ -180,7 +180,7 @@ if [ ${blEFI} == true ]
 		arch-chroot /mnt /bin/bash -c 'echo "linux /vmlinuz-linux" >> /boot/loader/entries/arch.conf\'
 		arch-chroot /mnt /bin/bash -c 'echo "initrd /initramfs-linux.img" >> /boot/loader/entries/arch.conf\'
 		arch-chroot /mnt /bin/bash -c $'echo "options root=${strInstallDrive}2 rw resume=${strInstallDrive}3" >> /boot/loader/entries/arch.conf\' #FIX THIS
-		arch-chroot /mnt /bin/bash -c 'echo "timeout 0" > /boot/loader/loader.conf\' #There is only 1 > because the file is created on install, and were overwriting it
+		arch-chroot /mnt /bin/bash -c 'echo "timeout 0" > /boot/loader/loader.conf\' #There is only 1 > because the file is created on install, and we're overwriting it
 		arch-chroot /mnt /bin/bash -c 'echo "default arch" >> /boot/loader/loader.conf\'
 		arch-chroot /mnt bootctl update
         else
