@@ -75,7 +75,7 @@ parted ${strInstallDrive} rm 4
 parted ${strInstallDrive} rm 5
 parted ${strInstallDrive} rm 6
 dd if=/dev/zero of=${strInstallDrive} bs=512 count=10 #should be replaced with wipefs
-if [ ${blEFI} == true ]
+if [ ${blEFI} = true ]
 	then
 		parted ${strInstallDrive} mklabel gpt
 		parted ${strInstallDrive} mkpart ESP fat32 1MiB ${strPartitionSizeBoot}
@@ -93,7 +93,7 @@ sleep 3
 #Format the partitions
 echo -e ${infoColor}"START OF FORMATTING"
 echo -e ${outputColor}
-if [ ${blEFI} == true ]
+if [ ${blEFI} = true ]
 	then
 		mkfs.vfat -F32 ${strInstallDrive}1
 	else
@@ -172,14 +172,14 @@ sleep 3
 #Install the bootloader
 echo -e ${infoColor}"START OF BOOTLOADER INSTALLATION"
 echo -e ${outputColor}
-if [ ${blEFI} == true ]
+if [ ${blEFI} = true ]
         then
 		arch-chroot /mnt pacman -S dosfstools
 		arch-chroot /mnt bootctl --path=/boot install
 		arch-chroot /mnt /bin/bash -c 'echo "title Arch Linux" >> /boot/loader/entries/arch.conf\'
 		arch-chroot /mnt /bin/bash -c 'echo "linux /vmlinuz-linux" >> /boot/loader/entries/arch.conf\'
 		arch-chroot /mnt /bin/bash -c 'echo "initrd /initramfs-linux.img" >> /boot/loader/entries/arch.conf\'
-		arch-chroot /mnt /bin/bash -c $'echo "options root=${strInstallDrive}2 rw resume=${strInstallDrive}3" >> /boot/loader/entries/arch.conf\' #FIX THIS
+		arch-chroot /mnt /bin/bash -c 'echo "options root=${strInstallDrive}2 rw resume=${strInstallDrive}3" >> /boot/loader/entries/arch.conf\' #FIX THIS
 		arch-chroot /mnt /bin/bash -c 'echo "timeout 0" > /boot/loader/loader.conf\' #There is only 1 > because the file is created on install, and we're overwriting it
 		arch-chroot /mnt /bin/bash -c 'echo "default arch" >> /boot/loader/loader.conf\'
 		arch-chroot /mnt bootctl update
