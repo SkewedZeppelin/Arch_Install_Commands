@@ -26,4 +26,4 @@ Most of the commits don't have commit messages because this used to be a gist, b
 
 Donate
 -------
-BTC: bc1qkjtp2k7cc4kuv8k9wjdlxkeuqczenrpv5mwasl
+- https://divested.dev/donate
